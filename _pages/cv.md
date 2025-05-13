@@ -65,24 +65,6 @@ redirect_from:
 * **Tools:** Git, SLURM, Linux, LaTeX, Inkscape
 * **Languages:** Chinese (native), German (fluent), English (fluent), Norwegian (beginner)
 
-# Publications
-
-<ul>{% for post in site.publications reversed %}
-  {% include archive-single-cv.html %}
-{% endfor %}</ul>
-
-# Talks
-
-<ul>{% for post in site.talks reversed %}
-  {% include archive-single-talk-cv.html %}
-{% endfor %}</ul>
-
-# Teaching
-
-<ul>{% for post in site.teaching reversed %}
-  {% include archive-single-cv.html %}
-{% endfor %}</ul>
-
 # Service & Leadership
 
 * **Appointment Commissions for two W2 Endowed Professorships (Machine Learning in the Life Sciences; Statistical & ML in Official Statistics)** – Primary student representative (Mar 2025 – Present)
