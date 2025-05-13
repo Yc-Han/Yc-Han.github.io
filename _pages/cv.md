@@ -10,6 +10,8 @@ redirect\_from:
 
 ---
 
+{% include base\_path %}
+
 [Download my full CV (PDF, 1 MB)]({{ site.baseurl }}/files/cv.pdf)
 
 # Research Interests
