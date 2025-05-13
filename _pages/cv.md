@@ -3,14 +3,13 @@
 layout: archive
 title: "CV"
 permalink: /cv/
-author\_profile: true
-redirect\_from:
-
-* /resume
+author_profile: true
+redirect_from:
+  - /resume
 
 ---
 
-{% include base\_path %}
+{% include base_path %}
 
 [Download my full CV (PDF, 1 MB)]({{ site.baseurl }}/files/cv.pdf)
 
@@ -87,5 +86,5 @@ redirect\_from:
 # Service & Leadership
 
 * **Appointment Commissions for two W2 Endowed Professorships (Machine Learning in the Life Sciences; Statistical & ML in Official Statistics)** – Primary student representative (Mar 2025 – Present)
-  Review candidates’ dossiers, question candidates during hearings, vote in short‑list selection.
-* **Statistics Student Council, LMU Munich** – Leader, Teaching Working Group; organiser of “Round Table for Teaching” events; website administrator (Apr 2023 – Present)
+  Review candidates' dossiers, question candidates during hearings, vote in short‑list selection.
+* **Statistics Student Council, LMU Munich** – Leader, Teaching Working Group; organiser of "Round Table for Teaching" events; website administrator (Apr 2023 – Present)
