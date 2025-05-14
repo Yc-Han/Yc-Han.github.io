@@ -7,7 +7,7 @@ redirect_from:
   - /about.html
 ---
 
-I am a statistics and data science student at LMU Munich (M.Sc. candidate). At the same time, I am a research assistant at [Statistical Consulting Unit (StaBLab)](https://www.stablab.stat.uni-muenchen.de/) and [Helmholtz Centre for Infection Research (HZI)](https://www.helmholtz-hzi.de/).
+I am a Statistics and Data Science student at LMU Munich. At the same time, I am a research assistant at [Statistical Consulting Unit (StaBLab)](https://www.stablab.stat.uni-muenchen.de/) and [Helmholtz Centre for Infection Research (HZI)](https://www.helmholtz-hzi.de/).
 
 At StaBLab, I provide statistical consulting to students and researchers at and outside of LMU Munich.
 
