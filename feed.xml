@@ -1,1 +1,93 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://yc-han.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://yc-han.github.io/" rel="alternate" type="text/html" /><updated>2025-05-14T09:30:03+00:00</updated><id>https://yc-han.github.io/feed.xml</id><title type="html">Yichen Han / Home Page</title><subtitle>personal description</subtitle><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><entry><title type="html">Experience as a statistical consultant</title><link href="https://yc-han.github.io/posts/2025/05/blog-post-1/" rel="alternate" type="text/html" title="Experience as a statistical consultant" /><published>2025-05-14T00:00:00+00:00</published><updated>2025-05-14T00:00:00+00:00</updated><id>https://yc-han.github.io/posts/2025/05/exp_consult</id><content type="html" xml:base="https://yc-han.github.io/posts/2025/05/blog-post-1/"><![CDATA[<p>This post is under construction.</p>]]></content><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><category term="Statistics" /><category term="Data Science" /><category term="Consulting" /><summary type="html"><![CDATA[This post is under construction.]]></summary></entry></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://yc-han.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://yc-han.github.io/" rel="alternate" type="text/html" /><updated>2025-05-14T10:58:43+00:00</updated><id>https://yc-han.github.io/feed.xml</id><title type="html">Yichen Han / Home Page</title><subtitle>personal description</subtitle><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><entry><title type="html">Thoughts on multiple testing</title><link href="https://yc-han.github.io/posts/2025/05/blog-post-multtest/" rel="alternate" type="text/html" title="Thoughts on multiple testing" /><published>2025-05-16T00:00:00+00:00</published><updated>2025-05-16T00:00:00+00:00</updated><id>https://yc-han.github.io/posts/2025/05/multtest</id><content type="html" xml:base="https://yc-han.github.io/posts/2025/05/blog-post-multtest/"><![CDATA[<p>This post is under construction.</p>]]></content><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><category term="Statistics" /><category term="Multiple Testing" /><category term="p-values" /><category term="Open Science" /><summary type="html"><![CDATA[This post is under construction.]]></summary></entry><entry><title type="html">A guide to connecting VSCode to a remote cluster</title><link href="https://yc-han.github.io/posts/2025/05/blog-post-vsccluster/" rel="alternate" type="text/html" title="A guide to connecting VSCode to a remote cluster" /><published>2025-05-09T00:00:00+00:00</published><updated>2025-05-09T00:00:00+00:00</updated><id>https://yc-han.github.io/posts/2025/05/vsccluster</id><content type="html" xml:base="https://yc-han.github.io/posts/2025/05/blog-post-vsccluster/"><![CDATA[<p>Working on a remote cluster is a common task in many scientific fields. Here, I will show how to connect VSCode to a remote cluster. I take the <a href="https://doku.lrz.de/access-and-login-to-the-linux-cluster-10745974.html">LRZ cluster</a> as an example.</p>
+
+<p>Suppose your LRZ-username (LRZ-Kennung) is “username”.
+Our goal is to connect to LRZ without having to type our password each time.
+You cannot avoid 2FA! Everytime you will have to give 2FA.</p>
+
+<ol>
+  <li>
+    <p>Manually download the extension <a href="hhttps://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh">Remote-SSH</a>. It doesn’t seem to be automatically downloaded although VSCode claims so.</p>
+  </li>
+  <li>
+    <p>Open Windows Powershell with admin rights</p>
+
+    <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code> ssh-keygen <span class="nt">-t</span> ed25519 <span class="nt">-C</span> <span class="s2">"username@lrz"</span>
+</code></pre></div>    </div>
+    <p>(press <code class="language-plaintext highlighter-rouge">&lt;Enter&gt;</code> three times for defaults)</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">USERPROFILE</span><span class="n">\.ssh\id_ed25519.pub</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">ssh</span><span class="w"> </span><span class="nt">-Y</span><span class="w"> </span><span class="nx">username</span><span class="err">@</span><span class="nx">cool.hpc.lrz.de</span><span class="w"> </span><span class="s2">"umask 077 &amp;&amp; mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt; ~/.ssh/authorized_keys"</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a local .ssh config file. Stored in <code class="language-plaintext highlighter-rouge">C:\Users\&lt;WindowsUser&gt;\.ssh\config</code></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c"># ensure the ~/.ssh directory exists</span>
+ <span class="nb">mkdir</span> <span class="nt">-p</span> ~/.ssh
+
+ <span class="c"># write the configuration</span>
+ <span class="nb">cat</span> <span class="o">&gt;</span> ~/.ssh/config <span class="o">&lt;&lt;</span><span class="sh">'</span><span class="no">EOF</span><span class="sh">'
+ Host lrz-hpc
+     HostName cool.hpc.lrz.de
+     Port 2222
+     User username
+     IdentityFile ~/.ssh/id_ed25519
+     IdentitiesOnly yes
+     ForwardX11 yes
+     ServerAliveInterval 60
+</span><span class="no"> EOF
+
+</span> <span class="c"># secure the file</span>
+ <span class="nb">chmod </span>600 ~/.ssh/config
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Enable the Windows SSH agent (optional but convenient)</p>
+
+    <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="n">Set-Service</span><span class="w"> </span><span class="nx">ssh-agent</span><span class="w"> </span><span class="nt">-StartupType</span><span class="w"> </span><span class="nx">Automatic</span><span class="w">
+ </span><span class="n">Start-Service</span><span class="w"> </span><span class="nx">ssh-agent</span><span class="w">
+ </span><span class="n">ssh-add</span><span class="w"> </span><span class="nv">$</span><span class="nn">env</span><span class="p">:</span><span class="nv">USERPROFILE</span><span class="nx">\.ssh\id_ed25519</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>In VSCode:</strong>
+ <code class="language-plaintext highlighter-rouge">Ctrl + Shift + P</code> → <code class="language-plaintext highlighter-rouge">Remote-SSH: Add New SSH Host…</code>
+ Enter: <code class="language-plaintext highlighter-rouge">ssh lrz-hpc</code>
+ The first connection installs the VS Code Server in <code class="language-plaintext highlighter-rouge">$HOME/.vscode-server/</code> on the cluster and takes long.
+ Enter passwords or 2FA when prompted.</p>
+  </li>
+  <li>
+    <p><strong>Note:</strong> You get logged in to the login node, and heavy computation is prohibited there! If you hit the “Run python code” button, the code will be executed in the current terminal, i.e. login node. You need to start an interactive session each time.</p>
+  </li>
+  <li>Configure your <code class="language-plaintext highlighter-rouge">.vscode</code> folder so that you get an interactive session easily.
+ <strong>In <code class="language-plaintext highlighter-rouge">.vscode/launch.json</code>:</strong>
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.2.0"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"configurations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+         </span><span class="p">{</span><span class="w">
+             </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Python on compute node"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"python"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"request"</span><span class="p">:</span><span class="w"> </span><span class="s2">"launch"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"program"</span><span class="p">:</span><span class="w"> </span><span class="s2">"${file}"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"console"</span><span class="p">:</span><span class="w"> </span><span class="s2">"integratedTerminal"</span><span class="p">,</span><span class="w">
+             </span><span class="nl">"preLaunchTask"</span><span class="p">:</span><span class="w"> </span><span class="s2">"slurm-srun"</span><span class="w">
+           </span><span class="p">}</span><span class="w">
+     </span><span class="p">]</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p><strong>In <code class="language-plaintext highlighter-rouge">.vscode/tasks.json</code>:</strong></p>
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w"> </span><span class="p">{</span><span class="w">
+     </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0"</span><span class="p">,</span><span class="w">
+     </span><span class="nl">"tasks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+         </span><span class="nl">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"slurm-srun"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"shell"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"command"</span><span class="p">:</span><span class="w"> </span><span class="s2">"if [[ -z $SLURM_JOB_ID ]]; then srun -M inter -p cm4_inter -n 1 -c 4 --mem=32G -t 03:00:00 --pty bash -l; fi"</span><span class="p">,</span><span class="w">
+         </span><span class="nl">"problemMatcher"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+     </span><span class="p">]</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+    <p><em>Modify the parameters in the <code class="language-plaintext highlighter-rouge">slurm-srun</code> task command as you need!</em></p>
+  </li>
+  <li>To use, i.e. to start an interactive session, press <code class="language-plaintext highlighter-rouge">Ctrl + F5</code></li>
+</ol>]]></content><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><category term="Computing" /><category term="Cluster" /><summary type="html"><![CDATA[Working on a remote cluster is a common task in many scientific fields. Here, I will show how to connect VSCode to a remote cluster. I take the LRZ cluster as an example.]]></summary></entry></feed>
