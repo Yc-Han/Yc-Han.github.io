@@ -7,21 +7,16 @@ redirect_from:
   - /about.html
 ---
 
-I am a Statistics and Data Science student at LMU Munich. At the same time, I am a research assistant at [Statistical Consulting Unit (StaBLab)](https://www.stablab.stat.uni-muenchen.de/) and [Helmholtz Centre for Infection Research (HZI)](https://www.helmholtz-hzi.de/).
+I am an undergraduate in **Statistics & Data Science** at **LMU Munich** and a research assistant with the [Statistical Consulting Unit (StaBLab)](https://www.stablab.stat.uni-muenchen.de/) and the [Helmholtz Centre for Infection Research (HZI)](https://www.helmholtz-hzi.de/).
 
-At StaBLab, I provide statistical consulting to students and researchers at and outside of LMU Munich.
+* **Consulting (StaBLab).** I provide statistical guidance on ≈ 20 student and faculty projects each semester—study design, modelling, and reproducible workflows. Support on external projects is also provided.
+* **Research (HZI).** I contribute to the **[GenomeNet](https://github.com/GenomeNet)** project, developing interpretable deep-learning models for prokaryotic phenotype-genome mapping. I am a member of the [Computational Biology for Infection Research (BIFO)](https://www.helmholtz-hzi.de/en/research/research-groups/details/computational-biology-for-infection-research/) department.
 
-At HZI, I am a member of the [Computational Biology for Infection Research (BIFO)](https://www.helmholtz-hzi.de/en/research/research-groups/details/computational-biology-for-infection-research/) department, where I work on the [GenomeNet](https://github.com/GenomeNet) project.
+**Research interests**
 
-My current research interests include:
+- Interpretable deep learning  
+- Adversarial robustness  
+- Machine learning in genomics  
+- Reproducible statistical practice in empirical science  
 
-- Interpretable Deep Learning
-- Adversarial Robustness
-- Causal Inference
-- Machine Learning in Genomics
-
-Based on my experience as a statistical consultant, I am also interested in improving the quality and reproducibility of statistical analyses in empirical research and enhancing statistical literacy in academia.
-
-For more details on my experience, please refer to my [CV]({{ site.baseurl }}/cv/).
-
-For my personal notes, please refer to my [blog]({{ site.baseurl }}/year-archive/).
+For further details see my **[CV]({{ site.baseurl }}/cv/)**, and my technical write-ups on the **[blog]({{ site.baseurl }}/year-archive/)**.
