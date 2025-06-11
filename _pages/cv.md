@@ -12,7 +12,7 @@ redirect_from:
 {% include base_path %}
 
 <div class="download">
-  <a href="{{ "/files/cv_0525.pdf" | relative_url }}" class="btn btn--primary">
+  <a href="{{ "/files/cv_0625.pdf" | relative_url }}" class="btn btn--primary">
     Download full CV (PDF, 1 MB)
   </a>
 </div>
@@ -23,7 +23,7 @@ redirect_from:
 Minor Biology (30 ECTS) • Thesis: *Interpretable Sequence-based Deep Learning Models for Biomarker Discovery in Genomics*
 
 ## Research experience  
-**Research Assistant** — Computational Biology for Infection Research, HZI Brunswick  
+**Research Assistant** — Computational Biology for Infection Research, HZI Braunschweig  
 *Oct 2024 – present*  
 
 **Research Assistant & Statistical Consultant** — StaBLab, LMU Munich  
