@@ -6,10 +6,21 @@ layout: compress
 
 <!doctype html>
 <html lang="{{ site.locale | slice: 0,2 }}" class="no-js"{% if site.site_theme == "dark" %} data-theme="dark"{% endif %}>
-<link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}"
   <head>
     {% include head.html %}
     {% include head/custom.html %}
+    <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+    {% if site.mathjax %}
+  <!-- optional: redefine inline delimiter to single $ if you insist on it -->
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+    {% endif %}
+
   </head>
 
   <body>

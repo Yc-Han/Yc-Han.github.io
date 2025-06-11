@@ -42,7 +42,7 @@ Minor Biology (30 ECTS) • Thesis: *Interpretable Sequence-based Deep Learning 
 **Languages:** Chinese (native) · German (fluent) · English (fluent) · Norwegian (beginner)
 
 ## Service & leadership  
-**Student representative**, W2 appointment commissions (Machine Learning in the Life Sciences; Statistical & ML in Official Statistics)  
+**Student representative**, W2 professorship appointment commissions, Department of Statistics, LMU Munich 
 *Mar 2025 – present*  
 
 **Statistics Student Council, LMU Munich** — Lead, Teaching Working Group; site administrator  
