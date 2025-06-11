@@ -2,7 +2,6 @@
 
 <!doctype html>
 <html lang="en" class="no-js">
-<link rel="stylesheet" href="/assets/css/custom.css"
   <head>
     
 
@@ -20,7 +19,7 @@
 
 
 
-<title>Thoughts on multiple testing - Yichen Han / Home Page</title>
+<title>Statistical Hypothesis Testing 1: Conceptual Framework - Yichen Han / Home Page</title>
 
 
 
@@ -30,15 +29,15 @@
 
 <meta property="og:locale" content="en-US">
 <meta property="og:site_name" content="Yichen Han / Home Page">
-<meta property="og:title" content="Thoughts on multiple testing">
+<meta property="og:title" content="Statistical Hypothesis Testing 1: Conceptual Framework">
 
 
-  <link rel="canonical" href="https://yc-han.github.io/posts/2025/05/blog-post-multtest/">
-  <meta property="og:url" content="https://yc-han.github.io/posts/2025/05/blog-post-multtest/">
+  <link rel="canonical" href="https://yc-han.github.io/posts/2025/05/blog-post-test1/">
+  <meta property="og:url" content="https://yc-han.github.io/posts/2025/05/blog-post-test1/">
 
 
 
-  <meta property="og:description" name="description" content="This post is under construction.">
+  <meta property="og:description" name="description" content="In the first few posts of this blog, I would like to talk about reproducible statistical practices in empirical research. The content will be primarily based on my experience as a statistical consultant at StaBLab, and on the lecture “Statistical Pitfalls in Biomedical Research” by Prof. Anne-Laure Boulesteix and Dr. Sabine Hoffmann.">
 
 
 
@@ -115,6 +114,18 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    
+  <!-- optional: redefine inline delimiter to single $ if you insist on it -->
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+    
 
   </head>
 
@@ -258,22 +269,22 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Thoughts on multiple testing">
-    <meta itemprop="description" content="This post is under construction.">
+    <meta itemprop="headline" content="Statistical Hypothesis Testing 1: Conceptual Framework">
+    <meta itemprop="description" content="In the first few posts of this blog, I would like to talk about reproducible statistical practices in empirical research. The content will be primarily based on my experience as a statistical consultant at StaBLab, and on the lecture “Statistical Pitfalls in Biomedical Research” by Prof. Anne-Laure Boulesteix and Dr. Sabine Hoffmann.">
     <meta itemprop="datePublished" content="May 16, 2025">
     
 
     <div class="page__inner-wrap">
       
         <header>
-          <h1 class="page__title" itemprop="headline">Thoughts on multiple testing
+          <h1 class="page__title" itemprop="headline">Statistical Hypothesis Testing 1: Conceptual Framework
 </h1>
           
             <p class="page__meta"><i class="fa fa-clock" aria-hidden="true"></i> 
 
 
   
-	  less than 1 minute read
+	  2 minute read
 	
 </p>
           
@@ -286,7 +297,44 @@
       
 
       <section class="page__content" itemprop="text">
-        <p>This post is under construction.</p>
+        <p>In the first few posts of this blog, I would like to talk about reproducible statistical practices in empirical research. The content will be primarily based on my experience as a statistical consultant at <a href="https://www.stablab.stat.uni-muenchen.de/">StaBLab</a>, and on the lecture <em>“Statistical Pitfalls in Biomedical Research”</em> by Prof. Anne-Laure Boulesteix and Dr. Sabine Hoffmann.</p>
+
+<p>Reproducibility in general is too broad a topic to cover in some blogs, but by focusing on some iconic aspects or pitfalls, we can get a better understanding of the gap in statistical practice between statisticians and practitioners.</p>
+
+<p>I would like to start with a simple example—<strong>hypothesis testing</strong>.</p>
+
+<h2 id="introduction">Introduction</h2>
+
+<p><strong>Hypothesis testing</strong> is the most frequent consulting request I receive from students and faculty. It is a common tool in empirical research and is easy to interpret. Despite its popularity, statistical hypothesis tests framed by our clients are often not in the form of what statisticians would agree on. Before introducing its mathematical framework, let’s take a simple example.</p>
+
+<p><strong>Example 1</strong>: Our research question is whether a new drug is effective in treating a certain disease. The severity of the disease is measured by a score. We have a sample of 100 patients, 50 of which receive the new drug and 50 of which receive a placebo. We measure the severity score before and after the treatment.</p>
+
+<p>RQ: <em>Is the new drug effective in reducing the severity of the disease?</em></p>
+
+<p><strong>Student A</strong> has in their protocol the following:</p>
+
+<blockquote>
+  <p>H0: The new drug is not effective in reducing the severity of the disease.</p>
+
+  <p>H1: The new drug is effective in reducing the severity of the disease.</p>
+</blockquote>
+
+<p><strong>Student B</strong> has in their protocol the following:</p>
+
+<blockquote>
+  <p>H0: In the post-treatment measurement, the severity of the disease is not lower than in the pre-treatment measurement.</p>
+
+  <p>H1: In the post-treatment measurement, the severity of the disease is lower than in the pre-treatment measurement.</p>
+</blockquote>
+
+<p><strong>Statistician</strong>: Let $\mu_{T, \text{pre}}$ and $\mu_{T, \text{post}}$ be the mean severity scores in the treatment group before and after the treatment, respectively; and $\mu_{C, \text{pre}}$ and $\mu_{C, \text{post}}$ be the mean severity scores in the control group.</p>
+
+<p>Let $\mu_{T, \text{pre}} - \mu_{C, \text{pre}} = \delta_{T}$ and $\mu_{T, \text{post}} - \mu_{C, \text{post}} = \delta_{T, \text{post}}$.</p>
+
+\[H0: \delta_{T} \geq 0\]
+
+\[H1: \delta_{T} &lt; 0\]
+
 
 
         
@@ -314,15 +362,11 @@
     
       
       
-      <a href="https://yc-han.github.io/tags/#multiple-testing" class="page__taxonomy-item" rel="tag">Multiple Testing</a><span class="sep">, </span>
+      <a href="https://yc-han.github.io/tags/#empirical-research" class="page__taxonomy-item" rel="tag">Empirical Research</a><span class="sep">, </span>
     
       
       
-      <a href="https://yc-han.github.io/tags/#open-science" class="page__taxonomy-item" rel="tag">Open Science</a><span class="sep">, </span>
-    
-      
-      
-      <a href="https://yc-han.github.io/tags/#p-values" class="page__taxonomy-item" rel="tag">p-values</a><span class="sep">, </span>
+      <a href="https://yc-han.github.io/tags/#hypothesis-testing" class="page__taxonomy-item" rel="tag">Hypothesis Testing</a><span class="sep">, </span>
     
       
       
@@ -343,13 +387,13 @@
     <h4 class="page__share-title">Share on</h4>
   
 
-  <a href="https://bsky.app/intent/compose?text=https://yc-han.github.io/posts/2025/05/blog-post-multtest/" class="btn btn--bluesky" title="Share on Bluesky"><i class="fab fa-bluesky" aria-hidden="true"></i><span> Bluesky</span></a>
+  <a href="https://bsky.app/intent/compose?text=https://yc-han.github.io/posts/2025/05/blog-post-test1/" class="btn btn--bluesky" title="Share on Bluesky"><i class="fab fa-bluesky" aria-hidden="true"></i><span> Bluesky</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https://yc-han.github.io/posts/2025/05/blog-post-multtest/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https://yc-han.github.io/posts/2025/05/blog-post-test1/" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yc-han.github.io/posts/2025/05/blog-post-multtest/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yc-han.github.io/posts/2025/05/blog-post-test1/" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 
-  <a href="https://x.com/intent/post?text=https://yc-han.github.io/posts/2025/05/blog-post-multtest/" class="btn btn--x" title="Share on X"><i class="fab fa-x-twitter" aria-hidden="true"></i><span> X (formerly Twitter)</span></a>
+  <a href="https://x.com/intent/post?text=https://yc-han.github.io/posts/2025/05/blog-post-test1/" class="btn btn--x" title="Share on X"><i class="fab fa-x-twitter" aria-hidden="true"></i><span> X (formerly Twitter)</span></a>
 </section>
 
 
@@ -455,7 +499,7 @@
 
 <div class="page__footer-copyright">
   &copy; 2025 Yichen Han, Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
-  Site last updated 2025-05-14
+  Site last updated 2025-06-11
 </div>
 
       </footer>

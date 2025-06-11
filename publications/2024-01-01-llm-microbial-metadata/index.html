@@ -2,7 +2,6 @@
 
 <!doctype html>
 <html lang="en" class="no-js">
-<link rel="stylesheet" href="/assets/css/custom.css"
   <head>
     
 
@@ -115,6 +114,18 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 <!-- end custom head snippets -->
+
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    
+  <!-- optional: redefine inline delimiter to single $ if you insist on it -->
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+  </script>
+
+  <script defer
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+    
 
   </head>
 
@@ -364,7 +375,7 @@
 
 <div class="page__footer-copyright">
   &copy; 2025 Yichen Han, Powered by <a href="http://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://github.com/academicpages/academicpages.github.io">AcademicPages</a>, a fork of <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.<br />
-  Site last updated 2025-05-14
+  Site last updated 2025-06-11
 </div>
 
       </footer>
