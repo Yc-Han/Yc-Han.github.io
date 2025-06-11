@@ -1,40 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://yc-han.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://yc-han.github.io/" rel="alternate" type="text/html" /><updated>2025-06-11T19:45:13+00:00</updated><id>https://yc-han.github.io/feed.xml</id><title type="html">Yichen Han / Home Page</title><subtitle>personal description</subtitle><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><entry><title type="html">Statistical Hypothesis Testing 1: Conceptual Framework</title><link href="https://yc-han.github.io/posts/2025/05/blog-post-test1/" rel="alternate" type="text/html" title="Statistical Hypothesis Testing 1: Conceptual Framework" /><published>2025-05-16T00:00:00+00:00</published><updated>2025-05-16T00:00:00+00:00</updated><id>https://yc-han.github.io/posts/2025/05/test1</id><content type="html" xml:base="https://yc-han.github.io/posts/2025/05/blog-post-test1/"><![CDATA[<p>In the first few posts of this blog, I would like to talk about reproducible statistical practices in empirical research. The content will be primarily based on my experience as a statistical consultant at <a href="https://www.stablab.stat.uni-muenchen.de/">StaBLab</a>, and on the lecture <em>“Statistical Pitfalls in Biomedical Research”</em> by Prof. Anne-Laure Boulesteix and Dr. Sabine Hoffmann.</p>
-
-<p>Reproducibility in general is too broad a topic to cover in some blogs, but by focusing on some iconic aspects or pitfalls, we can get a better understanding of the gap in statistical practice between statisticians and practitioners.</p>
-
-<p>I would like to start with a simple example—<strong>hypothesis testing</strong>.</p>
-
-<h2 id="introduction">Introduction</h2>
-
-<p><strong>Hypothesis testing</strong> is the most frequent consulting request I receive from students and faculty. It is a common tool in empirical research and is easy to interpret. Despite its popularity, statistical hypothesis tests framed by our clients are often not in the form of what statisticians would agree on. Before introducing its mathematical framework, let’s take a simple example.</p>
-
-<p><strong>Example 1</strong>: Our research question is whether a new drug is effective in treating a certain disease. The severity of the disease is measured by a score. We have a sample of 100 patients, 50 of which receive the new drug and 50 of which receive a placebo. We measure the severity score before and after the treatment.</p>
-
-<p>RQ: <em>Is the new drug effective in reducing the severity of the disease?</em></p>
-
-<p><strong>Student A</strong> has in their protocol the following:</p>
-
-<blockquote>
-  <p>H0: The new drug is not effective in reducing the severity of the disease.</p>
-
-  <p>H1: The new drug is effective in reducing the severity of the disease.</p>
-</blockquote>
-
-<p><strong>Student B</strong> has in their protocol the following:</p>
-
-<blockquote>
-  <p>H0: In the post-treatment measurement, the severity of the disease is not lower than in the pre-treatment measurement.</p>
-
-  <p>H1: In the post-treatment measurement, the severity of the disease is lower than in the pre-treatment measurement.</p>
-</blockquote>
-
-<p><strong>Statistician</strong>: Let $\mu_{T, \text{pre}}$ and $\mu_{T, \text{post}}$ be the mean severity scores in the treatment group before and after the treatment, respectively; and $\mu_{C, \text{pre}}$ and $\mu_{C, \text{post}}$ be the mean severity scores in the control group.</p>
-
-<p>Let $\mu_{T, \text{pre}} - \mu_{C, \text{pre}} = \delta_{T}$ and $\mu_{T, \text{post}} - \mu_{C, \text{post}} = \delta_{T, \text{post}}$.</p>
-
-\[H0: \delta_{T} \geq 0\]
-
-\[H1: \delta_{T} &lt; 0\]]]></content><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><category term="Statistics" /><category term="Hypothesis Testing" /><category term="Empirical Research" /><summary type="html"><![CDATA[In the first few posts of this blog, I would like to talk about reproducible statistical practices in empirical research. The content will be primarily based on my experience as a statistical consultant at StaBLab, and on the lecture “Statistical Pitfalls in Biomedical Research” by Prof. Anne-Laure Boulesteix and Dr. Sabine Hoffmann.]]></summary></entry><entry><title type="html">A guide to connecting VSCode to a remote cluster</title><link href="https://yc-han.github.io/posts/2025/05/blog-post-vsccluster/" rel="alternate" type="text/html" title="A guide to connecting VSCode to a remote cluster" /><published>2025-05-09T00:00:00+00:00</published><updated>2025-05-09T00:00:00+00:00</updated><id>https://yc-han.github.io/posts/2025/05/vsccluster</id><content type="html" xml:base="https://yc-han.github.io/posts/2025/05/blog-post-vsccluster/"><![CDATA[<p>Working on a remote cluster is a common task in many scientific fields. Here, I will show how to connect VSCode to a remote cluster. I take the <a href="https://doku.lrz.de/access-and-login-to-the-linux-cluster-10745974.html">LRZ cluster</a> as an example.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://yc-han.github.io/feed.xml" rel="self" type="application/atom+xml" /><link href="https://yc-han.github.io/" rel="alternate" type="text/html" /><updated>2025-06-11T19:46:58+00:00</updated><id>https://yc-han.github.io/feed.xml</id><title type="html">Yichen Han / Home Page</title><subtitle>personal description</subtitle><author><name>Yichen Han</name><email>yichen.han@campus.lmu.de</email></author><entry><title type="html">A guide to connecting VSCode to a remote cluster</title><link href="https://yc-han.github.io/posts/2025/05/blog-post-vsccluster/" rel="alternate" type="text/html" title="A guide to connecting VSCode to a remote cluster" /><published>2025-05-09T00:00:00+00:00</published><updated>2025-05-09T00:00:00+00:00</updated><id>https://yc-han.github.io/posts/2025/05/vsccluster</id><content type="html" xml:base="https://yc-han.github.io/posts/2025/05/blog-post-vsccluster/"><![CDATA[<p>Working on a remote cluster is a common task in many scientific fields. Here, I will show how to connect VSCode to a remote cluster. I take the <a href="https://doku.lrz.de/access-and-login-to-the-linux-cluster-10745974.html">LRZ cluster</a> as an example.</p>
 
 <p>Suppose your LRZ-username (LRZ-Kennung) is “username”.
 Our goal is to connect to LRZ without having to type our password each time.
