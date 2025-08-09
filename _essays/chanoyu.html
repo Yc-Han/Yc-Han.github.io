@@ -297,8 +297,8 @@ layout: none
                 </button>
                 <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="toriawase">
                     Toriawase Lab
-                </button>
-            </nav>
+            </button>
+        </nav>
         </div>
     </header>
 
@@ -391,7 +391,7 @@ layout: none
                     <button class="filter-badge border border-gray-300 bg-white" data-filter="Jōdo">Jōdo</button>
                     <button class="filter-badge border border-gray-300 bg-white" data-filter="Nichiren">Nichiren</button>
                     <button class="filter-badge border border-gray-300 bg-white" data-filter="Shingon">Shingon</button>
-                </div>
+                    </div>
                 <div id="temples-container" class="grid md:grid-cols-2 gap-4">
                     <!-- Temple cards will be inserted here -->
                 </div>
@@ -484,7 +484,7 @@ layout: none
                                 <dt class="font-semibold">Who are strong signers?</dt>
                                 <dd class="text-gray-600">Senke iemoto (Omote/Ura/Mushanokōji) and senior abbots of major temples (esp. Daitoku-ji).</dd>
                             </dl>
-                        </div>
+                    </div>
                     </div>
                     <div class="bg-white rounded-lg border border-gray-200 p-6">
                         <h3 class="text-xl font-bold mb-3">Due Diligence Checklist</h3>
@@ -512,7 +512,7 @@ layout: none
                 <h2 class="text-3xl font-bold mb-6">Temple Events & Formats</h2>
                 <div id="events-container" class="grid md:grid-cols-2 gap-4">
                     <!-- Event cards will be inserted here -->
-                </div>
+        </div>
             </div>
         </section>
 
@@ -594,7 +594,7 @@ layout: none
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
-            </button>
+                </button>
             <div id="modal-body">
                 <!-- Modal content will be inserted here -->
             </div>
@@ -874,27 +874,205 @@ layout: none
 
     // Translation dictionary for the translator
     const TRANSLATION_DICTIONARY = [
-        { japanese: "茶の湯", romaji: "chanoyu", english: "way of tea", explanation: "The Japanese tea ceremony; an aesthetic and spiritual practice centered on preparing and sharing matcha." },
-        { japanese: "茶道", romaji: "chadō", english: "way of tea", explanation: "Alternative reading for the Way of Tea, emphasizing the spiritual path aspect." },
-        { japanese: "侘び寂び", romaji: "wabi-sabi", english: "aesthetic of imperfect beauty", explanation: "Finding beauty in imperfection and impermanence." },
-        { japanese: "一期一会", romaji: "ichigo ichie", english: "one time one meeting", explanation: "Each tea gathering is unique and will never recur." },
-        { japanese: "茶禅一味", romaji: "chazen ichimi", english: "tea and zen are one taste", explanation: "Tea practice and Zen meditation share the same essence." },
-        { japanese: "利休", romaji: "rikyū", english: "Sen no Rikyū", explanation: "Greatest tea master who perfected wabi-cha." },
-        { japanese: "茶碗", romaji: "chawan", english: "tea bowl", explanation: "The ceramic bowl for drinking matcha." },
-        { japanese: "天目", romaji: "tenmoku", english: "tenmoku bowl", explanation: "Conical Chinese tea bowl with dark iron glaze." },
-        { japanese: "井戸", romaji: "ido", english: "ido bowl", explanation: "Korean rice bowl adopted for tea." },
-        { japanese: "楽", romaji: "raku", english: "raku bowl", explanation: "Hand-formed tea bowl created under Rikyū's guidance." },
-        { japanese: "茶杓", romaji: "chashaku", english: "tea scoop", explanation: "Bamboo scoop for transferring matcha." },
-        { japanese: "箱書", romaji: "hakogaki", english: "box inscription", explanation: "Authentication written on storage box." },
-        { japanese: "前大徳", romaji: "zen-daitoku", english: "former Daitoku-ji abbot", explanation: "Former abbot of Daitoku-ji temple." },
-        { japanese: "月釜", romaji: "tsukigama", english: "monthly tea gathering", explanation: "Regular monthly public tea gathering." },
-        { japanese: "献茶", romaji: "kencha", english: "tea offering", explanation: "Ritual offering of tea to deity or Buddha." },
-        { japanese: "和敬清寂", romaji: "wa kei sei jaku", english: "four principles", explanation: "The four principles of tea ceremony: harmony, respect, purity, tranquility." },
-        { japanese: "志野", romaji: "shino", english: "shino ware", explanation: "Japanese white-glazed ceramics with distinctive pinholes in the glaze." },
-        { japanese: "織部", romaji: "oribe", english: "oribe ware", explanation: "Distinctive green-glazed ceramics with bold, asymmetric designs." },
-        { japanese: "萩", romaji: "hagi", english: "hagi ware", explanation: "Soft, porous ceramics that transform through use, showing 'seven changes'." },
-        { japanese: "唐津", romaji: "karatsu", english: "karatsu ware", explanation: "Robust ceramics from Kyushu known for their earthy character." }
+    // Core concepts
+    { japanese: "茶の湯", romaji: "chanoyu", english: "Way of Tea", explanation: "The Japanese tea ceremony; aesthetic–ethical practice centered on preparing and sharing matcha." },
+    { japanese: "茶道", romaji: "chadō / sadō", english: "Way of Tea", explanation: "Alternate reading; emphasizes the ‘dō’ (Way) as a lifelong discipline." },
+    { japanese: "侘茶", romaji: "wabicha", english: "wabi-style tea", explanation: "Rustic, introspective tea developed by Jukō, Jōō, and perfected by Rikyū." },
+    { japanese: "侘び寂び", romaji: "wabi-sabi", english: "imperfect/aged beauty", explanation: "Aesthetic of humble simplicity (wabi) and patina of time (sabi)." },
+    { japanese: "茶禅一味", romaji: "chazen ichimi", english: "tea and Zen are one taste", explanation: "Tea practice and Zen insight share the same essence." },
+    { japanese: "一期一会", romaji: "ichigo ichie", english: "one time, one meeting", explanation: "Each encounter is unique and unrepeatable." },
+    { japanese: "四規", romaji: "shiki", english: "four principles", explanation: "Harmony (和), Respect (敬), Purity (清), Tranquility (寂) articulated by Rikyū." },
+    { japanese: "和敬清寂", romaji: "wa kei sei jaku", english: "harmony, respect, purity, tranquility", explanation: "Mnemonic of the four principles guiding tea." },
+    { japanese: "利休七則", romaji: "Rikyū shichisoku", english: "Rikyū’s Seven Rules", explanation: "Practical precepts on preparation, seasonality, and attentiveness." },
+  
+    // People (masters, monks, patrons)
+    { japanese: "栄西（明菴栄西）", romaji: "Eisai (Myōan Eisai)", english: "Eisai", explanation: "Rinzai monk who reintroduced tea from Song China; author of Kissa Yōjōki (1211)." },
+    { japanese: "明恵", romaji: "Myoe", english: "Myoe", explanation: "Kegon monk linked to early tea cultivation at Kōzan-ji." },
+    { japanese: "一休宗純", romaji: "Ikkyū Sōjun", english: "Ikkyū Sōjun", explanation: "Iconoclastic Daitoku-ji abbot; influenced Murata Jukō." },
+    { japanese: "村田珠光", romaji: "Murata Jukō", english: "Murata Jukō", explanation: "Early theorist of wabi-oriented tea aesthetics." },
+    { japanese: "武野紹鴎", romaji: "Takeno Jōō", english: "Takeno Jōō", explanation: "Merchant-master who refined wabi-cha; mentor to Rikyū." },
+    { japanese: "千利休", romaji: "Sen no Rikyū", english: "Sen no Rikyū", explanation: "Pivotal tea master; synthesized wabicha; executed in 1591." },
+    { japanese: "古田織部", romaji: "Furuta Oribe", english: "Furuta Oribe", explanation: "Warrior–tea master; playful asymmetry; Oribe ware patron." },
+    { japanese: "小堀遠州", romaji: "Kobori Enshū", english: "Kobori Enshū", explanation: "Aristocratic master; refined, elegant taste; garden and architecture patron." },
+    { japanese: "千宗旦", romaji: "Sen Sōtan", english: "Sen Sōtan", explanation: "Rikyū’s grandson; crucial transmitter of Sen family lineages." },
+    { japanese: "千宗室", romaji: "Sen Sōshitsu", english: "Sen Sōshitsu", explanation: "Hereditary iemoto name of Urasenke head." },
+    { japanese: "山上宗二", romaji: "Yamanoue Sōji", english: "Yamanoue Sōji", explanation: "Disciple and chronicler; author of Yamanoue Sōji ki." },
+    { japanese: "長次郎", romaji: "Chōjirō", english: "Chōjirō", explanation: "First Raku potter who worked under Rikyū’s guidance." },
+    { japanese: "豊臣秀吉", romaji: "Toyotomi Hideyoshi", english: "Toyotomi Hideyoshi", explanation: "Warlord patron; staged the 1587 Kitano Grand Tea Gathering." },
+  
+    // Schools & iemoto
+    { japanese: "表千家", romaji: "Omotesenke", english: "Omotesenke school", explanation: "One of the three Sen families; HQ: Konnichi-an." },
+    { japanese: "裏千家", romaji: "Urasenke", english: "Urasenke school", explanation: "One of the three Sen families; HQ: Fushin-an; global outreach." },
+    { japanese: "武者小路千家", romaji: "Mushanokōjisenke", english: "Mushanokōji Senke", explanation: "One of the three Sen families; HQ: Kankyū-an." },
+    { japanese: "家元", romaji: "iemoto", english: "head of school", explanation: "Hereditary head who defines and transmits forms and licenses." },
+    { japanese: "千家十職", romaji: "Senke Jisshoku", english: "Ten Craftsmen of the Sen houses", explanation: "Traditional artisan families supporting the Sen schools." },
+  
+    // Temples & shrines
+    { japanese: "大徳寺", romaji: "Daitoku-ji", english: "Daitoku-ji (Kyoto)", explanation: "Rinzai temple complex central to chanoyu; numerous subtemples host tea." },
+    { japanese: "妙心寺", romaji: "Myōshin-ji", english: "Myōshin-ji (Kyoto)", explanation: "Large Rinzai complex; historically stricter on clergy participation in tea." },
+    { japanese: "建仁寺", romaji: "Kennin-ji", english: "Kennin-ji (Kyoto)", explanation: "Oldest Zen temple in Kyoto; associated with Eisai; hosts tea culture programs." },
+    { japanese: "高山寺", romaji: "Kōzan-ji", english: "Kōzan-ji (Kyoto)", explanation: "Linked to early tea cultivation; annual kencha with Uji growers." },
+    { japanese: "増上寺", romaji: "Zōjō-ji", english: "Zōjō-ji (Tokyo)", explanation: "Pure Land temple; public kencha ceremonies with iemoto participation." },
+    { japanese: "池上本門寺", romaji: "Ikegami Honmon-ji", english: "Ikegami Honmon-ji (Tokyo)", explanation: "Nichiren temple; chasen kuyō (whisk memorial) rites." },
+    { japanese: "護国寺", romaji: "Gokoku-ji", english: "Gokoku-ji (Tokyo)", explanation: "Shingon temple; large-scale public tea events." },
+    { japanese: "北野天満宮", romaji: "Kitano Tenman-gū", english: "Kitano Tenmangū", explanation: "Shrine site of Hideyoshi’s 1587 Grand Tea Gathering; modern kencha." },
+  
+    // Historical texts & documents
+    { japanese: "喫茶養生記", romaji: "Kissa Yōjōki", english: "Drinking Tea for Health", explanation: "Eisai’s treatise (1211) promoting tea’s medicinal value." },
+    { japanese: "南方録", romaji: "Nanpōroku", english: "Nanpōroku", explanation: "Apocryphal records attributed to Rikyū; influential in later pedagogy." },
+    { japanese: "山上宗二記", romaji: "Yamanoue Sōji ki", english: "Record of Yamanoue Sōji", explanation: "Early notes on tea taste, practice, and notable utensils." },
+    { japanese: "君台観左右帳記", romaji: "Kundaikan Sōchōki", english: "Kundaikan Sōchōki", explanation: "Early Muromachi connoisseur text on display aesthetics and objects." },
+    { japanese: "利休百首", romaji: "Rikyū Hyakushu", english: "Rikyū’s Hundred Poems", explanation: "Didactic verses on spirit and technique of tea." },
+    { japanese: "珠光心の文", romaji: "Jukō kokoro no fumi", english: "Jukō’s Letter on the Heart", explanation: "Letter outlining wabi sensibility in tea." },
+    { japanese: "名物記", romaji: "Meibutsuki", english: "Catalogs of celebrated objects", explanation: "Records of meibutsu utensils and their provenance." },
+  
+    // Events & eras
+    { japanese: "北野大茶湯", romaji: "Kitano Ōchanoyu", english: "Kitano Grand Tea Gathering (1587)", explanation: "Mass tea event staged by Toyotomi Hideyoshi in Kyoto." },
+    { japanese: "口切の儀", romaji: "kuchikiri no gi", english: "seal-cutting rite", explanation: "Ceremonially opening the year’s tea jar in late autumn." },
+    { japanese: "月釜", romaji: "tsukigama", english: "monthly tea gathering", explanation: "Recurring public tea at temples/subtemples." },
+    { japanese: "献茶", romaji: "kencha", english: "tea offering", explanation: "Ritual offering of tea at shrines/temples; widely public from Meiji." },
+    { japanese: "茶礼", romaji: "charei", english: "monastic tea etiquette", explanation: "Zen monastic ritual tea; etiquette for wakefulness and harmony." },
+    { japanese: "闘茶", romaji: "tōcha", english: "tea-guessing contests", explanation: "Medieval competitive tastings; prehistory of chanoyu." },
+    { japanese: "利休切腹", romaji: "Rikyū seppuku", english: "Rikyū’s death (1591)", explanation: "Execution under Hideyoshi; marks tea’s political entanglement." },
+  
+    // Spaces & architecture
+    { japanese: "茶室", romaji: "chashitsu", english: "tea room", explanation: "Purpose-built room or hut for tea; often small, rustic." },
+    { japanese: "草庵", romaji: "sōan", english: "thatched hut", explanation: "Rustic tea hut form central to wabi aesthetics." },
+    { japanese: "床の間", romaji: "tokonoma", english: "alcove", explanation: "Display niche for scroll and flowers; theme-setting space." },
+    { japanese: "躙口", romaji: "nijiriguchi", english: "crawl-through entrance", explanation: "Small entrance symbolizing humility and equality." },
+    { japanese: "露地", romaji: "roji", english: "tea garden path", explanation: "Approach garden preparing guests’ mind; ‘dewy ground’." },
+    { japanese: "蹲", romaji: "tsukubai", english: "ablution basin", explanation: "Stone water basin for ritual cleansing before entry." },
+    { japanese: "待合", romaji: "machiai", english: "waiting area", explanation: "Shelter where guests assemble before the call." },
+    { japanese: "腰掛待合", romaji: "koshikake machiai", english: "bench waiting shelter", explanation: "Roji shelter with bench for guests." },
+    { japanese: "中門", romaji: "chūmon", english: "inner gate", explanation: "Gate demarcating inner roji precinct." },
+    { japanese: "水屋", romaji: "mizuya", english: "preparation area", explanation: "Back room for preparation, cleaning, and staging utensils." },
+    { japanese: "炉", romaji: "ro", english: "sunken hearth", explanation: "Winter hearth cut into tatami; used in cold season." },
+    { japanese: "風炉", romaji: "furo", english: "portable brazier", explanation: "Summer brazier used when the hearth is closed." },
+  
+    // Utensils (core)
+    { japanese: "茶碗", romaji: "chawan", english: "tea bowl", explanation: "Bowl for drinking matcha; many archetypes (Ido, Raku, etc.)." },
+    { japanese: "天目", romaji: "tenmoku", english: "tenmoku bowl", explanation: "Conical dark-glazed bowl from Song Jian tradition." },
+    { japanese: "井戸", romaji: "ido", english: "Ido bowl", explanation: "Elevated Korean rice-bowl type; prized in wabi-cha." },
+    { japanese: "楽", romaji: "raku", english: "Raku ware", explanation: "Hand-formed bowls from the Raku family lineage." },
+    { japanese: "志野", romaji: "shino", english: "Shino ware", explanation: "Milky feldspathic glaze with pinholes; Momoyama aesthetic." },
+    { japanese: "織部", romaji: "oribe", english: "Oribe ware", explanation: "Green copper glazes and bold, asymmetrical design." },
+    { japanese: "萩", romaji: "hagi", english: "Hagi ware", explanation: "Soft-bodied ware that develops patina through use." },
+    { japanese: "唐津", romaji: "karatsu", english: "Karatsu ware", explanation: "Hizen stoneware with iron brushwork and ash glazes." },
+    { japanese: "備前", romaji: "bizen", english: "Bizen ware", explanation: "Unglazed stoneware with natural firing effects." },
+    { japanese: "信楽", romaji: "shigaraki", english: "Shigaraki ware", explanation: "Rustic stoneware with feldspathic inclusions." },
+    { japanese: "伊賀", romaji: "iga", english: "Iga ware", explanation: "Dynamic Momoyama stoneware with fire-scar effects." },
+    { japanese: "瀬戸", romaji: "seto", english: "Seto ware", explanation: "Historic kiln center for glazed wares." },
+  
+    // Utensils (containers & implements)
+    { japanese: "茶入", romaji: "chaire", english: "thick-tea caddy", explanation: "Stoneware caddy for koicha; often with named pouch (shifuku)." },
+    { japanese: "棗", romaji: "natsume", english: "thin-tea caddy", explanation: "Lacquered wood container for usucha." },
+    { japanese: "仕覆", romaji: "shifuku", english: "drawstring pouch", explanation: "Silk pouch for chaire; carries named textile lineage." },
+    { japanese: "茶杓", romaji: "chashaku", english: "tea scoop", explanation: "Bamboo scoop; often carved/named by masters or abbots." },
+    { japanese: "茶筅", romaji: "chasen", english: "tea whisk", explanation: "Bamboo whisk used to mix matcha; retired in chasen kuyō rites." },
+    { japanese: "茶巾", romaji: "chakin", english: "linen cloth", explanation: "Cloth for wiping the bowl; folded and handled with precision." },
+    { japanese: "帛紗", romaji: "fukusa", english: "silk purifying cloth", explanation: "Silk cloth used to ritually purify utensils and as etiquette item." },
+    { japanese: "懐紙", romaji: "kaishi", english: "pocket paper", explanation: "Paper for sweets and incidental handling; carried by guests." },
+    { japanese: "柄杓", romaji: "hishaku", english: "bamboo ladle", explanation: "Ladle for water; different forms for ro and furo." },
+    { japanese: "蓋置", romaji: "futaoki", english: "lid rest", explanation: "Small stand for kettle lid and ladle tip." },
+    { japanese: "建水", romaji: "kensui", english: "waste-water bowl", explanation: "Vessel for discarded water during temae." },
+    { japanese: "風炉先屏風", romaji: "furosaki byōbu", english: "low folding screen", explanation: "Two-panel screen used near the hearth/brazier." },
+    { japanese: "棚", romaji: "tana", english: "display/utensil shelf", explanation: "Varied shelf forms used in certain procedures." },
+    { japanese: "長板", romaji: "naga-ita", english: "long board", explanation: "Board used in formal set-ups with furo; supports utensils." },
+  
+    // Utensils (kettle & water)
+    { japanese: "釜", romaji: "kama", english: "iron kettle", explanation: "Cast-iron kettle; form and sound quality prized." },
+    { japanese: "鐶", romaji: "kan", english: "kettle rings", explanation: "Removable iron rings for lifting the kettle." },
+    { japanese: "水指", romaji: "mizusashi", english: "fresh-water jar", explanation: "Container for fresh water; ceramic or lacquer." },
+  
+    // Scrolls & documentation
+    { japanese: "掛軸", romaji: "kakejiku", english: "hanging scroll", explanation: "Scroll in tokonoma; often Zen calligraphy (bokuseki)." },
+    { japanese: "墨蹟", romaji: "bokuseki", english: "Zen calligraphy", explanation: "Brush traces of monks; sets the theme (shudai)." },
+    { japanese: "箱書", romaji: "hakogaki", english: "box inscription", explanation: "Inscription on storage box by authority; key to provenance." },
+    { japanese: "共箱", romaji: "tomobako", english: "original box", explanation: "Maker’s/authority’s own box accompanying the utensil." },
+    { japanese: "花押", romaji: "kaō", english: "stylized signature", explanation: "Cursive seal-like signature used by masters/abbots." },
+    { japanese: "銘", romaji: "mei", english: "poetic name", explanation: "Name given to an object or scoop, often seasonal or literary." },
+    { japanese: "伝来", romaji: "denrai", english: "provenance", explanation: "Chain of transmission/ownership and documentation." },
+    { japanese: "名物", romaji: "meibutsu", english: "celebrated object", explanation: "Famous utensil with storied provenance and high esteem." },
+    { japanese: "唐物", romaji: "karamono", english: "Chinese objects", explanation: "Imported Chinese wares prized in medieval display culture." },
+    { japanese: "和物", romaji: "wamono", english: "Japanese wares", explanation: "Domestic wares elevated in wabi-cha aesthetics." },
+    { japanese: "前大徳", romaji: "zen-daitoku", english: "former Daitoku-ji abbot", explanation: "Honorific preceding inscription by a former abbot." },
+    { japanese: "御書付", romaji: "go-shofuda / go-shotsuke", english: "honorific inscription", explanation: "High-prestige endorsement or attestation on a box." },
+  
+    // Procedures & roles
+    { japanese: "点前", romaji: "temae", english: "tea procedure", explanation: "Codified sequence of making and serving tea." },
+    { japanese: "稽古", romaji: "keiko", english: "practice", explanation: "Training sessions to internalize forms and etiquette." },
+    { japanese: "亭主", romaji: "teishu", english: "host", explanation: "Host of the gathering; directs theme and utensils." },
+    { japanese: "半東", romaji: "hantō", english: "assistant host", explanation: "Assistant who supports the host’s service." },
+    { japanese: "客", romaji: "kyaku", english: "guest", explanation: "Participant(s) receiving tea; observe etiquette and haiken." },
+    { japanese: "正客", romaji: "shōkyaku", english: "principal guest", explanation: "Lead guest who speaks for the group and interacts with host." },
+    { japanese: "拝見", romaji: "haiken", english: "utensil appreciation", explanation: "Formal viewing of utensils; questions/answers on provenance." },
+    { japanese: "茶事", romaji: "chaji", english: "full tea gathering", explanation: "Formal event with kaiseki meal, charcoal, koicha and usucha." },
+    { japanese: "茶会", romaji: "chakai", english: "tea gathering", explanation: "Lighter event (often without full meal/charcoal sequence)." },
+    { japanese: "懐石", romaji: "kaiseki", english: "tea cuisine", explanation: "Seasonal meal preceding thick tea; restrained and mindful." },
+    { japanese: "主菓子", romaji: "omogashi", english: "fresh sweet", explanation: "Moist seasonal sweet served typically before koicha." },
+    { japanese: "干菓子", romaji: "higashi", english: "dry sweets", explanation: "Dry confections served with usucha." },
+    { japanese: "初炭", romaji: "shozumi", english: "first charcoal", explanation: "Opening charcoal procedure to prepare the kettle." },
+    { japanese: "後炭", romaji: "gozumi", english: "later charcoal", explanation: "Charcoal procedure after intermission to refresh the fire." },
+  
+    // Tea types & production
+    { japanese: "抹茶", romaji: "matcha", english: "powdered green tea", explanation: "Stone-milled green tea made from shade-grown tencha." },
+    { japanese: "碾茶", romaji: "tencha", english: "leaf for matcha", explanation: "Unmilled leaf base for matcha; destemmed/deveined." },
+    { japanese: "玉露", romaji: "gyokuro", english: "gyokuro", explanation: "Shade-grown leaf for steeped tea (sencha tradition), not whisked." },
+    { japanese: "煎茶", romaji: "sencha", english: "steeped green tea", explanation: "Brewed tea tradition distinct from chanoyu." },
+    { japanese: "茶壺", romaji: "chatsubo", english: "tea jar", explanation: "Storage jar for leaf; opened at kuchikiri in late autumn." },
+    { japanese: "茶臼", romaji: "chausu", english: "stone mill", explanation: "Hand mill used to grind tencha into matcha." },
+  
+    // Aesthetic & phrase repertoire
+    { japanese: "無", romaji: "mu", english: "nothingness", explanation: "Zen key term; frequent scroll subject encouraging emptiness of self." },
+    { japanese: "空", romaji: "kū", english: "emptiness", explanation: "Mahayana concept of interdependence; also a scroll theme." },
+    { japanese: "日々是好日", romaji: "hibi kore kōjitsu", english: "every day a good day", explanation: "Zen phrase on everyday suchness; common bokuseki theme." },
+    { japanese: "一期", romaji: "ichigo", english: "one lifetime", explanation: "Component of ichigo ichie; emphasizes rarity of encounters." },
+  
+    // Connoisseurship & markets
+    { japanese: "出自", romaji: "shutsuji", english: "origin", explanation: "Maker/kiln/period identity of an object." },
+    { japanese: "由緒", romaji: "yui sho", english: "pedigree", explanation: "Distinguished history or association enhancing value." },
+    { japanese: "極め", romaji: "kiwame", english: "attribution", explanation: "Formal judgment assigning maker/period; often by authority." },
+  
+    // Regions & kilns (geography)
+    { japanese: "宇治", romaji: "Uji", english: "Uji (Kyoto)", explanation: "Historic center of matcha cultivation and blending." },
+    { japanese: "美濃", romaji: "Mino", english: "Mino region", explanation: "Shino/Oribe kiln heartland (Gifu)." },
+    { japanese: "唐津（肥前）", romaji: "Karatsu (Hizen)", english: "Karatsu (Saga)", explanation: "Kyushu kiln zone producing Karatsu ware." },
+    { japanese: "萩（長州）", romaji: "Hagi (Chōshū)", english: "Hagi (Yamaguchi)", explanation: "Domain kilns fostering Hagi ware." },
+    { japanese: "信楽（近江）", romaji: "Shigaraki (Ōmi)", english: "Shigaraki (Shiga)", explanation: "Ancient kiln site for rustic stoneware." },
+    { japanese: "瀬戸（尾張）", romaji: "Seto (Owari)", english: "Seto (Aichi)", explanation: "Historic production center; wide glaze repertoire." },
+    { japanese: "伊賀（伊賀国）", romaji: "Iga", english: "Iga (Mie)", explanation: "Momoyama stoneware with powerful firing effects." },
+    { japanese: "楽家", romaji: "Raku-ke", english: "Raku family", explanation: "Potter lineage producing Raku ware for tea." },
+  
+    // Additional practice terms
+    { japanese: "会所の茶", romaji: "kaisho no cha", english: "salon-style tea", explanation: "Pre-wabi display-oriented gatherings of medieval elites." },
+    { japanese: "書院の茶", romaji: "shoin no cha", english: "shoin-style tea", explanation: "Formal architectural setting preceding wabi-cha huts." },
+    { japanese: "取り合わせ", romaji: "toriawase", english: "ensemble curation", explanation: "Curating a coherent set of utensils around a theme." },
+    { japanese: "主題", romaji: "shudai", english: "theme", explanation: "The guiding idea expressed by the scroll and utensils." },
+    { japanese: "茶花", romaji: "chabana", english: "tea flowers", explanation: "Seasonal wildflowers arranged simply for the alcove." },
+    { japanese: "花入", romaji: "hanaire", english: "flower vase", explanation: "Vase for chabana; bamboo, ceramic, or metal." },
+    { japanese: "香合", romaji: "kōgō", english: "incense container", explanation: "Small container for incense used in charcoal procedures." },
+    { japanese: "炭点前", romaji: "sumi-demae", english: "charcoal procedure", explanation: "Ritualized tending of the fire before/after the meal." },
+  
+    // Validations & boxes (market literacy)
+    { japanese: "書付", romaji: "shōtsuke / shofuda", english: "inscription", explanation: "General term for written attestation or note." },
+    { japanese: "桐箱", romaji: "kiribako", english: "paulownia box", explanation: "Standard storage box wood; stable for humidity control." },
+    { japanese: "添状", romaji: "soejō", english: "accompanying note", explanation: "Supplemental paper documenting details/provenance." },
+  
+    // Guest etiquette & sequence markers
+    { japanese: "初座", romaji: "shozā / shozā (shōza)", english: "first seating", explanation: "First half of chaji: kaiseki and first charcoal." },
+    { japanese: "中立", romaji: "chūritsu", english: "intermission", explanation: "Break between first and second seating." },
+    { japanese: "後座", romaji: "goza", english: "second seating", explanation: "Second half of chaji: koicha, usucha, later charcoal." },
+  
+    // Additional utensil details
+    { japanese: "台子", romaji: "daisu", english: "formal stand", explanation: "Classical stand used for highly formal procedures." },
+    { japanese: "火箸", romaji: "hibashi", english: "fire tongs", explanation: "Tongs used during charcoal procedures." },
+    { japanese: "羽箒", romaji: "habōki", english: "feather broom", explanation: "Feather brush for gentle cleaning of ash bed." },
+  
+    // Distinctions in tea service
+    { japanese: "濃茶", romaji: "koicha", english: "thick tea", explanation: "Shared, syrupy tea whisked with multiple scoops and less water." },
+    { japanese: "薄茶", romaji: "usucha", english: "thin tea", explanation: "Individual, frothy tea whisked lighter and served to each guest." }
     ];
+  
 
 
 
@@ -917,9 +1095,9 @@ layout: none
     function renderTimeline() {
         const container = document.getElementById('timeline-container');
         TIMELINE.forEach(item => {
-            const div = document.createElement('div');
+        const div = document.createElement('div');
             div.className = 'relative pl-8 pb-8';
-            div.innerHTML = `
+        div.innerHTML = `
                 <div class="timeline-dot"></div>
                 <div class="bg-white rounded-lg p-4 shadow hover:shadow-lg transition-shadow cursor-pointer">
                     <div class="flex items-baseline justify-between mb-2">
@@ -929,9 +1107,9 @@ layout: none
                     <p class="text-gray-700 text-sm">${item.desc}</p>
                     <div class="flex flex-wrap gap-1 mt-2">
                         ${item.tags.map(tag => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${tag}</span>`).join('')}
-                    </div>
                 </div>
-            `;
+            </div>
+        `;
             container.appendChild(div);
         });
     }
@@ -958,13 +1136,13 @@ layout: none
         const filtered = filter === 'All' ? TEMPLES : TEMPLES.filter(t => t.sect === filter);
         
         filtered.forEach(temple => {
-            const div = document.createElement('div');
+        const div = document.createElement('div');
             div.className = 'temple-card bg-white rounded-lg border border-gray-200 p-4';
-            div.innerHTML = `
+        div.innerHTML = `
                 <div class="flex items-baseline justify-between mb-2">
                     <h3 class="text-lg font-bold">${temple.name} ${temple.kanji}</h3>
                     <span class="text-sm text-gray-500">${temple.city} · ${temple.sect}</span>
-                </div>
+            </div>
                 <p class="text-sm text-gray-700 mb-3">${temple.notes}</p>
                 <div class="flex flex-wrap gap-1">
                     ${temple.roles.map(r => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${r}</span>`).join('')}
@@ -1063,7 +1241,7 @@ layout: none
                 <div class="flex items-baseline justify-between mb-2">
                     <h3 class="text-lg font-bold">${event.kind}</h3>
                     <span class="text-sm text-gray-500">${event.season}</span>
-                </div>
+                    </div>
                 <p class="text-sm text-gray-700 mb-3">${event.desc}</p>
                 <div class="flex flex-wrap gap-1">
                     ${event.where.map(w => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${w}</span>`).join('')}
@@ -1083,7 +1261,7 @@ layout: none
         const navMenu = document.getElementById('nav-menu');
 
         navButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
+        btn.addEventListener('click', () => {
                 const targetSection = btn.dataset.section;
                 
                 // Update active button
@@ -1366,27 +1544,16 @@ layout: none
         modal.classList.add('show');
     }
     
-    // Setup translator
-    function setupTranslator() {
-        const input = document.getElementById('translator-input');
-        let debounceTimer;
-        
-        input.addEventListener('input', (e) => {
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(() => {
-                if (e.target.value.trim()) {
-                    translateTerm(e.target.value);
-                } else {
-                    document.getElementById('translator-result').innerHTML = '<p class="text-sm text-gray-500">Your translation will appear here...</p>';
-                }
-            }, 300);
-        });
-    }
-
-    // Translator function
-    function translateTerm(input) {
+    // Translator function - make it global so buttons can access it
+    window.translateTerm = function(input) {
         const searchTerm = input.toLowerCase().trim();
         const resultDiv = document.getElementById('translator-result');
+        
+        // Update input field if called from button
+        const inputField = document.getElementById('translator-input');
+        if (inputField && inputField.value !== input) {
+            inputField.value = input;
+        }
         
         // Search through comprehensive dictionary
         const results = TRANSLATION_DICTIONARY.filter(entry => 
@@ -1419,11 +1586,22 @@ layout: none
         }
     }
 
-    // Make translateTerm globally accessible for quick search buttons
-    window.translateTerm = function(term) {
-        document.getElementById('translator-input').value = term;
-        translateTerm(term);
-    };
-    </script>
+    // Setup translator
+    function setupTranslator() {
+        const input = document.getElementById('translator-input');
+        let debounceTimer;
+        
+        input.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                if (e.target.value.trim()) {
+                    window.translateTerm(e.target.value);
+                } else {
+                    document.getElementById('translator-result').innerHTML = '<p class="text-sm text-gray-500">Your translation will appear here...</p>';
+                }
+            }, 300);
+        });
+    }
+</script>
 </body>
 </html>
