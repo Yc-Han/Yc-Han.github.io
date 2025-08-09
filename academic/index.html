@@ -19,7 +19,7 @@
 
 
 
-<title>Academic Work 学術 - Yichen Han / Home Page</title>
+<title>Academic Work - Yichen Han / Home Page</title>
 
 
 
@@ -29,7 +29,7 @@
 
 <meta property="og:locale" content="en-US">
 <meta property="og:site_name" content="Yichen Han / Home Page">
-<meta property="og:title" content="Academic Work 学術">
+<meta property="og:title" content="Academic Work">
 
 
   <link rel="canonical" href="https://yc-han.github.io/academic/">
@@ -143,10 +143,10 @@
             <li class="masthead__menu-item"><a href="https://yc-han.github.io/">About</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic 学術</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture 文化</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture</a></li>
           
           <li id="theme-toggle" class="masthead__menu-item persist tail">
             <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
@@ -260,7 +260,7 @@
 
   <div class="archive">
     
-      <h1 class="page__title">Academic Work 学術</h1>
+      <h1 class="page__title">Academic Work</h1>
     
     <style>
   .academic-grid {
@@ -277,12 +277,17 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: block;
+    color: inherit;
   }
   
   .academic-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 4px 16px rgba(0,0,0,0.15);
     border-color: var(--zen-accent, #6B8E23);
+    text-decoration: none;
   }
   
   .academic-card h3 {
@@ -299,21 +304,7 @@
   
   .academic-card p {
     color: var(--zen-text-light, #666);
-    margin-bottom: 1rem;
-  }
-  
-  .academic-card a {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    background: var(--zen-accent, #6B8E23);
-    color: white;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: background 0.3s ease;
-  }
-  
-  .academic-card a:hover {
-    background: var(--zen-highlight, #DAA520);
+    margin-bottom: 0;
   }
 </style>
 
@@ -325,46 +316,35 @@
 
 <div class="academic-grid">
   
-  <div class="academic-card">
+  <a href="/cv/" class="academic-card">
     <h3><span class="icon">📄</span> Curriculum Vitae</h3>
     <p>My complete academic and professional background, including education, research experience, and technical skills.</p>
-    <a href="/cv/">View CV →</a>
-  </div>
+  </a>
   
-  <div class="academic-card">
+  <a href="/research-interests/" class="academic-card">
+    <h3><span class="icon">🔬</span> Research Interests</h3>
+    <p>Detailed overview of my research focus areas: interpretable deep learning, adversarial robustness, machine learning in genomics, and reproducible statistical practice.</p>
+  </a>
+  
+  <a href="/publications/" class="academic-card">
     <h3><span class="icon">📚</span> Publications</h3>
     <p>Research papers and publications in statistics, machine learning, and computational biology.</p>
-    <a href="/publications/">View Publications →</a>
-  </div>
+  </a>
   
-  <div class="academic-card">
+  <a href="/teaching/" class="academic-card">
     <h3><span class="icon">🎓</span> Teaching</h3>
     <p>Course materials, tutorials, and resources from my teaching experience at LMU Munich.</p>
-    <a href="/teaching/">View Teaching →</a>
-  </div>
+  </a>
   
-  <div class="academic-card">
-    <h3><span class="icon">💻</span> Technical Blog</h3>
-    <p>In-depth articles on statistical methods, data science techniques, and research insights.</p>
-    <a href="/year-archive/">Read Blog →</a>
-  </div>
-  
-  <div class="academic-card">
-    <h3><span class="icon">🔬</span> Research Interests</h3>
-    <p>
-      • Interpretable deep learning<br>
-      • Adversarial robustness<br>
-      • Machine learning in genomics<br>
-      • Reproducible statistical practice
-    </p>
-    <a href="/#research-interests">Learn More →</a>
-  </div>
-  
-  <div class="academic-card">
+  <a href="https://www.stablab.stat.uni-muenchen.de/" target="_blank" class="academic-card">
     <h3><span class="icon">🤝</span> Consulting</h3>
     <p>Statistical consulting services through StaBLab, providing guidance on study design, modeling, and analysis.</p>
-    <a href="https://www.stablab.stat.uni-muenchen.de/" target="_blank">Visit StaBLab →</a>
-  </div>
+  </a>
+  
+  <a href="/year-archive/" class="academic-card">
+    <h3><span class="icon">💻</span> Technical Blog</h3>
+    <p>In-depth articles on statistical methods, data science techniques, and research insights.</p>
+  </a>
   
 </div>
 
