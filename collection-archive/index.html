@@ -308,33 +308,73 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&amp;family=Noto+Sans+JP:wght@300;400;700&amp;display=swap" rel="stylesheet" />
     <style>
+        :root {
+            --zen-primary: #FDFBF5;
+            --zen-secondary: #F0EAD6;
+            --zen-accent: #6B8E23;
+            --zen-highlight: #DAA520;
+            --zen-text: #3a3a3a;
+            --zen-text-light: #666666;
+        }
+        
         body {
-            font-family: 'Lato', 'Noto Sans JP', sans-serif;
-            background: linear-gradient(to bottom, #fdfbf7, #f5f2ed);
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--zen-primary) 0%, var(--zen-secondary) 100%);
+            color: var(--zen-text);
+            min-height: 100vh;
         }
         .nav-pill {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border: 2px solid transparent;
         }
         .nav-pill:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(107, 142, 35, 0.15);
+            border-color: var(--zen-accent);
+        }
+        .nav-pill.active {
+            background: var(--zen-accent);
+            color: white;
+            border-color: var(--zen-accent);
         }
         .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             transition: all 0.3s ease;
+            border: 1px solid rgba(107, 142, 35, 0.1);
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(107, 142, 35, 0.12);
+            border-color: var(--zen-accent);
         }
         .timeline-dot {
             position: absolute;
-            left: -9px;
-            width: 18px;
-            height: 18px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: white;
-            border: 3px solid #6B8E23;
+            background: var(--zen-highlight);
+            border: 3px solid var(--zen-accent);
             z-index: 1;
+        }
+        .accordion-btn {
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--zen-text);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .accordion-btn:hover {
+            color: var(--zen-accent);
         }
         .accordion-content {
             max-height: 0;
@@ -342,8 +382,17 @@
             transition: max-height 0.3s ease-out;
         }
         .accordion-content.open {
-            max-height: 1000px;
-            transition: max-height 0.5s ease-in;
+            max-height: 500px;
+        }
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+        .accordion-icon.rotate {
+            transform: rotate(180deg);
+        }
+        /* Optimize accordion performance */
+        .accordion-wrapper {
+            will-change: height;
         }
         .search-highlight {
             background-color: #fef3c7;
@@ -376,26 +425,31 @@
             to { transform: translateY(0); opacity: 1; }
         }
         .filter-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.375rem 1rem;
             border-radius: 9999px;
             font-size: 0.875rem;
             transition: all 0.2s;
             cursor: pointer;
+            background: white;
+            border: 2px solid var(--zen-secondary);
+            color: var(--zen-text);
         }
         .filter-badge:hover {
             transform: scale(1.05);
+            border-color: var(--zen-accent);
         }
         .filter-badge.active {
-            background-color: #1f2937;
+            background: var(--zen-accent);
             color: white;
+            border-color: var(--zen-accent);
         }
         .section-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(107, 142, 35, 0.15);
         }
         .icon {
             display: inline-block;
@@ -405,94 +459,131 @@
         }
         .temple-card {
             cursor: pointer;
+            background: white;
+            border: 2px solid transparent;
             transition: all 0.3s ease;
         }
         .temple-card:hover {
+            border-color: var(--zen-accent);
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(107, 142, 35, 0.15);
         }
-        .kanji-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
+        .golden-accent {
+            color: var(--zen-highlight);
+        }
+        
+        .zen-button {
+            background: var(--zen-accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .zen-button:hover {
+            background: #5a7a1f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
+        }
+        
+        .translator-box {
+            background: linear-gradient(135deg, white 0%, var(--zen-secondary) 100%);
+            border: 2px solid var(--zen-accent);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(107, 142, 35, 0.15);
+        }
+        
+        .translator-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--zen-secondary);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+        .translator-input:focus {
+            outline: none;
+            border-color: var(--zen-accent);
+            box-shadow: 0 0 0 3px rgba(107, 142, 35, 0.1);
+        }
+        
+        .translator-result {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 100;
-            min-width: 320px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid var(--zen-secondary);
+            min-height: 100px;
         }
-        .kanji-item {
-            padding: 8px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s;
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--zen-secondary);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: var(--zen-text);
+            margin: 0.125rem;
         }
-        .kanji-item:hover {
-            background: #f9f9f9;
-        }
-        .kanji-item:last-child {
-            border-bottom: none;
+        
+        .highlight-box {
+            background: linear-gradient(135deg, var(--zen-secondary) 0%, rgba(218, 165, 32, 0.1) 100%);
+            border-left: 4px solid var(--zen-highlight);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-zen-accent/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-4">
-                <h1 class="text-2xl font-bold text-gray-900">茶の湯 The Way of Tea</h1>
-                <div class="flex items-center gap-2">
-                    <div class="relative">
-                        <button id="kanji-toggle" class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium flex items-center gap-1">
-                            <span>漢字</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div id="kanji-dropdown" class="kanji-dropdown hidden">
-                            <!-- Kanji glossary items will be inserted here -->
-                        </div>
-                    </div>
-                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
+                <h1 class="text-2xl font-bold" style="color: var(--zen-accent);">
+                    <span class="golden-accent">茶の湯</span> The Way of Tea
+                </h1>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
             <!-- Navigation -->
             <nav id="nav-menu" class="hidden md:flex flex-wrap gap-2 pb-3">
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="overview">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="overview">
                     Overview
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="timeline">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="translator">
+                    茶道 Translator
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="timeline">
                     Timeline
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="roles">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="roles">
                     Roles
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="temples">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="temples">
                     Temples
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="monks">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="monks">
                     Monks &amp; Bokuseki
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="utensils">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="utensils">
                     Utensils Explorer
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="provenance">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="provenance">
                     Provenance &amp; Hakogaki
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="events">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="events">
                     Temple Events
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="toriawase">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="toriawase">
                     Toriawase Lab
-                </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="glossary">
-                    Glossary
                 </button>
             </nav>
         </div>
