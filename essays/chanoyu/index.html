@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --zen-primary: #FDFBF5;
@@ -19,7 +19,7 @@
         }
         
         body {
-            font-family: 'Noto Sans JP', sans-serif;
+            font-family: 'Noto Sans', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, var(--zen-primary) 0%, var(--zen-secondary) 100%);
             color: var(--zen-text);
             min-height: 100vh;
@@ -229,6 +229,12 @@
             font-size: 0.75rem;
             color: var(--zen-text);
             margin: 0.125rem;
+            transition: all 0.2s;
+        }
+        .tag:hover {
+            background: var(--zen-accent);
+            color: white;
+            transform: scale(1.05);
         }
         
         .highlight-box {
@@ -242,7 +248,7 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-zen-accent/20">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2" style="border-color: rgba(107, 142, 35, 0.2);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-4">
                 <h1 class="text-2xl font-bold" style="color: var(--zen-accent);">
@@ -336,11 +342,11 @@
                     </div>
                     <div class="mt-4 flex flex-wrap gap-2">
                         <span class="text-xs text-gray-600">Popular searches:</span>
-                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('一期一会')">一期一会</button>
-                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('wabi-sabi')">wabi-sabi</button>
-                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('tea bowl')">tea bowl</button>
-                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('利休')">利休</button>
-                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('hakogaki')">hakogaki</button>
+                        <button class="tag cursor-pointer" onclick="translateTerm('一期一会')">一期一会</button>
+                        <button class="tag cursor-pointer" onclick="translateTerm('wabi-sabi')">wabi-sabi</button>
+                        <button class="tag cursor-pointer" onclick="translateTerm('tea bowl')">tea bowl</button>
+                        <button class="tag cursor-pointer" onclick="translateTerm('利休')">利休</button>
+                        <button class="tag cursor-pointer" onclick="translateTerm('hakogaki')">hakogaki</button>
                     </div>
                 </div>
             </div>
@@ -876,7 +882,12 @@
         { japanese: "箱書", romaji: "hakogaki", english: "box inscription", explanation: "Authentication written on storage box." },
         { japanese: "前大徳", romaji: "zen-daitoku", english: "former Daitoku-ji abbot", explanation: "Former abbot of Daitoku-ji temple." },
         { japanese: "月釜", romaji: "tsukigama", english: "monthly tea gathering", explanation: "Regular monthly public tea gathering." },
-        { japanese: "献茶", romaji: "kencha", english: "tea offering", explanation: "Ritual offering of tea to deity or Buddha." }
+        { japanese: "献茶", romaji: "kencha", english: "tea offering", explanation: "Ritual offering of tea to deity or Buddha." },
+        { japanese: "和敬清寂", romaji: "wa kei sei jaku", english: "four principles", explanation: "The four principles of tea ceremony: harmony, respect, purity, tranquility." },
+        { japanese: "志野", romaji: "shino", english: "shino ware", explanation: "Japanese white-glazed ceramics with distinctive pinholes in the glaze." },
+        { japanese: "織部", romaji: "oribe", english: "oribe ware", explanation: "Distinctive green-glazed ceramics with bold, asymmetric designs." },
+        { japanese: "萩", romaji: "hagi", english: "hagi ware", explanation: "Soft, porous ceramics that transform through use, showing 'seven changes'." },
+        { japanese: "唐津", romaji: "karatsu", english: "karatsu ware", explanation: "Robust ceramics from Kyushu known for their earthy character." }
     ];
 
 
@@ -1382,7 +1393,7 @@
             let html = '<div class="space-y-3">';
             results.forEach(result => {
                 html += `
-                    <div class="border-l-4 border-zen-accent pl-3">
+                    <div class="border-l-4 pl-3" style="border-color: var(--zen-accent);">
                         <div class="flex flex-wrap items-baseline gap-2 mb-1">
                             <span class="text-xl font-bold">${result.japanese}</span>
                             <span class="text-sm" style="color: var(--zen-text-light);">${result.romaji}</span>
