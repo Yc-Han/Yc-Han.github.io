@@ -2,3 +2,52 @@
 p               { margin: 0 0 0.6rem; line-height: 1.45; }
 ul li,
 ol li           { margin: 0 0 0.3rem; }
+
+/* Chanoyu Page Harmonization Styles */
+.chanoyu-container {
+    max-width: 100%;
+    margin: -2rem -1rem 0 -1rem; /* Extend to full width */
+}
+
+@media (min-width: 768px) {
+    .chanoyu-container {
+        margin: -2rem -2rem 0 -2rem;
+    }
+}
+
+/* Override the author profile sidebar for chanoyu page */
+.layout--single.essays-chanoyu .sidebar__right {
+    display: none;
+}
+
+.layout--single.essays-chanoyu article {
+    grid-column: 1 / -1;
+    max-width: 100%;
+}
+
+/* Ensure the chanoyu container takes full width */
+.layout--single.essays-chanoyu .page__content {
+    max-width: 100%;
+    padding: 0;
+}
+
+/* Hide the page title for chanoyu (since it has its own hero) */
+.layout--single.essays-chanoyu .page__title {
+    display: none;
+}
+
+/* Ensure modals work properly */
+.chanoyu-container .modal-backdrop {
+    position: fixed !important;
+}
+
+/* Harmonize link colors in chanoyu with site theme */
+.chanoyu-container a:not(.nav-link):not(.filter-btn):not(.temple-tab-btn) {
+    color: var(--global-link-color, #6B8E23);
+    text-decoration: none;
+}
+
+.chanoyu-container a:not(.nav-link):not(.filter-btn):not(.temple-tab-btn):hover {
+    color: var(--global-link-color-hover, #4a6318);
+    text-decoration: underline;
+}
