@@ -1,89 +1,185 @@
 ---
 permalink: /
-title: "Welcome"
-author_profile: true
+title: " "
+author_profile: false
 redirect_from: 
   - /about/
   - /about.html
 ---
 
+<script>
+// Subdomain redirect support (activate when subdomains are set up)
+// Uncomment the following lines when you have academic.yourdomain.com and culture.yourdomain.com
+/*
+const host = window.location.hostname;
+if (host.startsWith('academic.')) {
+  window.location.replace('/academic/');
+} else if (host.startsWith('culture.')) {
+  window.location.replace('/culture/');
+}
+*/
+</script>
+
 <style>
-  .dual-intro {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
+  body {
+    overflow: hidden;
+  }
+  
+  .gateway-container {
+    display: flex;
+    height: 100vh;
+    margin: -3rem -2rem;
+    position: relative;
+  }
+  
+  .gateway-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .gateway-side::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+  }
+  
+  .gateway-side:hover::before {
+    transform: scale(1.05);
+  }
+  
+  .academic-side {
+    background: linear-gradient(135deg, #FDFBF5 0%, #F0EAD6 100%);
+  }
+  
+  .culture-side {
+    background: linear-gradient(135deg, #F0EAD6 0%, #FDFBF5 100%);
+  }
+  
+  .gateway-side:hover {
+    flex: 1.1;
+  }
+  
+  .gateway-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 400px;
+  }
+  
+  .gateway-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--zen-accent, #6B8E23);
+    font-weight: 300;
+  }
+  
+  .gateway-subtitle {
+    font-size: 1.2rem;
+    color: var(--zen-text-light, #666);
+    margin-bottom: 2rem;
+  }
+  
+  .gateway-description {
+    color: var(--zen-text, #3a3a3a);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .gateway-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--zen-accent, #6B8E23);
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  .gateway-btn:hover {
+    background: var(--zen-highlight, #DAA520);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  
+  .divider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 100px;
+    background: var(--zen-accent, #6B8E23);
+    opacity: 0.3;
   }
   
   @media (max-width: 768px) {
-    .dual-intro {
-      grid-template-columns: 1fr;
+    .gateway-container {
+      flex-direction: column;
+    }
+    
+    .divider {
+      width: 100px;
+      height: 2px;
+    }
+    
+    .gateway-title {
+      font-size: 2rem;
+    }
+    
+    .gateway-side:hover {
+      flex: 1;
     }
   }
   
-  .intro-section {
-    padding: 2rem;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  /* Override dark mode for gateway */
+  html[data-theme="dark"] .academic-side {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   }
   
-  .intro-section h2 {
-    color: var(--zen-accent, #6B8E23);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-  
-  .intro-section a.explore-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.6rem 1.2rem;
-    background: var(--zen-accent, #6B8E23);
-    color: white;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  
-  .intro-section a.explore-btn:hover {
-    background: var(--zen-highlight, #DAA520);
+  html[data-theme="dark"] .culture-side {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
   }
 </style>
 
-<div class="dual-intro">
-  <div class="intro-section">
-    <h2>Academic Work</h2>
-    <p>I am an undergraduate in <strong>Statistics & Data Science</strong> at <strong>LMU Munich</strong> and a research assistant with the <a href="https://www.stablab.stat.uni-muenchen.de/">Statistical Consulting Unit (StaBLab)</a> and the <a href="https://www.helmholtz-hzi.de/">Helmholtz Centre for Infection Research (HZI)</a>.</p>
-    
-    <p><strong>Research interests:</strong></p>
-    <ul style="margin-left: 1rem;">
-      <li>Interpretable deep learning</li>
-      <li>Machine learning in genomics</li>
-      <li>Reproducible statistical practice</li>
-    </ul>
-    
-    <a href="/academic/" class="explore-btn">Explore Academic Work →</a>
-  </div>
+<div class="gateway-container">
+  <a href="/academic/" class="gateway-side academic-side">
+    <div class="gateway-content">
+      <h1 class="gateway-title">Academic</h1>
+      <p class="gateway-subtitle">Research & Science</p>
+      <p class="gateway-description">
+        Statistics, Data Science, Machine Learning<br>
+        LMU Munich · StaBLab · HZI
+      </p>
+      <span class="gateway-btn">Enter Academic Site →</span>
+    </div>
+  </a>
   
-  <div class="intro-section">
-    <h2>Culture & Arts</h2>
-    <p>Beyond data and algorithms, I explore the rich traditions of cultural arts, particularly Japanese aesthetics and philosophy. This includes interactive experiences and essays on tea ceremony, Zen philosophy, and the beauty of imperfection.</p>
-    
-    <p><strong>Cultural interests:</strong></p>
-    <ul style="margin-left: 1rem;">
-      <li>Japanese tea ceremony</li>
-      <li>Zen aesthetics and philosophy</li>
-      <li>Traditional arts and crafts</li>
-    </ul>
-    
-    <a href="/culture/" class="explore-btn">Explore Cultural Works →</a>
-  </div>
+  <div class="divider"></div>
+  
+  <a href="/culture/" class="gateway-side culture-side">
+    <div class="gateway-content">
+      <h1 class="gateway-title">Culture</h1>
+      <p class="gateway-subtitle">Arts & Philosophy</p>
+      <p class="gateway-description">
+        Japanese Aesthetics, Tea Ceremony<br>
+        Interactive Digital Experiences
+      </p>
+      <span class="gateway-btn">Enter Culture Site →</span>
+    </div>
+  </a>
 </div>
-
-## Current Activities
-
-* **Consulting (StaBLab).** I provide statistical guidance on ≈ 20 student and faculty projects each semester—study design, modelling, and reproducible workflows.
-* **Research (HZI).** I contribute to the **[GenomeNet](https://github.com/GenomeNet)** project, developing interpretable deep-learning models for prokaryotic phenotype-genome mapping.
-* **Cultural Exploration.** Creating interactive digital experiences that bridge traditional arts with modern technology.
-
-For further details see my **[CV]({{ site.baseurl }}/cv/)**, technical write-ups on the **[blog]({{ site.baseurl }}/year-archive/)**, or explore my **[cultural essays]({{ site.baseurl }}/essays/)**.
