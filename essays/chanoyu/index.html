@@ -3,545 +3,1065 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Unbroken Circle: An Interactive Exploration of Chanoyu</title>
+    <title>The Way of Tea — An Interactive Exploration of Chanoyu</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Zen Garden Palette -->
     <style>
         body {
             font-family: 'Lato', 'Noto Sans JP', sans-serif;
-            background-color: #FDFBF5;
-            color: #3a3a3a;
+            background: linear-gradient(to bottom, #fdfbf7, #f5f2ed);
         }
-        .bg-primary { background-color: #FDFBF5; }
-        .bg-secondary { background-color: #F0EAD6; }
-        .bg-accent { background-color: #6B8E23; }
-        .text-accent { color: #6B8E23; }
-        .border-accent { border-color: #6B8E23; }
-        .highlight-accent { color: #DAA520; }
-        .nav-link {
-            transition: color 0.3s ease, border-color 0.3s ease;
-            border-bottom: 2px solid transparent;
+        .nav-pill {
+            transition: all 0.3s ease;
         }
-        .nav-link:hover, .nav-link.active {
-            color: #6B8E23;
-            border-bottom-color: #6B8E23;
+        .nav-pill:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        .timeline-item::before {
-            content: '';
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        .timeline-dot {
             position: absolute;
-            top: 20px;
-            left: -8px;
-            width: 16px;
-            height: 16px;
+            left: -9px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background-color: #F0EAD6;
+            background: white;
             border: 3px solid #6B8E23;
             z-index: 1;
         }
-        .modal-backdrop {
-            transition: opacity 0.3s ease-in-out;
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .accordion-content.open {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+        .search-highlight {
+            background-color: #fef3c7;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .modal-content {
-            transition: transform 0.3s ease-in-out;
+            background: white;
+            border-radius: 16px;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease-out;
         }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
+        @keyframes slideIn {
+            from { transform: translateY(-30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
-        @media (min-width: 768px) {
-            .chart-container { height: 350px; }
+        .filter-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        .filter-badge:hover {
+            transform: scale(1.05);
+        }
+        .filter-badge.active {
+            background-color: #1f2937;
+            color: white;
+        }
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            margin-bottom: 1.5rem;
+        }
+        .icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
         }
     </style>
 </head>
-<body class="bg-primary">
-
-    <header class="bg-primary/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
-            <h1 class="text-xl md:text-2xl font-bold text-accent">茶の湯</h1>
-            <div class="hidden md:flex space-x-8">
-                <a href="#path" class="nav-link py-2">The Path of Tea</a>
-                <a href="#figures" class="nav-link py-2">Key Figures</a>
-                <a href="#utensils" class="nav-link py-2">The Art of the Utensil</a>
-                <a href="#temple" class="nav-link py-2">The Modern Temple</a>
+<body>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between py-4">
+                <h1 class="text-2xl font-bold text-gray-900">茶の湯 The Way of Tea</h1>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
-            <button id="mobile-menu-button" class="md:hidden text-accent">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-            </button>
-        </nav>
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
-            <a href="#path" class="block py-2 nav-link">The Path of Tea</a>
-            <a href="#figures" class="block py-2 nav-link">Key Figures</a>
-            <a href="#utensils" class="block py-2 nav-link">The Art of the Utensil</a>
-            <a href="#temple" class="block py-2 nav-link">The Modern Temple</a>
+            <!-- Navigation -->
+            <nav id="nav-menu" class="hidden md:flex flex-wrap gap-2 pb-3">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="overview">
+                    Overview
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="timeline">
+                    Timeline
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="roles">
+                    Roles
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="temples">
+                    Temples
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="monks">
+                    Monks & Bokuseki
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="utensils">
+                    Utensils Explorer
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="provenance">
+                    Provenance & Hakogaki
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="events">
+                    Temple Events
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="toriawase">
+                    Toriawase Lab
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="research">
+                    Research
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="glossary">
+                    Glossary
+                </button>
+            </nav>
         </div>
     </header>
 
-    <main>
-        <section id="hero" class="container mx-auto px-6 py-16 md:py-24 text-center">
-            <h2 class="text-4xl md:text-6xl font-bold mb-4">The Unbroken Circle</h2>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">An interactive exploration of the profound bond between Japanese Zen temples and the world of Chanoyu (茶の湯), the Way of Tea.</p>
-        </section>
+    <!-- Search Bar -->
+    <div class="sticky top-16 z-40 bg-white/70 backdrop-blur-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="relative">
+                <input type="text" id="search-input" placeholder="Search across all sections (e.g., 'Ido foot', '前大徳', 'kencha', 'Rikyū')" 
+                    class="w-full pl-10 pr-10 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-800">
+                <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <button id="clear-search" class="hidden absolute right-3 top-3 p-1 rounded-full bg-gray-100 hover:bg-gray-200">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <section id="path" class="py-16 md:py-24 bg-secondary">
-            <div class="container mx-auto px-6">
-                <h3 class="text-3xl font-bold text-center mb-4">The Path of Tea: A Historical Journey</h3>
-                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The history of Chanoyu is not merely a sequence of events, but an evolution of philosophy and aesthetics deeply rooted in Zen. This timeline highlights the pivotal moments and figures who transformed a monastic ritual into a profound art form. Click on each event to uncover its significance.</p>
-                <div id="timeline-container" class="relative border-l-4 border-accent ml-4 md:mx-auto md:max-w-3xl">
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- Overview Section -->
+        <section id="overview" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-4">Chanoyu, Temples, and the Modern Collecting Ecosystem</h2>
+                <div class="prose max-w-none text-gray-700">
+                    <p class="mb-4">
+                        Chanoyu emerged from Zen monasteries as a practical aid to meditation and matured—through merchants, monks, and tea masters—into a codified aesthetic and social practice. This interactive guide presents an integrated, richly detailed map of that world: a timeline of key turns, the roles that sustain the Way, temple practices in the present, an explorer for utensils and their diagnostics, and a deep dive into provenance and <em>hakogaki</em>—the documentary spine of value.
+                    </p>
+                    <div class="grid md:grid-cols-3 gap-4 mt-6">
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Temple Centrality</h3>
+                            <p class="text-sm">Daitoku-ji and peers host public <em>tsukigama</em>, memorials, and <em>kencha</em>, while abbots provide bokuseki and endorsements.</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Wabi-cha Aesthetics</h3>
+                            <p class="text-sm">From Murata Jukō to Rikyū—small huts, rustic materials, moral clarity—distinct from earlier <em>karamono</em> display culture.</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4">
+                            <h3 class="font-semibold mb-2">Collector's Lens</h3>
+                            <p class="text-sm">Canon, diagnostics, and <em>denrai</em> (provenance) converge in the box inscription (<em>hakogaki</em>).</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="figures" class="py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <h3 class="text-3xl font-bold text-center mb-4">Key Figures of the Way of Tea</h3>
-                 <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">The philosophy of Chanoyu was shaped by visionary monks and masters. Their insights and aesthetic choices defined the very soul of the practice, creating a legacy that endures to this day. Click on a portrait to learn about their pivotal contributions.</p>
-                <div id="figures-container" class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Timeline Section -->
+        <section id="timeline" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Timeline: From Monastic Tool to Public Heritage</h2>
+                <div id="timeline-container" class="relative border-l-4 border-green-700 ml-2">
+                    <!-- Timeline items will be inserted here -->
                 </div>
             </div>
         </section>
 
-        <section id="utensils" class="py-16 md:py-24 bg-secondary">
-            <div class="container mx-auto px-6">
-                <h3 class="text-3xl font-bold text-center mb-4">The Art of the Utensil (道具の美)</h3>
-                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">For the collector and practitioner, utensils are not mere tools but vessels of history and philosophy. This section allows you to explore the major classifications of tea bowls (<em>chawan</em>), understand the aesthetic principles that guide their appreciation, and discover the art of creating a harmonious ensemble.</p>
+        <!-- Roles Section -->
+        <section id="roles" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">The Ecosystem of Roles</h2>
+                <div id="roles-container" class="grid md:grid-cols-2 gap-6">
+                    <!-- Role cards will be inserted here -->
+                </div>
+            </div>
+        </section>
 
-                <div class="mb-12">
-                    <h4 class="text-2xl font-bold text-center mb-6">Chawan Explorer</h4>
-                    <div id="chawan-filters" class="flex justify-center space-x-2 md:space-x-4 mb-8">
-                        <button class="filter-btn active px-4 py-2 rounded-full bg-accent text-white transition" data-filter="all">All (全て)</button>
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm transition" data-filter="Wamono">Wamono (和物)</button>
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm transition" data-filter="Kōraimono">Kōraimono (高麗物)</button>
-                        <button class="filter-btn px-4 py-2 rounded-full bg-white text-gray-700 shadow-sm transition" data-filter="Karamono">Karamono (唐物)</button>
+        <!-- Temples Section -->
+        <section id="temples" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Temples: Hubs, Counterpoints, Lineages</h2>
+                <div class="mb-4 flex flex-wrap gap-2">
+                    <span class="text-sm text-gray-600 mr-2">Filter by sect:</span>
+                    <button class="filter-badge border border-gray-300 bg-white active" data-filter="All">All</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-filter="Rinzai">Rinzai</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-filter="Kegon">Kegon</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-filter="Jōdo">Jōdo</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-filter="Nichiren">Nichiren</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-filter="Shingon">Shingon</button>
+                </div>
+                <div id="temples-container" class="grid md:grid-cols-2 gap-4">
+                    <!-- Temple cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Monks & Bokuseki Section -->
+        <section id="monks" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Monks & Bokuseki</h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 class="text-xl font-bold mb-3">Bokuseki (墨蹟): The Alcove's Heart</h3>
+                        <p class="text-gray-700 mb-4">
+                            Zen calligraphy by esteemed monks is the most revered tokonoma display. The phrase (e.g., <em>日々是好日</em>, <em>一期一会</em>) sets the <em>shudai</em> and guides the ensemble. Brush energy is read as the living trace of discipline and clarity.
+                        </p>
+                        <div class="accordion">
+                            <button class="w-full text-left flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                <span>How bokuseki guides selection</span>
+                                <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content px-2">
+                                <ul class="list-disc pl-5 text-sm text-gray-600 mt-2">
+                                    <li>Theme first; utensils should echo the scroll's teaching.</li>
+                                    <li>Balance: intense ink energy pairs well with quiet ceramics.</li>
+                                    <li>Seasonality: choose phrases aligned to season/occasion.</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div id="chawan-gallery" class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div class="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 class="text-xl font-bold mb-3">The Abbot as Host, Artist, and Arbiter</h3>
+                        <p class="text-gray-700 mb-4">
+                            High-ranking abbots (esp. at Daitoku-ji) may host tea as direct Zen instruction, brush scrolls, name/carve utensils, and write authoritative box inscriptions (<em>hakogaki</em>) that canonize objects.
+                        </p>
+                        <div class="accordion">
+                            <button class="w-full text-left flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                <span>Listing phrase decoder: 前大徳 [Name] 書付</span>
+                                <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="accordion-content px-2">
+                                <p class="text-sm text-gray-600 mt-2">
+                                    <strong>前大徳</strong> denotes a former abbot of Daitoku-ji; <strong>書付</strong> indicates an inscription/attestation. Together, this signals a premium endorsement—verify hand and seal.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="temple" class="py-16 md:py-24">
-            <div class="container mx-auto px-6">
-                <h3 class="text-3xl font-bold text-center mb-4">The Modern Temple: A Living Legacy</h3>
-                <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">In the 21st century, Zen temples continue to be the spiritual heart of Chanoyu. Their role has evolved, blending ancient tradition with modern needs. Explore the multifaceted ways temples and their abbots sustain and shape the Way of Tea today, from hosting public gatherings to authenticating priceless artifacts.</p>
-                
-                <div class="max-w-4xl mx-auto">
-                    <div class="border-b border-gray-200">
-                        <nav id="temple-tabs" class="-mb-px flex space-x-6" aria-label="Tabs">
-                        </nav>
+        <!-- Utensils Explorer Section -->
+        <section id="utensils" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Utensils Explorer</h2>
+                <div class="mb-4 flex flex-wrap gap-2">
+                    <span class="text-sm text-gray-600 mr-2">Filter by type:</span>
+                    <button class="filter-badge border border-gray-300 bg-white active" data-utensil-filter="All">All</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-utensil-filter="Chawan">Chawan (Tea Bowls)</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-utensil-filter="Chaire">Tea Caddies</button>
+                    <button class="filter-badge border border-gray-300 bg-white" data-utensil-filter="Other">Other Utensils</button>
+                </div>
+                <div id="utensils-container" class="space-y-8">
+                    <!-- Utensil cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Provenance & Hakogaki Section -->
+        <section id="provenance" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Provenance & Hakogaki: A Practical Guide</h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 class="text-xl font-bold mb-3">Reading a Box (Kiribako)</h3>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                            <li><strong>Front:</strong> Object type + title/mei; sometimes era/kiln.</li>
+                            <li><strong>Lid underside:</strong> Signature + <em>kaō</em> (stylized seal) of authority.</li>
+                            <li><strong>Sides:</strong> Old collection labels, exhibition notes.</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                            <h4 class="font-semibold mb-2">Common wordings</h4>
+                            <dl class="text-sm space-y-2">
+                                <dt class="font-semibold">What is hakogaki (箱書)?</dt>
+                                <dd class="text-gray-600">Box inscription on kiribako: name/mei, attribution, signer's signature + kaō. Documentary spine for identity and provenance.</dd>
+                                <dt class="font-semibold">Who are strong signers?</dt>
+                                <dd class="text-gray-600">Senke iemoto (Omote/Ura/Mushanokōji) and senior abbots of major temples (esp. Daitoku-ji).</dd>
+                            </dl>
+                        </div>
                     </div>
-                    <div id="temple-content" class="mt-8">
+                    <div class="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 class="text-xl font-bold mb-3">Due Diligence Checklist</h3>
+                        <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                            <li>Match handwriting + kaō to known exemplars (abbot/iemoto).</li>
+                            <li>Check box carpentry + paper/fabric age vs. claimed period.</li>
+                            <li>Confirm object–box fit: wear patterns, ties, internal blocks.</li>
+                            <li>Triangulate with museum comparanda and published denrai.</li>
+                            <li>Document every change (remounts, relacquers, repairs).</li>
+                        </ul>
+                        <div class="mt-4 p-4 bg-amber-50 rounded-lg">
+                            <h4 class="font-semibold mb-2 text-amber-900">Economics in brief</h4>
+                            <p class="text-sm text-amber-800">
+                                A credible <em>hakogaki</em> often commands a premium by transforming a good object into a named, canonized piece. Conversely, mismatched or forged inscriptions can invert value. Treat the box as a document, not décor.
+                            </p>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Temple Events Section -->
+        <section id="events" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Temple Events & Formats</h2>
+                <div id="events-container" class="grid md:grid-cols-2 gap-4">
+                    <!-- Event cards will be inserted here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Toriawase Lab Section -->
+        <section id="toriawase" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Toriawase Lab (Ensemble Sandbox)</h2>
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 class="text-xl font-bold mb-4">Set your theme</h3>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Theme</label>
+                                <input type="text" id="theme-input" value="Autumn moon" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Scroll (bokuseki)</label>
+                                <input type="text" id="scroll-input" value="一期一会" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tea bowl</label>
+                                    <select id="bowl-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                        <option>Ido</option>
+                                        <option>Raku</option>
+                                        <option>Tenmoku</option>
+                                        <option>Shino</option>
+                                        <option>Oribe</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tea caddy</label>
+                                    <select id="caddy-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                        <option>Chaire</option>
+                                        <option>Natsume</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Flower vase</label>
+                                <select id="vase-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                    <option>Bamboo (node-cut)</option>
+                                    <option>Ceramic (Shigaraki)</option>
+                                    <option>Bronze hanging</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg border border-gray-200 p-6">
+                        <h3 class="text-xl font-bold mb-4">Curatorial guidance</h3>
+                        <p class="text-gray-700 mb-3 text-sm">General heuristics drawn from orthodox practice and connoisseurship.</p>
+                        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                            <li>Choose a clear shudai (theme): seasonal, literary, or memorial.</li>
+                            <li>Balance decorated pieces with quiet anchors; avoid clashing patterns.</li>
+                            <li>Do not over-concentrate one maker/kiln; seek textural dialogue.</li>
+                            <li>Let bokuseki lead the room; utensils echo the scroll's teaching.</li>
+                            <li>Document the set: shifuku, boxes, and notes to build denrai.</li>
+                        </ul>
+                        <div id="toriawase-notes" class="mt-4 p-4 bg-blue-50 rounded-lg">
+                            <h4 class="font-semibold mb-2 text-blue-900">Contextual notes based on your picks</h4>
+                            <ul id="context-notes" class="list-disc pl-5 text-sm text-blue-800 space-y-1">
+                                <!-- Dynamic notes will appear here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section id="research" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Research Questions & Program</h2>
+                <p class="text-gray-700 mb-4">Hypotheses suitable for mixed-methods inquiry (catalog data + exhibition histories + auction archives + temple records):</p>
+                <ol class="list-decimal pl-5 space-y-2 text-gray-700">
+                    <li>How do endorsements (iemoto vs. abbots) differentially shift hammer prices when controlling for maker/period/condition?</li>
+                    <li>Do utensils used in kencha/memorial rites appreciate faster than comparable pieces lacking ritual provenance?</li>
+                    <li>How often do museums/temples revise attributions (e.g., re-dating Shino/Oribe), and what are the market impacts?</li>
+                    <li>Can measurable coherence between bokuseki content and toriawase elevate peer connoisseur rankings?</li>
+                    <li>How do non-Zen temples deploy chanoyu today (Jōdo, Nichiren, Shingon) and how does this broaden 'authenticity'?</li>
+                </ol>
+                <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                    <h3 class="font-semibold mb-2">Suggested data schema to get started</h3>
+                    <pre class="text-xs overflow-auto bg-white p-3 rounded border border-gray-200"><code>{
+  "object": {
+    "id": "",
+    "type": "chawan/chaire/...",
+    "kiln": "",
+    "period": "",
+    "features": [""],
+    "condition": ""
+  },
+  "documentation": {
+    "hakogaki": {
+      "signer": "abbot/iemoto",
+      "text": "",
+      "kao": ""
+    },
+    "tomobako": true,
+    "labels": [""],
+    "exhibitions": [{"venue": "", "date": ""}]
+  },
+  "ritualUse": {
+    "kencha": true,
+    "memorial": false,
+    "venue": "temple/subtemple"
+  },
+  "market": {
+    "auction": {"house": "", "date": "", "hammer": 0},
+    "privateSales": []
+  }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- Glossary Section -->
+        <section id="glossary" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6">Glossary (Kanji included where relevant)</h2>
+                <div id="glossary-container" class="grid md:grid-cols-2 gap-4">
+                    <!-- Glossary items will be inserted here -->
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2025 An Interactive Exploration. All content derived from the report "The Unbroken Circle".</p>
-            <p class="text-sm text-gray-400 mt-2">This application is for educational purposes.</p>
-        </div>
-    </footer>
-    
-    <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden opacity-0 modal-backdrop">
-        <div id="modal-container" class="flex items-center justify-center min-h-screen p-4">
-            <div id="modal-content" class="bg-primary rounded-lg shadow-xl p-8 max-w-2xl w-full relative transform scale-95 modal-content">
-                <button id="modal-close-button" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-                <div id="modal-body"></div>
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content p-8 max-w-3xl mx-4">
+            <button id="modal-close" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div id="modal-body">
+                <!-- Modal content will be inserted here -->
             </div>
         </div>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 Chanoyu Interactive. Educational content for the study of the Way of Tea.</p>
+            <p class="text-sm text-gray-400 mt-2">This site is self-contained for offline use.</p>
+        </div>
+    </footer>
 
-    const timelineData = [
+    <script>
+    // Data structures
+    const TIMELINE = [
         {
-            year: '1191',
-            title: 'The Seed from the Continent',
-            person: 'Myōan Eisai (明菴栄西)',
-            content: `Rinzai Zen monk Eisai returns from China, bringing powdered green tea (<em>matcha</em>) and Zen teachings to Japan. He introduces tea as a tool to aid in <em>zazen</em> meditation, providing an "awakening effect" to combat drowsiness. This dual import establishes the foundational link between Zen and tea.`
+            year: 1191,
+            title: "Eisai returns from Song China",
+            desc: "Rinzai monk Myōan Eisai brings Zen teachings and powdered tea practice to Japan. Tea aids zazen (wakefulness) and is formalized in monastic charei.",
+            tags: ["Zen", "Rinzai", "Origins"]
         },
         {
-            year: '1211',
-            title: 'The Kissa Yōjōki (喫茶養生記)',
-            person: 'Myōan Eisai',
-            content: `Eisai authors "Drinking Tea for Health," Japan's first specialized book on tea. He strategically frames tea as a secular "miraculous remedy for health" to gain patronage from the Kamakura shogunate, ensuring the survival and spread of his Zen sect alongside the popularization of tea.`
+            year: 1211,
+            title: "Kissa Yōjōki (Drinking Tea for Health)",
+            desc: "Eisai promotes tea's medicinal value; wins Kamakura patronage and diffuses Zen + tea together.",
+            tags: ["Text", "Patronage"]
         },
         {
-            year: 'c. 1350',
-            title: 'The Age of Karamono (唐物)',
-            person: 'Ashikaga Shoguns',
-            content: `During the Muromachi period, tea gatherings among the elite become opulent affairs focused on displaying luxurious, perfect art objects imported from China (<em>karamono</em>). Held in large reception rooms, these events are demonstrations of wealth and power, a stark contrast to tea's humble monastic origins.`
+            year: 1450,
+            title: "Murata Jukō & Ikkyū",
+            desc: "With guidance from Daitoku-ji abbot Ikkyū, Jukō reframes taste: elevate rustic wamono, pair Zen bokuseki with utensils—seed of wabi-cha.",
+            tags: ["Aesthetics", "Wabi-cha"]
         },
         {
-            year: 'c. 1480',
-            title: 'The Wabi-cha Revolution',
-            person: 'Murata Jukō (村田珠光)',
-            content: `Studying under the monk Ikkyū Sōjun of Daitoku-ji, Jukō challenges the opulent <em>karamono</em> aesthetic. He champions humble, imperfect Japanese ceramics (Bizen, Shigaraki) and introduces Zen calligraphy (<em>bokuseki</em>) as the primary object in the tea room, shifting the focus from material wealth to spiritual depth.`
+            year: 1550,
+            title: "Takeno Jōō refines wabi-cha",
+            desc: "Consolidates the philosophical and aesthetic program leading toward Rikyū's synthesis.",
+            tags: ["Wabi", "Aesthetics"]
         },
         {
-            year: 'c. 1500',
-            title: 'Chazen Ichimi (茶禅一味)',
-            person: 'Murata Jukō',
-            content: `Jukō establishes the core philosophy of "Tea and Zen are one taste." This concept posits that the meticulous practice of tea is a form of active meditation, a direct path to enlightenment identical to the goal of Zen. Tea is no longer just a drink, but a <em>dō</em> (道), or Way.`
+            year: 1582,
+            title: "Rikyū's synthesis",
+            desc: "Small sōan huts, minimal etiquette, domestically guided wares (Raku, Shino, Oribe); tea and Zen seen as one taste (chazen ichimi).",
+            tags: ["Rikyū", "Codification"]
         },
         {
-            year: 'c. 1580',
-            title: 'The Apex of Wabi-cha',
-            person: 'Sen no Rikyū (千利休)',
-            content: `Rikyū, a merchant from Sakai and devoted Zen practitioner at Daitoku-ji, perfects the <em>wabi-cha</em> aesthetic. He codifies the practice, championing the small, rustic tea hut (<em>sōan</em>) and commissioning hand-formed Raku ware, the ultimate expression of simple, understated beauty.`
+            year: 1591,
+            title: "Sanmon Incident",
+            desc: "Conflict with Toyotomi Hideyoshi culminates in Rikyū's death; illustrates tea's political charge and Daitoku-ji's centrality.",
+            tags: ["Politics", "Daitoku-ji"]
         },
         {
-            year: '1591',
-            title: 'The Sanmon Incident (山門事件)',
-            person: 'Sen no Rikyū & Toyotomi Hideyoshi',
-            content: `Rikyū is ordered to commit ritual suicide by the regent Hideyoshi. The pretext is a statue of Rikyū placed on Daitoku-ji's main gate, which forces Hideyoshi to walk beneath it. The true conflict lies between Rikyū's spiritual authority and <em>wabi</em> aesthetic versus Hideyoshi's absolute temporal power and love for ostentation.`
+            year: 1880,
+            title: "First modern Kencha at Kitano Tenman-gū",
+            desc: "Tea offerings at shrines/temples go public; from Meiji onward kencha-shiki spread nationwide, re-linking tea and religion in civic space.",
+            tags: ["Kencha", "Public Ritual"]
+        },
+        {
+            year: 1940,
+            title: "Rikyū 350th memorial at Daitoku-ji",
+            desc: "Abbot officiates service; Sen iemoto offer tea; three-day tea gatherings welcome thousands—temple as national cultural stage.",
+            tags: ["Memorial", "Temple Venue"]
         }
     ];
 
-    const figuresData = [
+    const ROLES = [
         {
-            name: 'Myōan Eisai',
-            kanji: '明菴栄西',
-            title: 'The Tea Founder',
-            image: 'https://placehold.co/400x400/F0EAD6/3a3a3a?text=栄西',
-            content: `The Rinzai Zen monk who reintroduced powdered green tea (<em>matcha</em>) to Japan in 1191. He established tea as an essential aid for Zen meditation and strategically promoted its health benefits to secure patronage from the warrior class. His work, the <em>Kissa Yōjōki</em>, was instrumental in popularizing tea throughout Japan.`
+            name: "Monk (Zen clergy)",
+            bullets: [
+                "Spiritual anchor; frames tea as lived Zen (chazen ichimi).",
+                "Host (teishu) in temple settings; gatherings as direct teaching.",
+                "Artist: bokuseki for tokonoma, chashaku carving/naming (mei).",
+                "Arbiter of value: hakogaki (box inscription) authenticates and elevates."
+            ],
+            details: "Bokuseki is the apex of scroll choices in the alcove; the monk's phrase sets the shudai (theme). A high-ranking abbot's hakogaki (signature + kaō) on a kiribako turns an anonymous utensil into a canonized piece with lineage."
         },
         {
-            name: 'Murata Jukō',
-            kanji: '村田珠光',
-            title: 'The Father of Wabi-cha',
-            image: 'https://placehold.co/400x400/F0EAD6/3a3a3a?text=珠光',
-            content: `A Zen practitioner under Ikkyū Sōjun of Daitoku-ji, Jukō initiated a revolutionary aesthetic shift. He rejected the opulent Chinese <em>karamono</em> utensils in favor of rustic, imperfect Japanese wares. He established the core principle of <em>Chazen Ichimi</em> ("Tea and Zen are one taste"), laying the philosophical foundation for <em>wabi-cha</em>.`
+            name: "Tea Master (iemoto / practitioner)",
+            bullets: [
+                "Creative director: composes toriawase ensembles under a theme.",
+                "Guides artisans (e.g., Rikyū⇄Chōjirō → Raku).",
+                "Transmits orthodoxy and pedagogy across schools (Senke)."
+            ],
+            details: "From Jukō to Jōō to Rikyū, the master defines the aesthetic economy of attention—small spaces, rough beauty, moral clarity."
         },
         {
-            name: 'Sen no Rikyū',
-            kanji: '千利休',
-            title: 'The Perfecter of the Way',
-            image: 'https://placehold.co/400x400/F0EAD6/3a3a3a?text=利休',
-            content: `The most revered figure in the history of Chanoyu. Rikyū synthesized and perfected the <em>wabi-cha</em> aesthetic, codifying every aspect of the tea gathering, from architecture to utensils. He commissioned the first Raku ware bowls, the ultimate embodiment of <em>wabi</em> beauty. His profound spiritual authority ultimately led to his tragic conflict with the ruler Toyotomi Hideyoshi.`
+            name: "Artisan (potters, lacquerers, metalworkers, bamboo)",
+            bullets: [
+                "Translate doctrine into object: Shino, Oribe, Raku, Karatsu, etc.",
+                "Institutional ties: Senke Jisshoku (Ten Craftsmen); oniwa-yaki at temples/patrons.",
+                "Material diagnostics (kairagi, foot rings, glaze movement) encode connoisseurship."
+            ],
+            details: "Temple-linked kilns (e.g., Kōdai-ji-gama) and designated families (Jisshoku) institutionalize standards."
         },
         {
-            name: 'Ikkyū Sōjun',
-            kanji: '一休宗純',
-            title: 'The Zen Catalyst',
-            image: 'https://placehold.co/400x400/F0EAD6/3a3a3a?text=一休',
-            content: `An iconoclastic and brilliant abbot of Daitoku-ji. While not a tea master himself, his influence was pivotal. As the Zen teacher of Murata Jukō, he instilled the spiritual depth that led Jukō to reject materialism and find beauty in simplicity. His calligraphy was among the first <em>bokuseki</em> to be displayed in a tea room, setting a crucial precedent.`
+            name: "Patron (warriors, merchants, modern sponsors)",
+            bullets: [
+                "Provide economic engine, spaces, and political cover.",
+                "Medieval karamono display → wabi-cha merchant culture → modern cultural tourism."
+            ],
+            details: "Patronage mediates prestige: from Ashikaga to Hideyoshi to corporate and municipal sponsors."
         }
     ];
 
-    const chawanData = [
+    const TEMPLES = [
+        { name: "Daitoku-ji", city: "Kyoto", sect: "Rinzai", roles: ["tea-friendly hub", "memorial venues", "abbots as calligraphers"], notes: "Subtemples host tsukigama (28th); deep ties to Rikyū and later masters." },
+        { name: "Myōshin-ji", city: "Kyoto", sect: "Rinzai", roles: ["historically stricter"], notes: "Periods of discouraging tea among clergy; instructive counterpoint to Daitoku-ji." },
+        { name: "Kōzan-ji", city: "Kyoto", sect: "Kegon", roles: ["tea garden heritage", "annual kencha"], notes: "Myoe planted tea; yearly offering to his spirit with Uji growers." },
+        { name: "Zōjō-ji", city: "Tokyo", sect: "Jōdo", roles: ["annual kencha"], notes: "Invites iemoto; ritualized civic link." },
+        { name: "Ikegami Honmon-ji", city: "Tokyo", sect: "Nichiren", roles: ["chasen kuyō"], notes: "Ceremony retiring whisks; material piety." },
+        { name: "Gokoku-ji", city: "Tokyo", sect: "Shingon", roles: ["capital hub for large tea events"], notes: "Nickname: a 'tea ceremony honzan'." }
+    ];
+
+    const EVENTS = [
+        { kind: "Tsukigama", desc: "Monthly public tea at temple subprecincts; ticketed; practice in historic spaces.", where: ["Daitoku-ji subtemples"], season: "Monthly" },
+        { kind: "Kencha / Kencha-shiki", desc: "Tea offering to deity/buddha; temple/shrine partnership; since 1880 widely public.", where: ["Kitano Tenman-gū", "Daitoku-ji", "Zōjō-ji", "Kōzan-ji"], season: "Varies" },
+        { kind: "Kuchikiri no chakai", desc: "Seal-cutting of new tea jars; grinding tencha; lectures + kaiseki.", where: ["Gyokurin-in (Daitoku-ji)", "Uji lineages"], season: "November" },
+        { kind: "Memorial Chakai", desc: "Annual rites at gravesites or founder halls (e.g., Enshūki at Kohō-an).", where: ["Kohō-an (Daitoku-ji)"], season: "Annual (date by master)" },
+        { kind: "Zen + Tea Experiences", desc: "Curated meditation + shōjin ryōri + private tea; high-end cultural tourism.", where: ["Daiji-in (Daitoku-ji)", "Kennin-ji subtemples"], season: "Year-round" }
+    ];
+
+    const UTENSIL_TYPES = [
         {
-            origin: 'Karamono',
-            name: 'Tenmoku (天目)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=天目',
-            characteristics: 'Conical shape, small foot, dark iron glaze. Often used with a stand (<em>tenmokudai</em>). Varieties are defined by glaze effects like iridescent spots (<em>Yōhen</em>) or oil-spots (<em>Yuteki</em>).',
-            context: 'From Song/Yuan China, originally used in Zen monasteries. The most prized <em>karamono</em> bowls, with three <em>Yōhen Tenmoku</em> designated as National Treasures of Japan.'
+            type: "Chawan (Tea Bowls)",
+            subtypes: [
+                { 
+                    name: "Tenmoku (天目)", 
+                    diagnostics: ["conical profile", "thick iron glaze", "oil-spot/hare's fur"], 
+                    lineage: "Song Jian ware via Zen refectories; early tea prestige.", 
+                    valueDrivers: ["authentic kiln/period", "fine glaze effects", "provenance, temple links"], 
+                    pitfalls: ["modern reproductions", "box-object mismatches"] 
+                },
+                { 
+                    name: "Ido (井戸)", 
+                    diagnostics: ["wide lip (kōhai)", "kairagi (sharkskin) at foot", "warm feldspathic glaze"], 
+                    lineage: "Korean rice bowls elevated by wabi-cha masters.", 
+                    valueDrivers: ["foot and clay quality", "patina", "named provenance"], 
+                    pitfalls: ["excessively neat copies", "over-polished foot"] 
+                },
+                { 
+                    name: "Raku (楽)", 
+                    diagnostics: ["hand-formed", "soft glaze", "lightweight"], 
+                    lineage: "Rikyū–Chōjirō collaboration; orthodox wabi ideal.", 
+                    valueDrivers: ["family generation", "iemoto ties", "hakogaki"], 
+                    pitfalls: ["post-firing alterations", "spurious boxes"] 
+                },
+                { 
+                    name: "Shino / Oribe", 
+                    diagnostics: ["Shino: feldspathic pinholes; Oribe: asymmetry, green copper glaze"], 
+                    lineage: "Momoyama innovation with master guidance.", 
+                    valueDrivers: ["kiln site", "period", "coherent toriawase role"], 
+                    pitfalls: ["attribution drift"] 
+                }
+            ]
         },
         {
-            origin: 'Kōraimono',
-            name: 'Ido (井戸)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=井戸',
-            characteristics: 'Simple, robust form, often with a visible potter\'s wheel mark (<em>rokuro-me</em>). Key features are a "bamboo node" foot and <em>kairagi</em> (梅花皮), a crackled glaze effect around the foot.',
-            context: 'Joseon Dynasty (Korea) utilitarian rice bowls "discovered" by early tea masters. Considered the epitome of <em>wabi</em> beauty. The <em>Kizaemon Ido</em> at Daitoku-ji is a National Treasure.'
+            type: "Chaire & Natsume (Tea Caddies)",
+            subtypes: [
+                { 
+                    name: "Chaire (濃茶)", 
+                    diagnostics: ["stoneware", "ivory lid (old)", "silk shifuku"], 
+                    lineage: "karamono prestige; named meibutsu.", 
+                    valueDrivers: ["named cloth lineage", "hakogaki", "old denrai"], 
+                    pitfalls: ["replaced lids/cloth"] 
+                },
+                { 
+                    name: "Natsume (薄茶)", 
+                    diagnostics: ["lacquered wood", "form/finish consistency"], 
+                    lineage: "Senke Jisshoku lacquer families.", 
+                    valueDrivers: ["maker family", "finish quality"], 
+                    pitfalls: ["later relacquering"] 
+                }
+            ]
         },
         {
-            origin: 'Kōraimono',
-            name: 'Mishima (三島)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=三島',
-            characteristics: 'Greyish clay with inlaid or stamped white slip designs under a clear glaze.',
-            context: 'From the Korean "Buncheong" ware tradition. The name is said to come from the resemblance of the patterns to the calendars issued by Mishima Shrine in Japan.'
-        },
-        {
-            origin: 'Wamono',
-            name: 'Raku (楽)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=楽',
-            characteristics: 'Hand-built (not wheel-thrown), low-fired, porous body. Primarily monochrome black (<em>kuro-raku</em>) or red (<em>aka-raku</em>).',
-            context: 'First produced by the potter Chōjirō under the direct guidance of Sen no Rikyū. Considered the quintessential <em>wabi-cha</em> bowl, embodying the spirit of the master.'
-        },
-        {
-            origin: 'Wamono',
-            name: 'Shino (志野)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=志野',
-            characteristics: 'Thick, feldspathic white glaze, often with orange "scorch" marks (<em>hi-iro</em>). Can have simple iron-underglaze designs.',
-            context: 'Produced in Mino province during the Momoyama period. The first white glazed ware in Japan. The <em>Unohana-gaki</em> Shino bowl is a National Treasure.'
-        },
-        {
-            origin: 'Wamono',
-            name: 'Oribe (織部)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=織部',
-            characteristics: 'Characterized by distorted, asymmetrical shapes (<em>kutsugata</em>, "shoe-shaped"), bold geometric patterns, and a distinctive deep green copper glaze.',
-            context: 'Named after the tea master Furuta Oribe, a disciple of Rikyū. Represents a more dynamic and playful aesthetic than Rikyū\'s severe <em>wabi</em>.'
-        },
-        {
-            origin: 'Wamono',
-            name: 'Hagi (萩)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=萩',
-            characteristics: 'Soft, whitish-pinkish glaze over a coarse, sandy clay body. Known for changing color and texture over time with use ("the seven transformations of Hagi").',
-            context: 'Began in Hagi with Korean potters. Highly valued for its simple, warm feeling and the way it evolves with the user.'
-        },
-        {
-            origin: 'Wamono',
-            name: 'Karatsu (唐津)',
-            image: 'https://placehold.co/600x400/3a3a3a/FDFBF5?text=唐津',
-            characteristics: 'A broad category of rustic wares from Kyushu known for its earthy, strong character. Can be undecorated, iron-painted, or mottled.',
-            context: 'Also began with Korean potters. The saying, "First Ido, second Raku, third Karatsu" reflects its high status among tea practitioners.'
+            type: "Kama / Mizusashi / Kakejiku / Hanaire",
+            subtypes: [
+                { 
+                    name: "Kama (釜)", 
+                    diagnostics: ["iron casting seam", "shoulder inscription"], 
+                    lineage: "tetsubin/kama smith lineages.", 
+                    valueDrivers: ["smith school", "sound", "surface"] 
+                },
+                { 
+                    name: "Mizusashi (水指)", 
+                    diagnostics: ["proportion to chawan", "lid fit"], 
+                    lineage: "ceramic or lacquer; visual anchor.", 
+                    valueDrivers: ["material coherence", "theme fit"] 
+                },
+                { 
+                    name: "Kakejiku (掛軸)", 
+                    diagnostics: ["bokuseki content", "paper/mount age"], 
+                    lineage: "Zen calligraphy as spiritual theme.", 
+                    valueDrivers: ["monk/abbot hand", "phrase relevance"], 
+                    pitfalls: ["re-mounted scrolls hiding era"] 
+                },
+                { 
+                    name: "Hanaire (花入)", 
+                    diagnostics: ["bamboo nodes", "cut marks"], 
+                    lineage: "rustic naturalism; temple garden motifs.", 
+                    valueDrivers: ["maker/monk carving", "surface patina"] 
+                }
+            ]
         }
     ];
 
-    const templeTabsData = [
-        {
-            id: 'stage',
-            title: 'Living Stage',
-            content: `
-                <h5 class="text-xl font-bold mb-4">The Temple as a Venue</h5>
-                <p class="mb-4">Temples with historical tea connections, like Daitoku-ji in Kyoto, are vibrant hubs for tea gatherings (<em>chakai</em>). They provide an unparalleled atmosphere of authenticity and tranquility.</p>
-                <ul class="list-disc list-inside space-y-2">
-                    <li><strong>Tsukigama (月釜):</strong> Regular monthly tea gatherings, often open to the public, that form the social and educational backbone of the tea community.</li>
-                    <li><strong>Memorial Events:</strong> Prestigious, often exclusive gatherings commemorating great tea masters like Kobori Enshū (<em>Enshūki</em>) or celebrating annual traditions like the opening of a new tea jar (<em>kuchikiri</em>).</li>
-                    <li><strong>Curated Experiences:</strong> High-end programs for small groups, often combining Zen meditation, a vegetarian meal, and a private tea ceremony in a historic room.</li>
-                </ul>
-            `
-        },
-        {
-            id: 'educator',
-            title: 'Cultural Educator',
-            content: `
-                <h5 class="text-xl font-bold mb-4">Sharing the Way of Tea</h5>
-                <p class="mb-4">Temples have embraced the role of educators, offering <em>taiken</em> (体験), or "experience-based" introductions to Chanoyu for novices and tourists. These accessible sessions demystify the practice and provide a crucial revenue stream for maintaining historic properties.</p>
-                <p>Participants are guided through basic etiquette, watch a demonstration (<em>otemae</em>), and are given the chance to whisk their own bowl of matcha, providing a hands-on taste of the ceremony's spirit without the need for rigorous training.</p>
-            `
-        },
-        {
-            id: 'arbiter',
-            title: 'Arbiter of Value',
-            content: `
-                <h5 class="text-xl font-bold mb-4">The Power of Hakogaki (箱書)</h5>
-                <p class="mb-4">Perhaps the most significant modern role of a high-ranking Zen abbot is as an authenticator of tea utensils through box-writing. A <em>hakogaki</em> is a written endorsement on the utensil's storage box that certifies its authenticity, gives it a poetic name (<em>mei</em>), and dramatically increases its cultural and monetary value.</p>
-                <div class="border-2 border-dashed border-gray-400 p-4 rounded-lg bg-white">
-                    <h6 class="font-bold text-center mb-2">Anatomy of a Hakogaki (Lid of a <em>Kiribako</em> 桐箱)</h6>
-                    <div class="text-center space-y-2">
-                        <div class="p-2 bg-gray-100 rounded"><strong>Top Right:</strong> Name of the object (e.g., 黒樂茶碗 - Black Raku Tea Bowl)</div>
-                        <div class="p-2 bg-gray-100 rounded"><strong>Center:</strong> Poetic Name or <em>Mei</em> (銘) given to the object</div>
-                        <div class="p-2 bg-gray-100 rounded"><strong>Bottom Left:</strong> Signature of the Abbot/Iemoto</div>
-                        <div class="p-2 bg-gray-100 rounded"><strong>Beside Signature:</strong> The Abbot's/Iemoto's personal seal (<em>kaō</em> 花押)</div>
-                    </div>
-                </div>
-                <p class="mt-4">This practice represents an unbroken chain of authority. The endorsement of an abbot from a temple like Daitoku-ji transforms an object into a certified piece of cultural heritage, underpinning the entire economic structure of the tea utensil world.</p>
-            `
-        }
+    const GLOSSARY = [
+        { term: "Chanoyu (茶の湯)", def: "The Japanese 'Way of Tea'; an aesthetic–ethical practice centered on preparing and sharing matcha." },
+        { term: "Chazen ichimi (茶禅一味)", def: "Tea and Zen are 'one taste': identical in ultimate aim (awakening)." },
+        { term: "Bokuseki (墨蹟)", def: "Zen calligraphy; preferred tokonoma scroll in tea for setting spiritual theme (shudai)." },
+        { term: "Hakogaki (箱書)", def: "Inscription on a utensil's storage box by an authority, certifying identity/provenance." },
+        { term: "Meibutsu (名物)", def: "Famous/celebrated objects within the tea canon; often with long denrai." },
+        { term: "Denrai (伝来)", def: "Provenance; chain of transmission/ownership and documentation." },
+        { term: "Toriawase (取り合わせ)", def: "Curated ensemble of utensils for a specific gathering aligned to a theme." },
+        { term: "Tsukigama (月釜)", def: "Monthly public tea events often at temples; training + community." },
+        { term: "Kencha (献茶)", def: "Tea offering ceremony at shrines/temples, public since Meiji." },
+        { term: "Kuchikiri (口切)", def: "Cutting the seal of the year's tea jar; ceremonial grinding of tencha." }
     ];
 
-    const timelineContainer = document.getElementById('timeline-container');
-    timelineData.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'timeline-item mb-8 pl-8 relative cursor-pointer';
-        div.innerHTML = `
-            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300">
-                <p class="text-sm highlight-accent font-bold">${item.year}</p>
-                <h4 class="text-xl font-bold mb-2 text-accent">${item.title}</h4>
-                <p class="font-semibold text-gray-700 mb-3">${item.person}</p>
-                <div class="timeline-content hidden text-gray-600">
-                    <p>${item.content}</p>
-                </div>
-            </div>
-        `;
-        timelineContainer.appendChild(div);
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        renderTimeline();
+        renderRoles();
+        renderTemples();
+        renderUtensils();
+        renderEvents();
+        renderGlossary();
+        setupNavigation();
+        setupSearch();
+        setupFilters();
+        setupAccordions();
+        setupToriawaseLab();
+        setupModal();
     });
 
-    timelineContainer.addEventListener('click', (e) => {
-        const item = e.target.closest('.timeline-item');
-        if (item) {
-            const content = item.querySelector('.timeline-content');
-            content.classList.toggle('hidden');
-        }
-    });
-
-    const figuresContainer = document.getElementById('figures-container');
-    figuresData.forEach(figure => {
-        const div = document.createElement('div');
-        div.className = 'figure-card text-center cursor-pointer group';
-        div.innerHTML = `
-            <div class="relative overflow-hidden rounded-lg shadow-lg bg-secondary">
-                <img src="${figure.image}" alt="${figure.name}" class="w-full h-auto transform group-hover:scale-105 transition-transform duration-300">
-            </div>
-            <h4 class="text-xl font-bold mt-4">${figure.name} <span class="text-lg text-gray-500">${figure.kanji}</span></h4>
-            <p class="text-accent">${figure.title}</p>
-        `;
-        figuresContainer.appendChild(div);
-        div.addEventListener('click', () => openModal(figure));
-    });
-
-    const chawanGallery = document.getElementById('chawan-gallery');
-    const renderChawan = (filter = 'all') => {
-        chawanGallery.innerHTML = '';
-        const filteredData = filter === 'all' ? chawanData : chawanData.filter(c => c.origin === filter);
-        filteredData.forEach(chawan => {
+    // Render functions
+    function renderTimeline() {
+        const container = document.getElementById('timeline-container');
+        TIMELINE.forEach(item => {
             const div = document.createElement('div');
-            div.className = 'chawan-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer group';
+            div.className = 'relative pl-8 pb-8';
             div.innerHTML = `
-                <div class="relative">
-                    <img src="${chawan.image}" alt="${chawan.name}" class="w-full h-48 object-cover">
-                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-300 flex items-center justify-center">
-                        <p class="text-white text-lg font-bold opacity-0 group-hover:opacity-100 transition-opacity">Learn More</p>
+                <div class="timeline-dot"></div>
+                <div class="bg-white rounded-lg p-4 shadow hover:shadow-lg transition-shadow cursor-pointer">
+                    <div class="flex items-baseline justify-between mb-2">
+                        <h3 class="text-lg font-bold">${item.title}</h3>
+                        <span class="text-sm text-gray-500">${item.year}</span>
+                    </div>
+                    <p class="text-gray-700 text-sm">${item.desc}</p>
+                    <div class="flex flex-wrap gap-1 mt-2">
+                        ${item.tags.map(tag => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${tag}</span>`).join('')}
                     </div>
                 </div>
-                <div class="p-4">
-                    <h5 class="text-lg font-bold">${chawan.name}</h5>
-                    <p class="text-sm text-gray-500">${chawan.origin}</p>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function renderRoles() {
+        const container = document.getElementById('roles-container');
+        ROLES.forEach(role => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow';
+            div.innerHTML = `
+                <h3 class="text-xl font-bold mb-3">${role.name}</h3>
+                <ul class="list-disc pl-5 space-y-1 text-sm text-gray-700">
+                    ${role.bullets.map(b => `<li>${b}</li>`).join('')}
+                </ul>
+                <p class="mt-4 text-sm text-gray-600 italic">${role.details}</p>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    function renderTemples(filter = 'All') {
+        const container = document.getElementById('temples-container');
+        container.innerHTML = '';
+        const filtered = filter === 'All' ? TEMPLES : TEMPLES.filter(t => t.sect === filter);
+        
+        filtered.forEach(temple => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow';
+            div.innerHTML = `
+                <div class="flex items-baseline justify-between mb-2">
+                    <h3 class="text-lg font-bold">${temple.name}</h3>
+                    <span class="text-sm text-gray-500">${temple.city} · ${temple.sect}</span>
+                </div>
+                <p class="text-sm text-gray-700 mb-3">${temple.notes}</p>
+                <div class="flex flex-wrap gap-1">
+                    ${temple.roles.map(r => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${r}</span>`).join('')}
                 </div>
             `;
-            chawanGallery.appendChild(div);
-            div.addEventListener('click', () => openModal(chawan, 'chawan'));
+            container.appendChild(div);
         });
-    };
+    }
 
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            document.querySelector('.filter-btn.active').classList.remove('active', 'bg-accent', 'text-white');
-            document.querySelector('.filter-btn.active').classList.add('bg-white', 'text-gray-700');
-            btn.classList.add('active', 'bg-accent', 'text-white');
-            btn.classList.remove('bg-white', 'text-gray-700');
-            renderChawan(btn.dataset.filter);
+    function renderUtensils(filter = 'All') {
+        const container = document.getElementById('utensils-container');
+        container.innerHTML = '';
+        
+        const filtered = filter === 'All' ? UTENSIL_TYPES : 
+            filter === 'Chawan' ? UTENSIL_TYPES.filter(u => u.type.includes('Chawan')) :
+            filter === 'Chaire' ? UTENSIL_TYPES.filter(u => u.type.includes('Chaire')) :
+            UTENSIL_TYPES.filter(u => u.type.includes('Kama'));
+        
+        filtered.forEach(category => {
+            const section = document.createElement('div');
+            section.innerHTML = `
+                <h3 class="text-xl font-bold mb-4">${category.type}</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    ${category.subtypes.map(item => `
+                        <div class="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow">
+                            <h4 class="font-bold mb-2">${item.name}</h4>
+                            ${item.lineage ? `<p class="text-sm text-gray-600 mb-3">${item.lineage}</p>` : ''}
+                            <div class="space-y-2">
+                                <div class="accordion">
+                                    <button class="w-full text-left flex items-center justify-between py-1 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                        <span>Diagnostics</span>
+                                        <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <ul class="list-disc pl-5 text-xs text-gray-600 mt-2">
+                                            ${item.diagnostics ? item.diagnostics.map(d => `<li>${d}</li>`).join('') : ''}
+                                        </ul>
+                                    </div>
+                                </div>
+                                ${item.valueDrivers ? `
+                                <div class="accordion">
+                                    <button class="w-full text-left flex items-center justify-between py-1 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                        <span>Value drivers</span>
+                                        <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <ul class="list-disc pl-5 text-xs text-gray-600 mt-2">
+                                            ${item.valueDrivers.map(v => `<li>${v}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                ` : ''}
+                                ${item.pitfalls ? `
+                                <div class="accordion">
+                                    <button class="w-full text-left flex items-center justify-between py-1 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                        <span>Common pitfalls</span>
+                                        <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="accordion-content">
+                                        <ul class="list-disc pl-5 text-xs text-gray-600 mt-2">
+                                            ${item.pitfalls.map(p => `<li>${p}</li>`).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(section);
         });
-    });
+        setupAccordions(); // Re-setup accordions for new content
+    }
 
-    const templeTabsContainer = document.getElementById('temple-tabs');
-    const templeContentContainer = document.getElementById('temple-content');
-    templeTabsData.forEach((tab, index) => {
-        const button = document.createElement('button');
-        button.className = `temple-tab-btn whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${index === 0 ? 'border-accent text-accent' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`;
-        button.textContent = tab.title;
-        button.dataset.target = tab.id;
-        templeTabsContainer.appendChild(button);
+    function renderEvents() {
+        const container = document.getElementById('events-container');
+        EVENTS.forEach(event => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow';
+            div.innerHTML = `
+                <div class="flex items-baseline justify-between mb-2">
+                    <h3 class="text-lg font-bold">${event.kind}</h3>
+                    <span class="text-sm text-gray-500">${event.season}</span>
+                </div>
+                <p class="text-sm text-gray-700 mb-3">${event.desc}</p>
+                <div class="flex flex-wrap gap-1">
+                    ${event.where.map(w => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${w}</span>`).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+        });
+    }
 
-        const contentDiv = document.createElement('div');
-        contentDiv.id = tab.id;
-        contentDiv.className = `temple-content-panel ${index !== 0 ? 'hidden' : ''}`;
-        contentDiv.innerHTML = tab.content;
-        templeContentContainer.appendChild(contentDiv);
-    });
-    
-    templeTabsContainer.addEventListener('click', (e) => {
-        if(e.target.classList.contains('temple-tab-btn')) {
-            const targetId = e.target.dataset.target;
+    function renderGlossary() {
+        const container = document.getElementById('glossary-container');
+        GLOSSARY.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'bg-white rounded-lg border border-gray-200 p-4';
+            div.innerHTML = `
+                <h3 class="font-bold mb-1">${item.term}</h3>
+                <p class="text-sm text-gray-700">${item.def}</p>
+            `;
+            container.appendChild(div);
+        });
+    }
+
+    // Setup functions
+    function setupNavigation() {
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('.content-section');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const navMenu = document.getElementById('nav-menu');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetSection = btn.dataset.section;
+                
+                // Update active button
+                navButtons.forEach(b => {
+                    b.classList.remove('bg-gray-900', 'text-white');
+                    b.classList.add('bg-white', 'border-gray-300');
+                });
+                btn.classList.remove('bg-white', 'border-gray-300');
+                btn.classList.add('bg-gray-900', 'text-white');
+                
+                // Scroll to section
+                document.getElementById(targetSection).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                
+                // Close mobile menu if open
+                if (navMenu.classList.contains('flex') && window.innerWidth < 768) {
+                    navMenu.classList.add('hidden');
+                    navMenu.classList.remove('flex');
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        mobileMenuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('hidden');
+            navMenu.classList.toggle('flex');
+        });
+    }
+
+    function setupSearch() {
+        const searchInput = document.getElementById('search-input');
+        const clearButton = document.getElementById('clear-search');
+        
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
             
-            document.querySelectorAll('.temple-tab-btn').forEach(btn => {
-                btn.classList.remove('border-accent', 'text-accent');
-                btn.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
-            });
-            e.target.classList.add('border-accent', 'text-accent');
-            e.target.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
-
-            document.querySelectorAll('.temple-content-panel').forEach(panel => {
-                panel.classList.add('hidden');
-            });
-            document.getElementById(targetId).classList.remove('hidden');
-        }
-    });
-
-    const modalBackdrop = document.getElementById('modal-backdrop');
-    const modalContent = document.getElementById('modal-content');
-    const modalBody = document.getElementById('modal-body');
-    const modalCloseButton = document.getElementById('modal-close-button');
-
-    const openModal = (data, type = 'figure') => {
-        let contentHTML = '';
-        if (type === 'figure') {
-            contentHTML = `
-                <div class="md:flex md:space-x-6">
-                    <div class="md:w-1/3 mb-4 md:mb-0">
-                        <img src="${data.image}" alt="${data.name}" class="rounded-lg shadow-md w-full">
-                    </div>
-                    <div class="md:w-2/3">
-                        <h3 class="text-2xl font-bold">${data.name} <span class="text-xl text-gray-500">${data.kanji}</span></h3>
-                        <p class="text-accent font-semibold mb-4">${data.title}</p>
-                        <p class="text-gray-700">${data.content}</p>
-                    </div>
-                </div>
-            `;
-        } else if (type === 'chawan') {
-            contentHTML = `
-                <div>
-                    <img src="${data.image}" alt="${data.name}" class="w-full h-64 object-cover rounded-lg mb-4">
-                    <h3 class="text-2xl font-bold">${data.name}</h3>
-                    <p class="text-sm text-gray-500 font-semibold mb-4">${data.origin}</p>
-                    <div class="space-y-2">
-                        <p><strong>Characteristics:</strong> ${data.characteristics}</p>
-                        <p><strong>Context:</strong> ${data.context}</p>
-                    </div>
-                </div>
-            `;
-        }
-        modalBody.innerHTML = contentHTML;
-        modalBackdrop.classList.remove('hidden');
-        setTimeout(() => {
-            modalBackdrop.classList.remove('opacity-0');
-            modalContent.classList.remove('scale-95');
-        }, 10);
-    };
-
-    const closeModal = () => {
-        modalBackdrop.classList.add('opacity-0');
-        modalContent.classList.add('scale-95');
-        setTimeout(() => {
-            modalBackdrop.classList.add('hidden');
-        }, 300);
-    };
-
-    modalCloseButton.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', (e) => {
-        if (e.target === modalBackdrop) {
-            closeModal();
-        }
-    });
-
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const mobileMenu = document.getElementById('mobile-menu');
-    mobileMenuButton.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
-    
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            if (mobileMenu.classList.contains('hidden') === false) {
-                mobileMenu.classList.add('hidden');
+            if (query) {
+                clearButton.classList.remove('hidden');
+                // Add search functionality here
+                highlightSearchResults(query);
+            } else {
+                clearButton.classList.add('hidden');
+                clearHighlights();
             }
         });
-    });
+        
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            clearButton.classList.add('hidden');
+            clearHighlights();
+        });
+    }
 
-    const navLinks = document.querySelectorAll('nav a.nav-link');
-    const sections = document.querySelectorAll('main section');
-    window.addEventListener('scroll', () => {
-        let current = '';
+    function highlightSearchResults(query) {
+        // Simple highlight implementation
+        const sections = document.querySelectorAll('.content-section');
         sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            if (pageYOffset >= sectionTop - 60) {
-                current = section.getAttribute('id');
+            const walker = document.createTreeWalker(
+                section,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            let node;
+            while (node = walker.nextNode()) {
+                const parent = node.parentNode;
+                if (parent.tagName !== 'SCRIPT' && parent.tagName !== 'STYLE') {
+                    const text = node.textContent;
+                    if (text.toLowerCase().includes(query)) {
+                        // Highlight logic here
+                    }
+                }
             }
         });
+    }
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').substring(1) === current) {
-                link.classList.add('active');
+    function clearHighlights() {
+        document.querySelectorAll('.search-highlight').forEach(el => {
+            const text = el.textContent;
+            el.replaceWith(text);
+        });
+    }
+
+    function setupFilters() {
+        // Temple filters
+        document.querySelectorAll('[data-filter]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-filter]').forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                renderTemples(btn.dataset.filter);
+            });
+        });
+        
+        // Utensil filters
+        document.querySelectorAll('[data-utensil-filter]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('[data-utensil-filter]').forEach(b => {
+                    b.classList.remove('active');
+                });
+                btn.classList.add('active');
+                renderUtensils(btn.dataset.utensilFilter);
+            });
+        });
+    }
+
+    function setupAccordions() {
+        document.querySelectorAll('.accordion button').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('svg');
+                
+                content.classList.toggle('open');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+    }
+
+    function setupToriawaseLab() {
+        const updateNotes = () => {
+            const scroll = document.getElementById('scroll-input').value;
+            const bowl = document.getElementById('bowl-select').value;
+            const caddy = document.getElementById('caddy-select').value;
+            const vase = document.getElementById('vase-select').value;
+            
+            const notes = [];
+            if (scroll.includes('一期')) notes.push("Scroll emphasizes uniqueness → favor quiet textures, avoid loud patterns.");
+            if (bowl === 'Ido') notes.push("Ido foot (kairagi) provides earthy gravity; pair with subtly mounted scroll.");
+            if (caddy === 'Chaire') notes.push("Match shifuku textile to season; choose a quiet natsume if the bowl is already strong.");
+            if (vase === 'Bamboo (node-cut)') notes.push("Bamboo vase echoes temple garden motifs; pick seasonal wildflowers.");
+            
+            const notesContainer = document.getElementById('context-notes');
+            notesContainer.innerHTML = notes.map(n => `<li>${n}</li>`).join('');
+        };
+        
+        document.getElementById('scroll-input').addEventListener('input', updateNotes);
+        document.getElementById('bowl-select').addEventListener('change', updateNotes);
+        document.getElementById('caddy-select').addEventListener('change', updateNotes);
+        document.getElementById('vase-select').addEventListener('change', updateNotes);
+        
+        updateNotes(); // Initial update
+    }
+
+    function setupModal() {
+        const modal = document.getElementById('modal');
+        const modalClose = document.getElementById('modal-close');
+        
+        modalClose.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
             }
         });
-    });
-
-    renderChawan();
-});
-</script>
+    }
+    </script>
 </body>
 </html>
