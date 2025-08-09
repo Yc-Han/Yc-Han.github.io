@@ -18,6 +18,18 @@ if (host.startsWith('academic.')) {
   window.location.replace('/culture/');
 }
 */
+
+// Ensure masthead is visible on homepage
+document.addEventListener('DOMContentLoaded', function() {
+  const masthead = document.querySelector('.masthead');
+  if (masthead) {
+    masthead.style.display = 'block';
+    masthead.style.visibility = 'visible';
+  }
+  
+  // Add homepage class
+  document.body.classList.add('homepage-gateway');
+});
 </script>
 
 <style>

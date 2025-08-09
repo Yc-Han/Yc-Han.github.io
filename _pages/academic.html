@@ -26,6 +26,24 @@ const savedTheme = localStorage.getItem('theme');
 if (savedTheme) {
   document.documentElement.setAttribute('data-theme', savedTheme);
 }
+
+// Hide masthead and apply classes
+document.addEventListener('DOMContentLoaded', function() {
+  // Add class to body
+  document.body.classList.add('hide-masthead', 'academic-standalone');
+  
+  // Force hide masthead
+  const masthead = document.querySelector('.masthead');
+  if (masthead) {
+    masthead.style.display = 'none';
+  }
+  
+  // Adjust page content
+  const pageContent = document.querySelector('.page__content');
+  if (pageContent) {
+    pageContent.style.paddingTop = '2rem';
+  }
+});
 </script>
 
 <style>

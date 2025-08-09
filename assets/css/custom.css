@@ -113,18 +113,60 @@ html[data-theme="dark"] code {
     border-color: #8eb34a !important;
 }
 
-/* Hide masthead navigation on standalone sections */
-.academic-standalone .masthead,
-.culture-standalone .masthead,
+/* Hide masthead navigation on standalone sections - aggressive approach */
+body.layout--archive.academic-standalone .masthead,
+body.layout--archive.culture-standalone .masthead,
 .layout--archive.academic-standalone .masthead,
-.layout--archive.culture-standalone .masthead {
+.layout--archive.culture-standalone .masthead,
+.academic-standalone .masthead,
+.culture-standalone .masthead {
     display: none !important;
+}
+
+/* More aggressive masthead hiding by URL */
+body[class*="academic"] .masthead,
+body[class*="culture"] .masthead {
+    display: none !important;
+}
+
+/* Hide masthead by checking page content */
+.page__content:has(.floating-controls) ~ * .masthead,
+.page__content .floating-controls ~ .masthead {
+    display: none !important;
+}
+
+/* Alternative: JavaScript-based hiding */
+.hide-masthead .masthead {
+    display: none !important;
+}
+
+/* If floating controls exist, hide masthead */
+body:has(.floating-controls) .masthead {
+    display: none !important;
+}
+
+/* Ensure masthead shows on homepage */
+.homepage-gateway .masthead {
+    display: block !important;
+    visibility: visible !important;
 }
 
 /* Adjust page content when masthead is hidden */
 .academic-standalone .page__content,
 .culture-standalone .page__content {
     padding-top: 2rem;
+}
+
+/* Center content when sidebar is hidden (culture page) */
+.culture-standalone .page {
+    display: block !important;
+}
+
+.culture-standalone .page__content {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
 }
 
 /* Floating night mode toggle for standalone sections */
