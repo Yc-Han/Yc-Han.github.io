@@ -235,6 +235,9 @@ collections:
   talks:
     output: true
     permalink: /:collection/:path/
+  essays:
+    output: true
+    permalink: /:collection/:path/
 
 
 # These settings control how pages and collections are included in the site
@@ -279,6 +282,15 @@ defaults:
   - scope:
       path: ""
       type: portfolio
+    values:
+      layout: single
+      author_profile: true
+      share: true
+      comment: true
+  # _essays
+  - scope:
+      path: ""
+      type: essays
     values:
       layout: single
       author_profile: true
