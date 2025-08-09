@@ -255,12 +255,23 @@ ol li           { margin: 0 0 0.3rem; }
     margin: 2rem 0;
 }
 
-/* Fix clickable card underlines */
+/* Aggressive fix for clickable card underlines */
+a.academic-card,
+a.culture-card,
 .academic-card,
 .culture-card {
     text-decoration: none !important;
+    border-bottom: none !important;
 }
 
+a.academic-card:hover,
+a.culture-card:hover,
+a.academic-card:focus,
+a.culture-card:focus,
+a.academic-card:visited,
+a.culture-card:visited,
+a.academic-card:active,
+a.culture-card:active,
 .academic-card:hover,
 .culture-card:hover,
 .academic-card:focus,
@@ -268,13 +279,30 @@ ol li           { margin: 0 0 0.3rem; }
 .academic-card:visited,
 .culture-card:visited {
     text-decoration: none !important;
+    border-bottom: none !important;
 }
 
+a.academic-card h3,
+a.culture-card h3,
+a.academic-card p,
+a.culture-card p,
 .academic-card h3,
 .culture-card h3,
 .academic-card p,
-.culture-card p {
+.culture-card p,
+a.academic-card span,
+a.culture-card span,
+.academic-card span,
+.culture-card span {
     text-decoration: none !important;
+    border-bottom: none !important;
+}
+
+/* Override any Academic Pages underline styles */
+a.academic-card *,
+a.culture-card * {
+    text-decoration: none !important;
+    border-bottom: none !important;
 }
 
 /* Code blocks with Zen colors */
