@@ -104,6 +104,38 @@
             height: 20px;
             margin-right: 8px;
         }
+        .temple-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .temple-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .kanji-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            min-width: 320px;
+        }
+        .kanji-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        .kanji-item:hover {
+            background: #f9f9f9;
+        }
+        .kanji-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -112,11 +144,24 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-4">
                 <h1 class="text-2xl font-bold text-gray-900">茶の湯 The Way of Tea</h1>
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <div class="flex items-center gap-2">
+                    <div class="relative">
+                        <button id="kanji-toggle" class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium flex items-center gap-1">
+                            <span>漢字</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="kanji-dropdown" class="kanji-dropdown hidden">
+                            <!-- Kanji glossary items will be inserted here -->
+                        </div>
+                    </div>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
             <!-- Navigation -->
             <nav id="nav-menu" class="hidden md:flex flex-wrap gap-2 pb-3">
@@ -146,9 +191,6 @@
                 </button>
                 <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="toriawase">
                     Toriawase Lab
-                </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="research">
-                    Research
                 </button>
                 <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="glossary">
                     Glossary
@@ -228,6 +270,7 @@
         <section id="temples" class="content-section mb-12">
             <div class="section-card">
                 <h2 class="text-3xl font-bold mb-6">Temples: Hubs, Counterpoints, Lineages</h2>
+                <p class="text-sm text-gray-600 mb-4 italic">Click on any temple card to learn more about its history and role in tea culture.</p>
                 <div class="mb-4 flex flex-wrap gap-2">
                     <span class="text-sm text-gray-600 mr-2">Filter by sect:</span>
                     <button class="filter-badge border border-gray-300 bg-white active" data-filter="All">All</button>
@@ -386,6 +429,8 @@
                                         <option>Tenmoku</option>
                                         <option>Shino</option>
                                         <option>Oribe</option>
+                                        <option>Hagi</option>
+                                        <option>Karatsu</option>
                                     </select>
                                 </div>
                                 <div>
@@ -423,53 +468,6 @@
                             </ul>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Research Section -->
-        <section id="research" class="content-section mb-12">
-            <div class="section-card">
-                <h2 class="text-3xl font-bold mb-6">Research Questions & Program</h2>
-                <p class="text-gray-700 mb-4">Hypotheses suitable for mixed-methods inquiry (catalog data + exhibition histories + auction archives + temple records):</p>
-                <ol class="list-decimal pl-5 space-y-2 text-gray-700">
-                    <li>How do endorsements (iemoto vs. abbots) differentially shift hammer prices when controlling for maker/period/condition?</li>
-                    <li>Do utensils used in kencha/memorial rites appreciate faster than comparable pieces lacking ritual provenance?</li>
-                    <li>How often do museums/temples revise attributions (e.g., re-dating Shino/Oribe), and what are the market impacts?</li>
-                    <li>Can measurable coherence between bokuseki content and toriawase elevate peer connoisseur rankings?</li>
-                    <li>How do non-Zen temples deploy chanoyu today (Jōdo, Nichiren, Shingon) and how does this broaden 'authenticity'?</li>
-                </ol>
-                <div class="mt-6 p-4 bg-gray-50 rounded-lg">
-                    <h3 class="font-semibold mb-2">Suggested data schema to get started</h3>
-                    <pre class="text-xs overflow-auto bg-white p-3 rounded border border-gray-200"><code>{
-  "object": {
-    "id": "",
-    "type": "chawan/chaire/...",
-    "kiln": "",
-    "period": "",
-    "features": [""],
-    "condition": ""
-  },
-  "documentation": {
-    "hakogaki": {
-      "signer": "abbot/iemoto",
-      "text": "",
-      "kao": ""
-    },
-    "tomobako": true,
-    "labels": [""],
-    "exhibitions": [{"venue": "", "date": ""}]
-  },
-  "ritualUse": {
-    "kencha": true,
-    "memorial": false,
-    "venue": "temple/subtemple"
-  },
-  "market": {
-    "auction": {"house": "", "date": "", "hammer": 0},
-    "privateSales": []
-  }
-}</code></pre>
                 </div>
             </div>
         </section>
@@ -600,12 +598,60 @@
     ];
 
     const TEMPLES = [
-        { name: "Daitoku-ji", city: "Kyoto", sect: "Rinzai", roles: ["tea-friendly hub", "memorial venues", "abbots as calligraphers"], notes: "Subtemples host tsukigama (28th); deep ties to Rikyū and later masters." },
-        { name: "Myōshin-ji", city: "Kyoto", sect: "Rinzai", roles: ["historically stricter"], notes: "Periods of discouraging tea among clergy; instructive counterpoint to Daitoku-ji." },
-        { name: "Kōzan-ji", city: "Kyoto", sect: "Kegon", roles: ["tea garden heritage", "annual kencha"], notes: "Myoe planted tea; yearly offering to his spirit with Uji growers." },
-        { name: "Zōjō-ji", city: "Tokyo", sect: "Jōdo", roles: ["annual kencha"], notes: "Invites iemoto; ritualized civic link." },
-        { name: "Ikegami Honmon-ji", city: "Tokyo", sect: "Nichiren", roles: ["chasen kuyō"], notes: "Ceremony retiring whisks; material piety." },
-        { name: "Gokoku-ji", city: "Tokyo", sect: "Shingon", roles: ["capital hub for large tea events"], notes: "Nickname: a 'tea ceremony honzan'." }
+        { 
+            name: "Daitoku-ji", 
+            kanji: "大徳寺",
+            city: "Kyoto", 
+            sect: "Rinzai", 
+            roles: ["tea-friendly hub", "memorial venues", "abbots as calligraphers"], 
+            notes: "Subtemples host tsukigama (28th); deep ties to Rikyū and later masters.",
+            details: "Founded in 1315, Daitoku-ji became the spiritual center of wabi-cha. Its 22 subtemples include Kōtō-in (高桐院) where Hosokawa Tadaoki is buried, and Zuihō-in (瑞峯院) with its famous dry landscape garden. Abbots like Ikkyū and Takuan left profound marks on tea culture through their calligraphy and direct guidance to tea masters."
+        },
+        { 
+            name: "Myōshin-ji", 
+            kanji: "妙心寺",
+            city: "Kyoto", 
+            sect: "Rinzai", 
+            roles: ["historically stricter"], 
+            notes: "Periods of discouraging tea among clergy; instructive counterpoint to Daitoku-ji.",
+            details: "The largest Rinzai temple complex with 46 subtemples. While historically more austere regarding tea practice among monks, it houses important tea rooms including Taizō-in's (退蔵院) yokushitsu, showing the complex relationship between Zen orthodoxy and tea culture."
+        },
+        { 
+            name: "Kōzan-ji", 
+            kanji: "高山寺",
+            city: "Kyoto", 
+            sect: "Kegon", 
+            roles: ["tea garden heritage", "annual kencha"], 
+            notes: "Myoe planted tea; yearly offering to his spirit with Uji growers.",
+            details: "Home to Japan's oldest tea garden, planted by monk Myōe (明恵) in 1206 using seeds from Eisai. The temple maintains the tradition of 'honcha' (本茶) - original tea. Every May, Uji tea growers offer the first harvest in a solemn kencha ceremony."
+        },
+        { 
+            name: "Zōjō-ji", 
+            kanji: "増上寺",
+            city: "Tokyo", 
+            sect: "Jōdo", 
+            roles: ["annual kencha"], 
+            notes: "Invites iemoto; ritualized civic link.",
+            details: "The Tokugawa family temple hosts major kencha ceremonies where Sen family iemoto offer tea to the Buddha. This Pure Land temple demonstrates how tea transcends sectarian boundaries, linking civic, religious, and aesthetic spheres."
+        },
+        { 
+            name: "Ikegami Honmon-ji", 
+            kanji: "池上本門寺",
+            city: "Tokyo", 
+            sect: "Nichiren", 
+            roles: ["chasen kuyō"], 
+            notes: "Ceremony retiring whisks; material piety.",
+            details: "Famous for its annual chasen kuyō (茶筅供養) where used tea whisks are ritually burned in gratitude. This ceremony, held each autumn, reflects the animistic respect for tools central to tea philosophy - acknowledging the spirit within objects."
+        },
+        { 
+            name: "Gokoku-ji", 
+            kanji: "護国寺",
+            city: "Tokyo", 
+            sect: "Shingon", 
+            roles: ["capital hub for large tea events"], 
+            notes: "Nickname: a 'tea ceremony honzan'.",
+            details: "This Shingon temple, founded by the fifth Tokugawa shogun's mother, hosts massive public tea gatherings. Its Geppō-den (月鳳殿) hall accommodates hundreds for simultaneous tea ceremonies, earning its reputation as Tokyo's 'tea ceremony headquarters'."
+        }
     ];
 
     const EVENTS = [
@@ -647,6 +693,20 @@
                     lineage: "Momoyama innovation with master guidance.", 
                     valueDrivers: ["kiln site", "period", "coherent toriawase role"], 
                     pitfalls: ["attribution drift"] 
+                },
+                {
+                    name: "Hagi (萩)",
+                    diagnostics: ["soft porous body", "pinkish-white glaze", "visible crazing"],
+                    lineage: "Korean potters brought to Hagi domain; prized for transformation through use.",
+                    valueDrivers: ["'seven transformations' patina", "old family kilns", "tea-stained crackle"],
+                    pitfalls: ["forced aging", "artificial staining"]
+                },
+                {
+                    name: "Karatsu (唐津)",
+                    diagnostics: ["sandy clay body", "simple iron decoration", "sturdy foot"],
+                    lineage: "Kyushu kilns with Korean influence; 'First Ido, second Raku, third Karatsu'.",
+                    valueDrivers: ["e-garatsu painted designs", "Korean potter lineages", "natural ash deposits"],
+                    pitfalls: ["modern mass production", "confused attributions"]
                 }
             ]
         },
@@ -696,6 +756,13 @@
                     diagnostics: ["bamboo nodes", "cut marks"], 
                     lineage: "rustic naturalism; temple garden motifs.", 
                     valueDrivers: ["maker/monk carving", "surface patina"] 
+                },
+                {
+                    name: "Chashaku (茶杓)",
+                    diagnostics: ["bamboo node placement", "curve angle", "tip shape"],
+                    lineage: "Tea scoop carved by masters/monks; most intimate utensil.",
+                    valueDrivers: ["carver identity", "poetic name (mei)", "original筒 (tsutsu) case"],
+                    pitfalls: ["posthumous naming", "mismatched cases"]
                 }
             ]
         }
@@ -714,6 +781,69 @@
         { term: "Kuchikiri (口切)", def: "Cutting the seal of the year's tea jar; ceremonial grinding of tencha." }
     ];
 
+    // Comprehensive Kanji Reference
+    const KANJI_REFERENCE = [
+        { japanese: "茶の湯", romaji: "Chanoyu", meaning: "The Way of Tea" },
+        { japanese: "侘び寂び", romaji: "Wabi-sabi", meaning: "Aesthetic of imperfect beauty" },
+        { japanese: "一期一会", romaji: "Ichigo ichie", meaning: "One time, one meeting" },
+        { japanese: "和敬清寂", romaji: "Wa kei sei jaku", meaning: "Harmony, respect, purity, tranquility" },
+        { japanese: "茶禅一味", romaji: "Chazen ichimi", meaning: "Tea and Zen are one taste" },
+        { japanese: "利休", romaji: "Rikyū", meaning: "Sen no Rikyū (tea master)" },
+        { japanese: "珠光", romaji: "Jukō", meaning: "Murata Jukō (tea master)" },
+        { japanese: "紹鷗", romaji: "Jōō", meaning: "Takeno Jōō (tea master)" },
+        { japanese: "栄西", romaji: "Eisai", meaning: "Myōan Eisai (monk)" },
+        { japanese: "一休", romaji: "Ikkyū", meaning: "Ikkyū Sōjun (monk)" },
+        { japanese: "大徳寺", romaji: "Daitoku-ji", meaning: "Major Zen temple in Kyoto" },
+        { japanese: "前大徳", romaji: "Zen-daitoku", meaning: "Former abbot of Daitoku-ji" },
+        { japanese: "書付", romaji: "Kakitsuke", meaning: "Written inscription" },
+        { japanese: "茶碗", romaji: "Chawan", meaning: "Tea bowl" },
+        { japanese: "天目", romaji: "Tenmoku", meaning: "Conical tea bowl type" },
+        { japanese: "井戸", romaji: "Ido", meaning: "Korean tea bowl type" },
+        { japanese: "楽", romaji: "Raku", meaning: "Hand-formed tea bowl type" },
+        { japanese: "志野", romaji: "Shino", meaning: "White-glazed ware" },
+        { japanese: "織部", romaji: "Oribe", meaning: "Green-glazed ware" },
+        { japanese: "萩", romaji: "Hagi", meaning: "Soft-glazed ware from Hagi" },
+        { japanese: "唐津", romaji: "Karatsu", meaning: "Ware from Kyushu" },
+        { japanese: "棗", romaji: "Natsume", meaning: "Tea caddy for thin tea" },
+        { japanese: "茶入", romaji: "Chaire", meaning: "Tea caddy for thick tea" },
+        { japanese: "茶杓", romaji: "Chashaku", meaning: "Tea scoop" },
+        { japanese: "茶筅", romaji: "Chasen", meaning: "Tea whisk" },
+        { japanese: "水指", romaji: "Mizusashi", meaning: "Fresh water container" },
+        { japanese: "釜", romaji: "Kama", meaning: "Iron kettle" },
+        { japanese: "掛軸", romaji: "Kakejiku", meaning: "Hanging scroll" },
+        { japanese: "花入", romaji: "Hanaire", meaning: "Flower vase" },
+        { japanese: "床の間", romaji: "Tokonoma", meaning: "Alcove for display" },
+        { japanese: "箱書", romaji: "Hakogaki", meaning: "Box inscription" },
+        { japanese: "花押", romaji: "Kaō", meaning: "Stylized signature seal" },
+        { japanese: "銘", romaji: "Mei", meaning: "Poetic name" },
+        { japanese: "桐箱", romaji: "Kiribako", meaning: "Paulownia storage box" },
+        { japanese: "仕覆", romaji: "Shifuku", meaning: "Silk pouch for tea caddy" },
+        { japanese: "月釜", romaji: "Tsukigama", meaning: "Monthly tea gathering" },
+        { japanese: "献茶", romaji: "Kencha", meaning: "Tea offering ceremony" },
+        { japanese: "口切", romaji: "Kuchikiri", meaning: "Opening new tea jar" },
+        { japanese: "初釜", romaji: "Hatsugama", meaning: "First tea of the year" },
+        { japanese: "茶会", romaji: "Chakai", meaning: "Tea gathering" },
+        { japanese: "茶事", romaji: "Chaji", meaning: "Formal tea gathering" },
+        { japanese: "懐石", romaji: "Kaiseki", meaning: "Tea ceremony meal" },
+        { japanese: "濃茶", romaji: "Koicha", meaning: "Thick tea" },
+        { japanese: "薄茶", romaji: "Usucha", meaning: "Thin tea" },
+        { japanese: "点前", romaji: "Temae", meaning: "Tea preparation procedure" },
+        { japanese: "亭主", romaji: "Teishu", meaning: "Host of tea gathering" },
+        { japanese: "正客", romaji: "Shōkyaku", meaning: "Main guest" },
+        { japanese: "草庵", romaji: "Sōan", meaning: "Thatched hut tea room" },
+        { japanese: "躙口", romaji: "Nijiriguchi", meaning: "Small entrance to tea room" },
+        { japanese: "露地", romaji: "Roji", meaning: "Tea garden path" },
+        { japanese: "蹲踞", romaji: "Tsukubai", meaning: "Stone water basin" },
+        { japanese: "待合", romaji: "Machiai", meaning: "Waiting shelter" },
+        { japanese: "炉", romaji: "Ro", meaning: "Sunken hearth (winter)" },
+        { japanese: "風炉", romaji: "Furo", meaning: "Portable brazier (summer)" },
+        { japanese: "家元", romaji: "Iemoto", meaning: "Head of tea school" },
+        { japanese: "千家", romaji: "Senke", meaning: "Sen family schools" },
+        { japanese: "表千家", romaji: "Omotesenke", meaning: "One of three Sen schools" },
+        { japanese: "裏千家", romaji: "Urasenke", meaning: "Largest Sen school" },
+        { japanese: "武者小路千家", romaji: "Mushakōjisenke", meaning: "Third Sen school" }
+    ];
+
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         renderTimeline();
@@ -728,6 +858,7 @@
         setupAccordions();
         setupToriawaseLab();
         setupModal();
+        setupKanjiDropdown();
     });
 
     // Render functions
@@ -776,10 +907,10 @@
         
         filtered.forEach(temple => {
             const div = document.createElement('div');
-            div.className = 'bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow';
+            div.className = 'temple-card bg-white rounded-lg border border-gray-200 p-4';
             div.innerHTML = `
                 <div class="flex items-baseline justify-between mb-2">
-                    <h3 class="text-lg font-bold">${temple.name}</h3>
+                    <h3 class="text-lg font-bold">${temple.name} ${temple.kanji}</h3>
                     <span class="text-sm text-gray-500">${temple.city} · ${temple.sect}</span>
                 </div>
                 <p class="text-sm text-gray-700 mb-3">${temple.notes}</p>
@@ -787,6 +918,14 @@
                     ${temple.roles.map(r => `<span class="px-2 py-1 bg-gray-100 text-xs rounded-full">${r}</span>`).join('')}
                 </div>
             `;
+            div.addEventListener('click', () => {
+                openModal({
+                    title: `${temple.name} ${temple.kanji}`,
+                    subtitle: `${temple.city} · ${temple.sect} Buddhism`,
+                    content: temple.details,
+                    footer: `Roles: ${temple.roles.join(', ')}`
+                });
+            });
             container.appendChild(div);
         });
     }
@@ -1024,33 +1163,183 @@
     }
 
     function setupToriawaseLab() {
-        const updateNotes = () => {
+        // Sophisticated analysis engine for toriawase
+        const analyzeEnsemble = () => {
+            const theme = document.getElementById('theme-input').value.toLowerCase();
             const scroll = document.getElementById('scroll-input').value;
             const bowl = document.getElementById('bowl-select').value;
             const caddy = document.getElementById('caddy-select').value;
             const vase = document.getElementById('vase-select').value;
             
             const notes = [];
-            if (scroll.includes('一期')) notes.push("Scroll emphasizes uniqueness → favor quiet textures, avoid loud patterns.");
-            if (bowl === 'Ido') notes.push("Ido foot (kairagi) provides earthy gravity; pair with subtly mounted scroll.");
-            if (caddy === 'Chaire') notes.push("Match shifuku textile to season; choose a quiet natsume if the bowl is already strong.");
-            if (vase === 'Bamboo (node-cut)') notes.push("Bamboo vase echoes temple garden motifs; pick seasonal wildflowers.");
+            
+            // Theme-based analysis
+            if (theme.includes('autumn') || theme.includes('fall') || theme.includes('秋')) {
+                notes.push("Autumn theme calls for warm earth tones. Consider maple leaf motifs on shifuku or russet-glazed pieces.");
+                if (bowl === 'Ido') notes.push("The golden undertones of Ido complement autumn perfectly—its kairagi evokes dried grasses.");
+                if (vase === 'Bronze hanging') notes.push("Bronze hanaire with pampas grass (susuki) captures autumn's metallic light.");
+            }
+            if (theme.includes('moon') || theme.includes('月')) {
+                notes.push("Moon viewing demands restraint—let negative space echo lunar quietude.");
+                if (bowl === 'Raku') notes.push("Black Raku (kuro-raku) creates a void-like depth, perfect for moon contemplation.");
+            }
+            if (theme.includes('spring') || theme.includes('春')) {
+                notes.push("Spring welcomes color—consider e-Shino with plum blossom underglaze or fresh green Oribe.");
+                if (vase === 'Bamboo (node-cut)') notes.push("Fresh-cut bamboo with early wildflowers (violets, yamabuki) embodies spring's emergence.");
+            }
+            if (theme.includes('memorial') || theme.includes('追善')) {
+                notes.push("Memorial gatherings require solemn dignity. Avoid playful or asymmetric pieces.");
+                if (bowl === 'Tenmoku') notes.push("Tenmoku's formality and Buddhist origins make it ideal for memorial services.");
+            }
+            
+            // Scroll-based guidance
+            const scrollAnalysis = {
+                '一期一会': "This scroll demands ultimate sincerity. Every choice should emphasize the unrepeatable nature of this moment. Avoid anything that feels contrived or decorative.",
+                '日々是好日': "'Every day is a good day' invites appreciation of the ordinary. Choose humble, well-used pieces that show the beauty of daily practice.",
+                '和敬清寂': "The four principles of tea require perfect balance. Each utensil should embody one aspect: harmony (soft glazes), respect (proper proportions), purity (clean lines), tranquility (subdued colors).",
+                '松風': "'Pine wind' evokes nature's voice. Emphasize natural materials—unglazed stoneware, bamboo, rough silk.",
+                '雲水': "'Clouds and water' suggests flow and impermanence. Pieces with movement in their glazes or organic forms resonate.",
+                '無': "The character for 'nothingness' requires maximum restraint. Strip the ensemble to essentials—perhaps only black and earth tones."
+            };
+            
+            // Check for exact scroll matches first
+            for (const [key, value] of Object.entries(scrollAnalysis)) {
+                if (scroll.includes(key)) {
+                    notes.push(value);
+                    break;
+                }
+            }
+            
+            // If no exact match, analyze scroll content
+            if (!notes.some(n => n.includes('scroll'))) {
+                if (scroll.includes('心') || scroll.includes('kokoro')) {
+                    notes.push("References to 'heart/mind' call for pieces that reveal inner character—visible clay body, natural ash deposits, honest construction.");
+                } else if (scroll.includes('水') || scroll.includes('mizu')) {
+                    notes.push("Water imagery pairs with pieces showing fluidity—Chosen Karatsu with its running glazes or Hagi with its milky pooling.");
+                } else if (scroll.includes('mountain') || scroll.includes('山')) {
+                    notes.push("Mountain themes suggest stability and weathering. Bizen or Shigaraki with their crusty, geological surfaces fit perfectly.");
+                } else if (scroll.length > 0) {
+                    notes.push("Consider how the scroll's brushwork energy relates to your utensils—bold calligraphy can handle decorated pieces, while delicate writing needs quiet companions.");
+                }
+            }
+            
+            // Bowl-specific insights
+            const bowlInsights = {
+                'Ido': {
+                    'Chaire': "Ido with chaire creates a Korean-Chinese dialogue—ensure the shifuku bridges these aesthetics with subdued geometry.",
+                    'Natsume': "Ido's rusticity can overwhelm delicate natsume. Choose a robust shape with confident lacquer.",
+                    'season': "Ido works year-round but excels in autumn when its warm tones match the season."
+                },
+                'Raku': {
+                    'Chaire': "Raku and chaire represent the ultimate wabi pairing—both shaped by Rikyū's vision. Let nothing distract from this historical resonance.",
+                    'Natsume': "Raku with natsume risks being too 'Sen school orthodox'—add an unexpected element elsewhere.",
+                    'season': "Black Raku deepens winter gatherings; red Raku warms spring dawn ceremonies."
+                },
+                'Tenmoku': {
+                    'Chaire': "Both being karamono, ensure variety—if using yuteki tenmoku, choose a quieter chaire shape.",
+                    'Natsume': "Tenmoku's formality clashes with casual natsume unless the theme specifically calls for such contrast.",
+                    'season': "Tenmoku's depth suits winter's introspection and formal New Year gatherings."
+                },
+                'Shino': {
+                    'Chaire': "Shino's softness complements chaire's strength—the feldspathic white creates breathing room around the dark stoneware.",
+                    'Natsume': "Both being 'soft' aesthetics, add structure elsewhere—perhaps a bold kakejiku or geometric shifuku.",
+                    'season': "Shino evokes snow and suits winter, but e-Shino with underglaze painting can celebrate any season."
+                },
+                'Oribe': {
+                    'Chaire': "Oribe's dynamism can fight with elaborate chaire. Choose simple katatsuki form to ground Oribe's energy.",
+                    'Natsume': "Oribe and decorated natsume together risk visual chaos—one should be plain.",
+                    'season': "Green Oribe resonates with fresh growth—ideal for late spring into summer."
+                },
+                'Hagi': {
+                    'Chaire': "Hagi's transformation through use pairs beautifully with well-traveled chaire showing genuine patina.",
+                    'Natsume': "Both invite gentle handling—this combination suits intimate gatherings among close friends.",
+                    'season': "Hagi's warmth suits autumn; its 'seven transformations' philosophy fits New Year reflection."
+                },
+                'Karatsu': {
+                    'Chaire': "Korean-influenced Karatsu with Chinese-style chaire creates pan-Asian dialogue—very sophisticated when done right.",
+                    'Natsume': "Robust Karatsu can anchor refined natsume—good contrast of folk and urban aesthetics.",
+                    'season': "E-garatsu's iron brushwork suits autumn; plain Karatsu works year-round."
+                }
+            };
+            
+            if (bowlInsights[bowl]) {
+                if (bowlInsights[bowl][caddy]) {
+                    notes.push(bowlInsights[bowl][caddy]);
+                }
+            }
+            
+            // Vase harmony
+            const vaseNotes = {
+                'Bamboo (node-cut)': {
+                    formal: "Single-node bamboo hanaire maintains tea room's rustic vocabulary while adding organic verticality.",
+                    flowers: "Seasonal wildflowers or single camellia branch—never compete with the scroll's message."
+                },
+                'Ceramic (Shigaraki)': {
+                    formal: "Shigaraki's crusty surface and natural ash deposits echo the randomness of nature within controlled space.",
+                    flowers: "Can handle bolder arrangements—autumn grasses or spring branches with movement."
+                },
+                'Bronze hanging': {
+                    formal: "Bronze usubata adds temple gravitas—perfect for memorial or highly formal gatherings.",
+                    flowers: "Demands elegant restraint—single peony, lotus pod, or pine branch."
+                }
+            };
+            
+            if (vaseNotes[vase]) {
+                notes.push(vaseNotes[vase].formal);
+            }
+            
+            // Cross-reference checks
+            if (bowl === 'Oribe' && vase === 'Bronze hanging') {
+                notes.push("⚠️ Oribe's playfulness conflicts with bronze formality—reconsider unless intentionally juxtaposing.");
+            }
+            if (bowl === 'Tenmoku' && vase === 'Bamboo (node-cut)') {
+                notes.push("Tenmoku's Chinese elegance with rustic bamboo creates interesting tension—ensure scroll unifies them.");
+            }
+            if (caddy === 'Natsume' && theme.includes('memorial')) {
+                notes.push("⚠️ Natsume (usucha) may be too casual for memorial—consider switching to chaire for koicha service.");
+            }
+            
+            // General principles
+            if (notes.length < 3) {
+                notes.push("Remember: one focal point per gathering. If the scroll is powerful, subdue utensils. If featuring a special bowl, choose a quiet scroll.");
+            }
+            
+            // Seasonal awareness
+            const month = new Date().getMonth();
+            const seasonalHint = [
+                "January calls for auspicious motifs—pine, bamboo, plum (shō-chiku-bai).",
+                "February's plum blossoms inspire hope before spring—consider red accents.",
+                "March celebrates Girls' Day—shell-shaped pieces or soft colors appropriate.",
+                "April's cherry blossoms demand restraint—let one sakura reference suffice.",
+                "May's fresh tea (shincha) deserves celebration—consider pieces with tea plant motifs.",
+                "June's rain (tsuyu) invites water themes—rain dragon patterns or 'wet' glazes.",
+                "July's heat calls for visual coolness—glass or pale ceramics, water-themed scrolls.",
+                "August's Obon remembrance suits subdued palettes and memorial themes.",
+                "September's moon viewing is paramount—ensure nothing competes with lunar contemplation.",
+                "October's colored leaves inspire warm palettes—rust, gold, and crimson welcomed.",
+                "November's tea year begins with kuchikiri—use your finest, most treasured pieces.",
+                "December's winter solstice calls for depth—dark glazes and candlelit intimacy."
+            ];
+            notes.push(seasonalHint[month]);
             
             const notesContainer = document.getElementById('context-notes');
             notesContainer.innerHTML = notes.map(n => `<li>${n}</li>`).join('');
         };
         
-        document.getElementById('scroll-input').addEventListener('input', updateNotes);
-        document.getElementById('bowl-select').addEventListener('change', updateNotes);
-        document.getElementById('caddy-select').addEventListener('change', updateNotes);
-        document.getElementById('vase-select').addEventListener('change', updateNotes);
+        // Add event listeners
+        document.getElementById('theme-input').addEventListener('input', analyzeEnsemble);
+        document.getElementById('scroll-input').addEventListener('input', analyzeEnsemble);
+        document.getElementById('bowl-select').addEventListener('change', analyzeEnsemble);
+        document.getElementById('caddy-select').addEventListener('change', analyzeEnsemble);
+        document.getElementById('vase-select').addEventListener('change', analyzeEnsemble);
         
-        updateNotes(); // Initial update
+        analyzeEnsemble(); // Initial analysis
     }
 
     function setupModal() {
         const modal = document.getElementById('modal');
         const modalClose = document.getElementById('modal-close');
+        const modalBody = document.getElementById('modal-body');
         
         modalClose.addEventListener('click', () => {
             modal.classList.remove('show');
@@ -1059,6 +1348,49 @@
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 modal.classList.remove('show');
+            }
+        });
+    }
+    
+    function openModal(data) {
+        const modal = document.getElementById('modal');
+        const modalBody = document.getElementById('modal-body');
+        
+        modalBody.innerHTML = `
+            <h3 class="text-2xl font-bold mb-2">${data.title}</h3>
+            ${data.subtitle ? `<p class="text-gray-600 mb-4">${data.subtitle}</p>` : ''}
+            <div class="prose max-w-none">
+                <p>${data.content}</p>
+            </div>
+            ${data.footer ? `<div class="mt-6 pt-4 border-t border-gray-200 text-sm text-gray-600">${data.footer}</div>` : ''}
+        `;
+        
+        modal.classList.add('show');
+    }
+    
+    function setupKanjiDropdown() {
+        const toggle = document.getElementById('kanji-toggle');
+        const dropdown = document.getElementById('kanji-dropdown');
+        
+        // Populate dropdown
+        dropdown.innerHTML = KANJI_REFERENCE.map(item => `
+            <div class="kanji-item">
+                <div class="flex justify-between items-center">
+                    <span class="text-lg font-medium">${item.japanese}</span>
+                    <span class="text-sm text-gray-600">${item.romaji}</span>
+                </div>
+                <div class="text-xs text-gray-500 mt-1">${item.meaning}</div>
+            </div>
+        `).join('');
+        
+        toggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdown.classList.toggle('hidden');
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
             }
         });
     }
