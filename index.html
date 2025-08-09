@@ -19,7 +19,7 @@
 
 
 
-<title>Welcome - Yichen Han / Home Page</title>
+<title>  Yichen Han / Home Page</title>
 
 
 
@@ -29,7 +29,7 @@
 
 <meta property="og:locale" content="en-US">
 <meta property="og:site_name" content="Yichen Han / Home Page">
-<meta property="og:title" content="Welcome">
+<meta property="og:title" content="">
 
 
   <link rel="canonical" href="https://yc-han.github.io/">
@@ -140,13 +140,13 @@
           <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="https://yc-han.github.io/">Yichen Han / Home Page</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/">About</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/">Home</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic →</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture →</a></li>
           
           <li id="theme-toggle" class="masthead__menu-item persist tail">
             <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
@@ -168,100 +168,9 @@
   
 
 
-  <div class="sidebar sticky">
-  
-
-
-
-<div itemscope itemtype="http://schema.org/Person">
-
-  <div class="author__avatar">
-    
-    	<img src="https://yc-han.github.io/images/profile.png" class="author__avatar" alt="Yichen Han">
-    
-  </div>
-
-  <div class="author__content">
-    <h3 class="author__name">Yichen Han</h3>
-    
-    <p class="author__bio">Statistics and Data Science @ LMU Munich; RA @ HZI & StaBLab</p>
-  </div>
-
-  <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">Follow</button>
-    <ul class="author__urls social-icons">
-      <!-- Font Awesome icons / Biographic information  -->
-      
-        <li class="author__desktop"><i class="fa-solid fa-location-dot icon-pad-right" aria-hidden="true"></i>Munich, Germany</li>
-      
-      
-        <li class="author__desktop"><i class="fas fa-fw fa-building-columns icon-pad-right" aria-hidden="true"></i>LMU Munich</li>
-      
-      
-      
-        <li><a href="mailto:yichen.han@campus.lmu.de"><i class="fas fa-fw fa-envelope icon-pad-right" aria-hidden="true"></i>Email</a></li>
-      
-
-      <!-- Font Awesome and Academicons icons / Academic websites -->
-      
-            
-      
-      
-      
-      
-        <li><a href="https://orcid.org/0009-0008-7018-8949"><i class="ai ai-orcid ai-fw icon-pad-right"></i>ORCID</a></li>
-      
-                              
-      
-      
-
-      <!-- Font Awesome icons / Repositories and software development -->
-      
-            
-            
-      
-        <li><a href="https://github.com/Yc-Han"><i class="fab fa-fw fa-github icon-pad-right" aria-hidden="true"></i>GitHub</a></li>
-      
-            
-            
-
-      <!-- Font Awesome icons / Social media -->
-      
-      
-            
-      
-                  
-                  
-      
-            
-            
-      
-        <li><a href="https://www.linkedin.com/in/yichen-han-865092258"><i class="fab fa-fw fa-linkedin icon-pad-right" aria-hidden="true"></i>LinkedIn</a></li>
-            
-      
-            
-                  
-            
-      
-            
-            
-      
-              
-      
-                      
-      
-      
-            
-    </ul>
-  </div>
-</div>
-
-  
-  </div>
-
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Welcome">
+    <meta itemprop="headline" content="">
     
     
     
@@ -269,7 +178,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 class="page__title" itemprop="headline">Welcome
+          <h1 class="page__title" itemprop="headline">
 </h1>
           
         
@@ -279,88 +188,182 @@
       
 
       <section class="page__content" itemprop="text">
-        <style>
-  .dual-intro {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-bottom: 3rem;
+        <script>
+// Subdomain redirect support (activate when subdomains are set up)
+// Uncomment the following lines when you have academic.yourdomain.com and culture.yourdomain.com
+/*
+const host = window.location.hostname;
+if (host.startsWith('academic.')) {
+  window.location.replace('/academic/');
+} else if (host.startsWith('culture.')) {
+  window.location.replace('/culture/');
+}
+*/
+</script>
+
+<style>
+  body {
+    overflow: hidden;
+  }
+  
+  .gateway-container {
+    display: flex;
+    height: 100vh;
+    margin: -3rem -2rem;
+    position: relative;
+  }
+  
+  .gateway-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .gateway-side::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
+  }
+  
+  .gateway-side:hover::before {
+    transform: scale(1.05);
+  }
+  
+  .academic-side {
+    background: linear-gradient(135deg, #FDFBF5 0%, #F0EAD6 100%);
+  }
+  
+  .culture-side {
+    background: linear-gradient(135deg, #F0EAD6 0%, #FDFBF5 100%);
+  }
+  
+  .gateway-side:hover {
+    flex: 1.1;
+  }
+  
+  .gateway-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 400px;
+  }
+  
+  .gateway-title {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--zen-accent, #6B8E23);
+    font-weight: 300;
+  }
+  
+  .gateway-subtitle {
+    font-size: 1.2rem;
+    color: var(--zen-text-light, #666);
+    margin-bottom: 2rem;
+  }
+  
+  .gateway-description {
+    color: var(--zen-text, #3a3a3a);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .gateway-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--zen-accent, #6B8E23);
+    color: white;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  .gateway-btn:hover {
+    background: var(--zen-highlight, #DAA520);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+  }
+  
+  .divider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 100px;
+    background: var(--zen-accent, #6B8E23);
+    opacity: 0.3;
   }
   
   @media (max-width: 768px) {
-    .dual-intro {
-      grid-template-columns: 1fr;
+    .gateway-container {
+      flex-direction: column;
+    }
+    
+    .divider {
+      width: 100px;
+      height: 2px;
+    }
+    
+    .gateway-title {
+      font-size: 2rem;
+    }
+    
+    .gateway-side:hover {
+      flex: 1;
     }
   }
   
-  .intro-section {
-    padding: 2rem;
-    border-radius: 12px;
-    background: white;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  /* Override dark mode for gateway */
+  html[data-theme="dark"] .academic-side {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
   }
   
-  .intro-section h2 {
-    color: var(--zen-accent, #6B8E23);
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-  }
-  
-  .intro-section a.explore-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.6rem 1.2rem;
-    background: var(--zen-accent, #6B8E23);
-    color: white;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-  }
-  
-  .intro-section a.explore-btn:hover {
-    background: var(--zen-highlight, #DAA520);
+  html[data-theme="dark"] .culture-side {
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
   }
 </style>
 
-<div class="dual-intro">
-  <div class="intro-section">
-    <h2>Academic Work</h2>
-    <p>I am an undergraduate in <strong>Statistics &amp; Data Science</strong> at <strong>LMU Munich</strong> and a research assistant with the <a href="https://www.stablab.stat.uni-muenchen.de/">Statistical Consulting Unit (StaBLab)</a> and the <a href="https://www.helmholtz-hzi.de/">Helmholtz Centre for Infection Research (HZI)</a>.</p>
-    
-    <p><strong>Research interests:</strong></p>
-    <ul style="margin-left: 1rem;">
-      <li>Interpretable deep learning</li>
-      <li>Machine learning in genomics</li>
-      <li>Reproducible statistical practice</li>
-    </ul>
-    
-    <a href="/academic/" class="explore-btn">Explore Academic Work →</a>
-  </div>
+<div class="gateway-container">
+  <a href="/academic/" class="gateway-side academic-side">
+    <div class="gateway-content">
+      <h1 class="gateway-title">Academic</h1>
+      <p class="gateway-subtitle">Research &amp; Science</p>
+      <p class="gateway-description">
+        Statistics, Data Science, Machine Learning<br />
+        LMU Munich · StaBLab · HZI
+      </p>
+      <span class="gateway-btn">Enter Academic Site →</span>
+    </div>
+  </a>
   
-  <div class="intro-section">
-    <h2>Culture &amp; Arts</h2>
-    <p>Beyond data and algorithms, I explore the rich traditions of cultural arts, particularly Japanese aesthetics and philosophy. This includes interactive experiences and essays on tea ceremony, Zen philosophy, and the beauty of imperfection.</p>
-    
-    <p><strong>Cultural interests:</strong></p>
-    <ul style="margin-left: 1rem;">
-      <li>Japanese tea ceremony</li>
-      <li>Zen aesthetics and philosophy</li>
-      <li>Traditional arts and crafts</li>
-    </ul>
-    
-    <a href="/culture/" class="explore-btn">Explore Cultural Works →</a>
-  </div>
+  <div class="divider"></div>
+  
+  <a href="/culture/" class="gateway-side culture-side">
+    <div class="gateway-content">
+      <h1 class="gateway-title">Culture</h1>
+      <p class="gateway-subtitle">Arts &amp; Philosophy</p>
+      <p class="gateway-description">
+        Japanese Aesthetics, Tea Ceremony<br />
+        Interactive Digital Experiences
+      </p>
+      <span class="gateway-btn">Enter Culture Site →</span>
+    </div>
+  </a>
 </div>
-
-<h2 id="current-activities">Current Activities</h2>
-
-<ul>
-  <li><strong>Consulting (StaBLab).</strong> I provide statistical guidance on ≈ 20 student and faculty projects each semester—study design, modelling, and reproducible workflows.</li>
-  <li><strong>Research (HZI).</strong> I contribute to the <strong><a href="https://github.com/GenomeNet">GenomeNet</a></strong> project, developing interpretable deep-learning models for prokaryotic phenotype-genome mapping.</li>
-  <li><strong>Cultural Exploration.</strong> Creating interactive digital experiences that bridge traditional arts with modern technology.</li>
-</ul>
-
-<p>For further details see my <strong><a href="/cv/">CV</a></strong>, technical write-ups on the <strong><a href="/year-archive/">blog</a></strong>, or explore my <strong><a href="/essays/">cultural essays</a></strong>.</p>
 
 
         

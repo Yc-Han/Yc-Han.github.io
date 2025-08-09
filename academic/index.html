@@ -19,7 +19,7 @@
 
 
 
-<title>Academic Work - Yichen Han / Home Page</title>
+<title>Academic Portfolio - Yichen Han / Home Page</title>
 
 
 
@@ -29,7 +29,7 @@
 
 <meta property="og:locale" content="en-US">
 <meta property="og:site_name" content="Yichen Han / Home Page">
-<meta property="og:title" content="Academic Work">
+<meta property="og:title" content="Academic Portfolio">
 
 
   <link rel="canonical" href="https://yc-han.github.io/academic/">
@@ -140,13 +140,13 @@
           <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="https://yc-han.github.io/">Yichen Han / Home Page</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/">About</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/">Home</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic →</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture →</a></li>
           
           <li id="theme-toggle" class="masthead__menu-item persist tail">
             <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
@@ -260,9 +260,61 @@
 
   <div class="archive">
     
-      <h1 class="page__title">Academic Work</h1>
+      <h1 class="page__title">Academic Portfolio</h1>
     
     <style>
+  .section-nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--zen-secondary, #F0EAD6);
+  }
+  
+  .section-nav a {
+    color: var(--zen-text, #3a3a3a);
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+  
+  .section-nav a:hover {
+    background: var(--zen-secondary, #F0EAD6);
+    color: var(--zen-accent, #6B8E23);
+  }
+  
+  .cross-link {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem 1rem;
+    background: var(--zen-secondary, #F0EAD6);
+    color: var(--zen-accent, #6B8E23);
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+  
+  .cross-link:hover {
+    background: var(--zen-accent, #6B8E23);
+    color: white;
+  }
+</style>
+
+<a href="/culture/" class="cross-link">→ Culture Site</a>
+
+<div class="section-nav">
+  <a href="/cv/">CV</a>
+  <a href="/publications/">Publications</a>
+  <a href="/teaching/">Teaching</a>
+  <a href="/year-archive/">Blog</a>
+  <a href="https://github.com/">GitHub</a>
+</div>
+
+<style>
   .academic-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
