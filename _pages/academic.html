@@ -3,59 +3,30 @@ layout: archive
 title: "Academic Portfolio"
 permalink: /academic/
 author_profile: true
+classes: academic-standalone
 ---
 
-<style>
-  .section-nav {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--zen-secondary, #F0EAD6);
-  }
-  
-  .section-nav a {
-    color: var(--zen-text, #3a3a3a);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-  }
-  
-  .section-nav a:hover {
-    background: var(--zen-secondary, #F0EAD6);
-    color: var(--zen-accent, #6B8E23);
-  }
-  
-  .cross-link {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    background: var(--zen-secondary, #F0EAD6);
-    color: var(--zen-accent, #6B8E23);
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-  }
-  
-  .cross-link:hover {
-    background: var(--zen-accent, #6B8E23);
-    color: white;
-  }
-</style>
-
-<a href="/culture/" class="cross-link">→ Culture Site</a>
-
-<div class="section-nav">
-  <a href="/cv/">CV</a>
-  <a href="/publications/">Publications</a>
-  <a href="/teaching/">Teaching</a>
-  <a href="/year-archive/">Blog</a>
-  <a href="https://github.com/{{ site.github_username }}">GitHub</a>
+<div class="floating-controls">
+  <button class="floating-btn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+  <a href="/culture/" class="floating-btn" title="Culture site" style="text-decoration: none;">🎋</a>
+  <a href="/" class="floating-btn" title="Home" style="text-decoration: none;">🏠</a>
 </div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? '' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+}
+</script>
 
 <style>
   .academic-grid {

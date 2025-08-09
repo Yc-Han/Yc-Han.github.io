@@ -2,57 +2,31 @@
 layout: archive
 title: "Culture & Arts"
 permalink: /culture/
-author_profile: true
+author_profile: false
+classes: culture-standalone
 ---
 
-<style>
-  .section-nav {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--zen-secondary, #F0EAD6);
-  }
-  
-  .section-nav a {
-    color: var(--zen-text, #3a3a3a);
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    transition: all 0.3s ease;
-  }
-  
-  .section-nav a:hover {
-    background: var(--zen-secondary, #F0EAD6);
-    color: var(--zen-accent, #6B8E23);
-  }
-  
-  .cross-link {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem 1rem;
-    background: var(--zen-secondary, #F0EAD6);
-    color: var(--zen-accent, #6B8E23);
-    text-decoration: none;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-  }
-  
-  .cross-link:hover {
-    background: var(--zen-accent, #6B8E23);
-    color: white;
-  }
-</style>
-
-<a href="/academic/" class="cross-link">→ Academic Site</a>
-
-<div class="section-nav">
-  <a href="/essays/chanoyu/">Tea Ceremony</a>
-  <a href="/essays/">All Essays</a>
+<div class="floating-controls">
+  <button class="floating-btn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+  <a href="/academic/" class="floating-btn" title="Academic site" style="text-decoration: none;">📊</a>
+  <a href="/" class="floating-btn" title="Home" style="text-decoration: none;">🏠</a>
 </div>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const currentTheme = html.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? '' : 'dark';
+  html.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  document.documentElement.setAttribute('data-theme', savedTheme);
+}
+</script>
 
 <style>
   .culture-hero {
@@ -196,4 +170,11 @@ author_profile: true
     "In the practice of tea, the ordinary becomes extraordinary, and the simple act of sharing a bowl of tea becomes a profound meditation on beauty, impermanence, and human connection."
   </blockquote>
   <cite>— Sen no Rikyū</cite>
+</div>
+
+<div class="about-section" style="background: white; border-radius: 12px; padding: 2rem; margin: 3rem 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+  <h3 style="color: var(--zen-accent, #6B8E23); margin-bottom: 1rem; text-align: center;">About</h3>
+  <p style="color: var(--zen-text, #3a3a3a); line-height: 1.6; text-align: center; max-width: 600px; margin: 0 auto;">
+    I am an amateur <em>chawan</em> collector, drawn to the quiet beauty and imperfect harmony of Japanese tea ceramics. Through digital storytelling and interactive experiences, I explore the aesthetic philosophy that finds profound meaning in simplicity and the acceptance of transience.
+  </p>
 </div>
