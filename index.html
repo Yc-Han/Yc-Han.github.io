@@ -19,7 +19,7 @@
 
 
 
-<title>About me - Yichen Han / Home Page</title>
+<title>Welcome 歓迎 - Yichen Han / Home Page</title>
 
 
 
@@ -29,7 +29,7 @@
 
 <meta property="og:locale" content="en-US">
 <meta property="og:site_name" content="Yichen Han / Home Page">
-<meta property="og:title" content="About me">
+<meta property="og:title" content="Welcome 歓迎">
 
 
   <link rel="canonical" href="https://yc-han.github.io/">
@@ -140,19 +140,13 @@
           <li class="masthead__menu-item masthead__menu-item--lg persist"><a href="https://yc-han.github.io/">Yichen Han / Home Page</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/cv/">CV</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/">About</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/year-archive/">Blog Posts</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/academic/">Academic 学術</a></li>
           
             
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/publications/">Publications</a></li>
-          
-            
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/teaching/">Teaching</a></li>
-          
-            
-            <li class="masthead__menu-item"><a href="https://yc-han.github.io/essays/">Culture & Essays</a></li>
+            <li class="masthead__menu-item"><a href="https://yc-han.github.io/culture/">Culture 文化</a></li>
           
           <li id="theme-toggle" class="masthead__menu-item persist tail">
             <a><i id="theme-icon" class="fa-solid fa-sun" aria-hidden="true" title="toggle theme"></i></a>
@@ -267,7 +261,7 @@
 
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="About me">
+    <meta itemprop="headline" content="Welcome 歓迎">
     
     
     
@@ -275,7 +269,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 class="page__title" itemprop="headline">About me
+          <h1 class="page__title" itemprop="headline">Welcome 歓迎
 </h1>
           
         
@@ -285,23 +279,88 @@
       
 
       <section class="page__content" itemprop="text">
-        <p>I am an undergraduate in <strong>Statistics &amp; Data Science</strong> at <strong>LMU Munich</strong> and a research assistant with the <a href="https://www.stablab.stat.uni-muenchen.de/">Statistical Consulting Unit (StaBLab)</a> and the <a href="https://www.helmholtz-hzi.de/">Helmholtz Centre for Infection Research (HZI)</a>.</p>
+        <style>
+  .dual-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 768px) {
+    .dual-intro {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .intro-section {
+    padding: 2rem;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .intro-section h2 {
+    color: var(--zen-accent, #6B8E23);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+  }
+  
+  .intro-section a.explore-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--zen-accent, #6B8E23);
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .intro-section a.explore-btn:hover {
+    background: var(--zen-highlight, #DAA520);
+  }
+</style>
+
+<div class="dual-intro">
+  <div class="intro-section">
+    <h2>Academic Work 学術</h2>
+    <p>I am an undergraduate in <strong>Statistics &amp; Data Science</strong> at <strong>LMU Munich</strong> and a research assistant with the <a href="https://www.stablab.stat.uni-muenchen.de/">Statistical Consulting Unit (StaBLab)</a> and the <a href="https://www.helmholtz-hzi.de/">Helmholtz Centre for Infection Research (HZI)</a>.</p>
+    
+    <p><strong>Research interests:</strong></p>
+    <ul style="margin-left: 1rem;">
+      <li>Interpretable deep learning</li>
+      <li>Machine learning in genomics</li>
+      <li>Reproducible statistical practice</li>
+    </ul>
+    
+    <a href="/academic/" class="explore-btn">Explore Academic Work →</a>
+  </div>
+  
+  <div class="intro-section">
+    <h2>Culture &amp; Arts 文化</h2>
+    <p>Beyond data and algorithms, I explore the rich traditions of cultural arts, particularly Japanese aesthetics and philosophy. This includes interactive experiences and essays on tea ceremony, Zen philosophy, and the beauty of imperfection.</p>
+    
+    <p><strong>Cultural interests:</strong></p>
+    <ul style="margin-left: 1rem;">
+      <li>Japanese tea ceremony (茶の湯)</li>
+      <li>Zen aesthetics and philosophy</li>
+      <li>Traditional arts and crafts</li>
+    </ul>
+    
+    <a href="/culture/" class="explore-btn">Explore Cultural Works →</a>
+  </div>
+</div>
+
+<h2 id="current-activities">Current Activities</h2>
 
 <ul>
-  <li><strong>Consulting (StaBLab).</strong> I provide statistical guidance on ≈ 20 student and faculty projects each semester—study design, modelling, and reproducible workflows. Support on external projects is also provided.</li>
-  <li><strong>Research (HZI).</strong> I contribute to the <strong><a href="https://github.com/GenomeNet">GenomeNet</a></strong> project, developing interpretable deep-learning models for prokaryotic phenotype-genome mapping. I am a member of the <a href="https://www.helmholtz-hzi.de/en/research/research-groups/details/computational-biology-for-infection-research/">Computational Biology for Infection Research (BIFO)</a> department.</li>
+  <li><strong>Consulting (StaBLab).</strong> I provide statistical guidance on ≈ 20 student and faculty projects each semester—study design, modelling, and reproducible workflows.</li>
+  <li><strong>Research (HZI).</strong> I contribute to the <strong><a href="https://github.com/GenomeNet">GenomeNet</a></strong> project, developing interpretable deep-learning models for prokaryotic phenotype-genome mapping.</li>
+  <li><strong>Cultural Exploration.</strong> Creating interactive digital experiences that bridge traditional arts with modern technology.</li>
 </ul>
 
-<p><strong>Research interests</strong></p>
-
-<ul>
-  <li>Interpretable deep learning</li>
-  <li>Adversarial robustness</li>
-  <li>Machine learning in genomics</li>
-  <li>Reproducible statistical practice in empirical science</li>
-</ul>
-
-<p>For further details see my <strong><a href="/cv/">CV</a></strong>, and my technical write-ups on the <strong><a href="/year-archive/">blog</a></strong>.</p>
+<p>For further details see my <strong><a href="/cv/">CV</a></strong>, technical write-ups on the <strong><a href="/year-archive/">blog</a></strong>, or explore my <strong><a href="/essays/">cultural essays</a></strong>.</p>
 
 
         

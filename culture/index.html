@@ -19,7 +19,7 @@
 
 
 
-<title>Tutorial 1 on Relevant Topic in Your Field - Yichen Han / Home Page</title>
+<title>Culture &amp; Arts 文化 - Yichen Han / Home Page</title>
 
 
 
@@ -29,15 +29,13 @@
 
 <meta property="og:locale" content="en-US">
 <meta property="og:site_name" content="Yichen Han / Home Page">
-<meta property="og:title" content="Tutorial 1 on Relevant Topic in Your Field">
+<meta property="og:title" content="Culture &amp; Arts 文化">
 
 
-  <link rel="canonical" href="https://yc-han.github.io/talks/2013-03-01-tutorial-1">
-  <meta property="og:url" content="https://yc-han.github.io/talks/2013-03-01-tutorial-1">
+  <link rel="canonical" href="https://yc-han.github.io/culture/">
+  <meta property="og:url" content="https://yc-han.github.io/culture/">
 
 
-
-  <meta property="og:description" name="description" content="More information here">
 
 
 
@@ -50,9 +48,6 @@
 
 
 
-
-  <meta property="og:type" content="article">
-  <meta property="article:published_time" content="2013-03-01T00:00:00+00:00">
 
 
 
@@ -167,8 +162,6 @@
 
 
 
-
-
 <div id="main" role="main">
   
 
@@ -265,81 +258,177 @@
   </div>
 
 
-  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Tutorial 1 on Relevant Topic in Your Field">
-    <meta itemprop="description" content="More information here">
-    <meta itemprop="datePublished" content="March 01, 2013">
+  <div class="archive">
     
-
-    <div class="page__inner-wrap">
-      
-        <header>
-          <h1 class="page__title" itemprop="headline">Tutorial 1 on Relevant Topic in Your Field
-</h1>
-          
-        
-          <p class="page__date"><strong><i class="fa fa-fw fa-calendar" aria-hidden="true"></i>Date:</strong> <time datetime="2013-03-01T00:00:00+00:00">March 01, 2013</time></p>
-        
-        
-
-        </header>
-      
-
-      <section class="page__content" itemprop="text">
-        <p><a href="http://exampleurl.com">More information here</a></p>
-
-<p>This is a description of your tutorial, note the different field in type. This is a markdown files that can be all markdown-ified like any other post. Yay markdown!</p>
-
-        
-      </section>
-
-      <footer class="page__meta">
-        
-        
-
-
-
-
-      </footer>
-
-      
-
-<section class="page__share">
+      <h1 class="page__title">Culture & Arts 文化</h1>
+    
+    <style>
+  .culture-hero {
+    background: linear-gradient(135deg, var(--zen-secondary, #F0EAD6) 0%, var(--zen-primary, #FDFBF5) 100%);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
   
-    <h4 class="page__share-title">Share on</h4>
+  .culture-hero h2 {
+    color: var(--zen-accent, #6B8E23);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
   
+  .culture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  
+  .culture-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
+  
+  .culture-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    border-color: var(--zen-accent, #6B8E23);
+  }
+  
+  .culture-card-image {
+    height: 200px;
+    background: linear-gradient(135deg, var(--zen-accent, #6B8E23) 0%, var(--zen-highlight, #DAA520) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: white;
+  }
+  
+  .culture-card-content {
+    padding: 1.5rem;
+  }
+  
+  .culture-card h3 {
+    color: var(--zen-accent, #6B8E23);
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+  
+  .culture-card .subtitle {
+    color: var(--zen-highlight, #DAA520);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  
+  .culture-card p {
+    color: var(--zen-text-light, #666);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .culture-card a {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background: var(--zen-accent, #6B8E23);
+    color: white;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  .culture-card a:hover {
+    background: var(--zen-highlight, #DAA520);
+    transform: translateX(4px);
+  }
+  
+  .quote-section {
+    background: var(--zen-secondary, #F0EAD6);
+    border-left: 4px solid var(--zen-accent, #6B8E23);
+    padding: 2rem;
+    margin: 3rem 0;
+    border-radius: 8px;
+  }
+  
+  .quote-section blockquote {
+    font-style: italic;
+    color: var(--zen-text, #3a3a3a);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .quote-section cite {
+    display: block;
+    text-align: right;
+    margin-top: 1rem;
+    color: var(--zen-accent, #6B8E23);
+  }
+</style>
 
-  <a href="https://bsky.app/intent/compose?text=https://yc-han.github.io/talks/2013-03-01-tutorial-1" class="btn btn--bluesky" title="Share on Bluesky"><i class="fab fa-bluesky" aria-hidden="true"></i><span> Bluesky</span></a>
+<div class="culture-hero">
+  <h2>探索文化の美</h2>
+  <p style="font-size: 1.2rem; color: var(--zen-text-light, #666);">
+    Exploring the Beauty of Culture
+  </p>
+  <p style="color: var(--zen-text-light, #666); max-width: 700px; margin: 1rem auto;">
+    Beyond the realm of data and algorithms lies a world of aesthetic traditions and cultural practices. Here, I explore the intersections of art, philosophy, and tradition, with a particular focus on Japanese cultural arts.
+  </p>
+</div>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=https://yc-han.github.io/talks/2013-03-01-tutorial-1" class="btn btn--facebook" title="Share on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
-
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://yc-han.github.io/talks/2013-03-01-tutorial-1" class="btn btn--linkedin" title="Share on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
-
-  <a href="https://x.com/intent/post?text=https://yc-han.github.io/talks/2013-03-01-tutorial-1" class="btn btn--x" title="Share on X"><i class="fab fa-x-twitter" aria-hidden="true"></i><span> X (formerly Twitter)</span></a>
-</section>
-
-
-      
-
-
-  <nav class="pagination">
-    
-      <a href="https://yc-han.github.io/talks/2012-03-01-talk-1" class="pagination--pager" title="Talk 1 on Relevant Topic in Your Field
-">Previous</a>
-    
-    
-      <a href="https://yc-han.github.io/talks/2014-02-01-talk-2" class="pagination--pager" title="Talk 2 on Relevant Topic in Your Field
-">Next</a>
-    
-  </nav>
-
+<div class="culture-grid">
+  
+  <div class="culture-card">
+    <div class="culture-card-image">
+      <span>🍵</span>
     </div>
-
-    
-  </article>
-
+    <div class="culture-card-content">
+      <h3>The Way of Tea</h3>
+      <div class="subtitle">茶の湯 Chanoyu</div>
+      <p>
+        An interactive exploration of the profound bond between Japanese Zen temples and the world of Chanoyu. Discover the history, philosophy, and aesthetics of the tea ceremony through an immersive digital experience.
+      </p>
+      <a href="/essays/chanoyu/">Explore Chanoyu →</a>
+    </div>
+  </div>
   
+  <div class="culture-card">
+    <div class="culture-card-image">
+      <span>📝</span>
+    </div>
+    <div class="culture-card-content">
+      <h3>Cultural Essays</h3>
+      <div class="subtitle">文化随筆 Bunka Zuihitsu</div>
+      <p>
+        A collection of writings on art, aesthetics, and cultural practices. From the philosophy of wabi-sabi to modern interpretations of traditional arts, these essays explore the depth and beauty of cultural traditions.
+      </p>
+      <a href="/essays/">Read Essays →</a>
+    </div>
+  </div>
   
+</div>
+
+<div class="quote-section">
+  <blockquote>
+    "In the practice of tea, the ordinary becomes extraordinary, and the simple act of sharing a bowl of tea becomes a profound meditation on beauty, impermanence, and human connection."
+  </blockquote>
+  <cite>— Sen no Rikyū</cite>
+</div>
+
+<div style="text-align: center; margin-top: 3rem;">
+  <h3 style="color: var(--zen-accent, #6B8E23); margin-bottom: 1rem;">Future Explorations</h3>
+  <p style="color: var(--zen-text-light, #666); max-width: 600px; margin: 0 auto;">
+    This section will continue to grow with new interactive experiences, essays, and explorations of cultural traditions. Stay tuned for upcoming content on Japanese gardens, calligraphy, and the aesthetics of imperfection.
+  </p>
+</div>
+
+  </div>
 </div>
 
 

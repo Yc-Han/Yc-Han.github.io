@@ -1,53 +1,216 @@
+/* Import Noto Sans JP Font */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+
+/* Zen Garden Color Palette */
+:root {
+    --zen-primary: #FDFBF5;      /* Warm white/cream */
+    --zen-secondary: #F0EAD6;     /* Light beige */
+    --zen-accent: #6B8E23;        /* Olive green */
+    --zen-highlight: #DAA520;     /* Golden */
+    --zen-text: #3a3a3a;          /* Dark gray */
+    --zen-text-light: #666666;    /* Medium gray */
+}
+
+/* Global Font and Color Application */
+body, html {
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--zen-primary);
+    color: var(--zen-text);
+}
+
+/* Override Academic Pages default colors */
+.page__content {
+    background-color: var(--zen-primary);
+}
+
+.masthead {
+    background-color: var(--zen-primary);
+    border-bottom: 1px solid var(--zen-secondary);
+}
+
+.masthead__menu-item a {
+    color: var(--zen-text);
+}
+
+.masthead__menu-item a:hover {
+    color: var(--zen-accent);
+}
+
+/* Links */
+a {
+    color: var(--zen-accent);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--zen-highlight);
+    text-decoration: underline;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--zen-text);
+    font-weight: 500;
+}
+
+/* Archive pages */
+.archive {
+    background-color: var(--zen-primary);
+}
+
+.archive__item {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.archive__item:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--zen-secondary);
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.author__avatar img {
+    border: 3px solid var(--zen-accent);
+}
+
+.author__name {
+    color: var(--zen-text);
+    font-weight: 500;
+}
+
+.author__bio {
+    color: var(--zen-text-light);
+}
+
+/* Footer */
+.page__footer {
+    background-color: var(--zen-text);
+    color: var(--zen-primary);
+}
+
+.page__footer a {
+    color: var(--zen-secondary);
+}
+
+.page__footer a:hover {
+    color: var(--zen-highlight);
+}
+
+/* Buttons */
+.btn {
+    background-color: var(--zen-accent);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--zen-highlight);
+    color: white;
+}
+
 /* Global vertical-rhythm tweak */
 p               { margin: 0 0 0.6rem; line-height: 1.45; }
 ul li,
 ol li           { margin: 0 0 0.3rem; }
 
-/* Chanoyu Page Harmonization Styles */
-.chanoyu-container {
-    max-width: 100%;
-    margin: -2rem -1rem 0 -1rem; /* Extend to full width */
+/* Navigation enhancement for balanced sections */
+.greedy-nav {
+    background-color: var(--zen-primary);
 }
 
-@media (min-width: 768px) {
-    .chanoyu-container {
-        margin: -2rem -2rem 0 -2rem;
-    }
+.greedy-nav a {
+    color: var(--zen-text);
+    font-weight: 400;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
-/* Override the author profile sidebar for chanoyu page */
-.layout--single.essays-chanoyu .sidebar__right {
-    display: none;
+.greedy-nav a:hover {
+    color: var(--zen-accent);
+    border-bottom-color: var(--zen-accent);
 }
 
-.layout--single.essays-chanoyu article {
-    grid-column: 1 / -1;
-    max-width: 100%;
+/* Section headers with Zen aesthetic */
+.page__title {
+    color: var(--zen-text);
+    border-bottom: 2px solid var(--zen-accent);
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
 }
 
-/* Ensure the chanoyu container takes full width */
-.layout--single.essays-chanoyu .page__content {
-    max-width: 100%;
-    padding: 0;
+/* Cards and containers */
+.feature__wrapper {
+    background-color: var(--zen-secondary);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
 }
 
-/* Hide the page title for chanoyu (since it has its own hero) */
-.layout--single.essays-chanoyu .page__title {
-    display: none;
+/* Code blocks with Zen colors */
+pre {
+    background-color: var(--zen-secondary);
+    border: 1px solid var(--zen-accent);
+    border-radius: 8px;
 }
 
-/* Ensure modals work properly */
-.chanoyu-container .modal-backdrop {
-    position: fixed !important;
+code {
+    background-color: var(--zen-secondary);
+    color: var(--zen-text);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
 }
 
-/* Harmonize link colors in chanoyu with site theme */
-.chanoyu-container a:not(.nav-link):not(.filter-btn):not(.temple-tab-btn) {
-    color: var(--global-link-color, #6B8E23);
-    text-decoration: none;
+/* Tables */
+table {
+    border-collapse: collapse;
+    width: 100%;
 }
 
-.chanoyu-container a:not(.nav-link):not(.filter-btn):not(.temple-tab-btn):hover {
-    color: var(--global-link-color-hover, #4a6318);
-    text-decoration: underline;
+th {
+    background-color: var(--zen-accent);
+    color: white;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+td {
+    border-bottom: 1px solid var(--zen-secondary);
+    padding: 0.75rem;
+}
+
+tr:hover {
+    background-color: var(--zen-secondary);
+}
+
+/* Forms and inputs */
+input[type="text"],
+input[type="email"],
+textarea {
+    border: 1px solid var(--zen-secondary);
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    font-family: 'Noto Sans JP', sans-serif;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--zen-accent);
+    box-shadow: 0 0 0 2px rgba(107, 142, 35, 0.2);
 }
