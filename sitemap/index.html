@@ -1206,6 +1206,38 @@
             height: 20px;
             margin-right: 8px;
         }
+        .temple-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .temple-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        .kanji-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            min-width: 320px;
+        }
+        .kanji-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        .kanji-item:hover {
+            background: #f9f9f9;
+        }
+        .kanji-item:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -1214,11 +1246,24 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-4">
                 <h1 class="text-2xl font-bold text-gray-900">茶の湯 The Way of Tea</h1>
-                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <div class="flex items-center gap-2">
+                    <div class="relative">
+                        <button id="kanji-toggle" class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium flex items-center gap-1">
+                            <span>漢字</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div id="kanji-dropdown" class="kanji-dropdown hidden">
+                            <!-- Kanji glossary items will be inserted here -->
+                        </div>
+                    </div>
+                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
             <!-- Navigation -->
             <nav id="nav-menu" class="hidden md:flex flex-wrap gap-2 pb-3">
@@ -1248,9 +1293,6 @@
                 </button>
                 <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="toriawase">
                     Toriawase Lab
-                </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="research">
-                    Research
                 </button>
                 <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="glossary">
                     Glossary
