@@ -2,71 +2,73 @@
 title: "The Unbroken Circle: An Interactive Exploration of Chanoyu"
 collection: essays
 permalink: /essays/chanoyu/
-excerpt: 'An interactive exploration of the profound bond between Japanese Zen temples and the world of Chanoyu (茶の湯), the Way of Tea.'
-date: 2025-01-01
-venue: 'Culture & Essays'
-classes: essays-chanoyu
-author_profile: false
+layout: none
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Unbroken Circle: An Interactive Exploration of Chanoyu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Zen Garden Palette -->
+    <style>
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #FDFBF5;
+            color: #3a3a3a;
+        }
+        .bg-primary { background-color: #FDFBF5; }
+        .bg-secondary { background-color: #F0EAD6; }
+        .bg-accent { background-color: #6B8E23; }
+        .text-accent { color: #6B8E23; }
+        .border-accent { border-color: #6B8E23; }
+        .highlight-accent { color: #DAA520; }
+        .nav-link {
+            transition: color 0.3s ease, border-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #6B8E23;
+            border-bottom-color: #6B8E23;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #F0EAD6;
+            border: 3px solid #6B8E23;
+            z-index: 1;
+        }
+        .modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-content {
+            transition: transform 0.3s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container { height: 350px; }
+        }
+    </style>
+</head>
+<body class="bg-primary">
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
-
-<style>
-    .chanoyu-container {
-        font-family: 'Noto Sans JP', sans-serif;
-        background-color: #FDFBF5;
-        color: #3a3a3a;
-    }
-    .bg-primary { background-color: #FDFBF5; }
-    .bg-secondary { background-color: #F0EAD6; }
-    .bg-accent { background-color: #6B8E23; }
-    .text-accent { color: #6B8E23; }
-    .border-accent { border-color: #6B8E23; }
-    .highlight-accent { color: #DAA520; }
-    .nav-link {
-        transition: color 0.3s ease, border-color 0.3s ease;
-        border-bottom: 2px solid transparent;
-    }
-    .nav-link:hover, .nav-link.active {
-        color: #6B8E23;
-        border-bottom-color: #6B8E23;
-    }
-    .timeline-item::before {
-        content: '';
-        position: absolute;
-        top: 20px;
-        left: -8px;
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        background-color: #F0EAD6;
-        border: 3px solid #6B8E23;
-        z-index: 1;
-    }
-    .modal-backdrop {
-        transition: opacity 0.3s ease-in-out;
-    }
-    .modal-content {
-        transition: transform 0.3s ease-in-out;
-    }
-    .chart-container {
-        position: relative;
-        width: 100%;
-        max-width: 600px;
-        margin-left: auto;
-        margin-right: auto;
-        height: 300px;
-        max-height: 400px;
-    }
-    @media (min-width: 768px) {
-        .chart-container { height: 350px; }
-    }
-</style>
-
-<div class="chanoyu-container">
     <header class="bg-primary/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <h1 class="text-xl md:text-2xl font-bold text-accent">茶の湯</h1>
@@ -147,6 +149,13 @@ author_profile: false
             </div>
         </section>
     </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 An Interactive Exploration. All content derived from the report "The Unbroken Circle".</p>
+            <p class="text-sm text-gray-400 mt-2">This application is for educational purposes.</p>
+        </div>
+    </footer>
     
     <div id="modal-backdrop" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden opacity-0 modal-backdrop">
         <div id="modal-container" class="flex items-center justify-center min-h-screen p-4">
@@ -158,7 +167,6 @@ author_profile: false
             </div>
         </div>
     </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -541,3 +549,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderChawan();
 });
 </script>
+</body>
+</html>
