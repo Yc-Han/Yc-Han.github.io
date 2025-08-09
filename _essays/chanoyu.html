@@ -15,33 +15,73 @@ layout: none
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --zen-primary: #FDFBF5;
+            --zen-secondary: #F0EAD6;
+            --zen-accent: #6B8E23;
+            --zen-highlight: #DAA520;
+            --zen-text: #3a3a3a;
+            --zen-text-light: #666666;
+        }
+        
         body {
-            font-family: 'Lato', 'Noto Sans JP', sans-serif;
-            background: linear-gradient(to bottom, #fdfbf7, #f5f2ed);
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, var(--zen-primary) 0%, var(--zen-secondary) 100%);
+            color: var(--zen-text);
+            min-height: 100vh;
         }
         .nav-pill {
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: white;
+            border: 2px solid transparent;
         }
         .nav-pill:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 6px 20px rgba(107, 142, 35, 0.15);
+            border-color: var(--zen-accent);
+        }
+        .nav-pill.active {
+            background: var(--zen-accent);
+            color: white;
+            border-color: var(--zen-accent);
         }
         .card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
             transition: all 0.3s ease;
+            border: 1px solid rgba(107, 142, 35, 0.1);
         }
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(107, 142, 35, 0.12);
+            border-color: var(--zen-accent);
         }
         .timeline-dot {
             position: absolute;
-            left: -9px;
-            width: 18px;
-            height: 18px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
             border-radius: 50%;
-            background: white;
-            border: 3px solid #6B8E23;
+            background: var(--zen-highlight);
+            border: 3px solid var(--zen-accent);
             z-index: 1;
+        }
+        .accordion-btn {
+            width: 100%;
+            text-align: left;
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--zen-text);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .accordion-btn:hover {
+            color: var(--zen-accent);
         }
         .accordion-content {
             max-height: 0;
@@ -49,8 +89,17 @@ layout: none
             transition: max-height 0.3s ease-out;
         }
         .accordion-content.open {
-            max-height: 1000px;
-            transition: max-height 0.5s ease-in;
+            max-height: 500px;
+        }
+        .accordion-icon {
+            transition: transform 0.3s;
+        }
+        .accordion-icon.rotate {
+            transform: rotate(180deg);
+        }
+        /* Optimize accordion performance */
+        .accordion-wrapper {
+            will-change: height;
         }
         .search-highlight {
             background-color: #fef3c7;
@@ -83,26 +132,31 @@ layout: none
             to { transform: translateY(0); opacity: 1; }
         }
         .filter-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
+            padding: 0.375rem 1rem;
             border-radius: 9999px;
             font-size: 0.875rem;
             transition: all 0.2s;
             cursor: pointer;
+            background: white;
+            border: 2px solid var(--zen-secondary);
+            color: var(--zen-text);
         }
         .filter-badge:hover {
             transform: scale(1.05);
+            border-color: var(--zen-accent);
         }
         .filter-badge.active {
-            background-color: #1f2937;
+            background: var(--zen-accent);
             color: white;
+            border-color: var(--zen-accent);
         }
         .section-card {
-            background: white;
-            border-radius: 16px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
-            margin-bottom: 1.5rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            border: 1px solid rgba(107, 142, 35, 0.15);
         }
         .icon {
             display: inline-block;
@@ -112,116 +166,137 @@ layout: none
         }
         .temple-card {
             cursor: pointer;
+            background: white;
+            border: 2px solid transparent;
             transition: all 0.3s ease;
         }
         .temple-card:hover {
+            border-color: var(--zen-accent);
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 20px rgba(107, 142, 35, 0.15);
         }
-        .kanji-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 0.5rem;
+        .golden-accent {
+            color: var(--zen-highlight);
+        }
+        
+        .zen-button {
+            background: var(--zen-accent);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .zen-button:hover {
+            background: #5a7a1f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 142, 35, 0.3);
+        }
+        
+        .translator-box {
+            background: linear-gradient(135deg, white 0%, var(--zen-secondary) 100%);
+            border: 2px solid var(--zen-accent);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(107, 142, 35, 0.15);
+        }
+        
+        .translator-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--zen-secondary);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+        .translator-input:focus {
+            outline: none;
+            border-color: var(--zen-accent);
+            box-shadow: 0 0 0 3px rgba(107, 142, 35, 0.1);
+        }
+        
+        .translator-result {
             background: white;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 100;
-            min-width: 320px;
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid var(--zen-secondary);
+            min-height: 100px;
         }
-        .kanji-item {
-            padding: 8px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            transition: background 0.2s;
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--zen-secondary);
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: var(--zen-text);
+            margin: 0.125rem;
         }
-        .kanji-item:hover {
-            background: #f9f9f9;
-        }
-        .kanji-item:last-child {
-            border-bottom: none;
+        
+        .highlight-box {
+            background: linear-gradient(135deg, var(--zen-secondary) 0%, rgba(218, 165, 32, 0.1) 100%);
+            border-left: 4px solid var(--zen-highlight);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-zen-accent/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between py-4">
-                <h1 class="text-2xl font-bold text-gray-900">茶の湯 The Way of Tea</h1>
-                <div class="flex items-center gap-2">
-                    <div class="relative">
-                        <button id="kanji-toggle" class="px-3 py-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm font-medium flex items-center gap-1">
-                            <span>漢字</span>
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div id="kanji-dropdown" class="kanji-dropdown hidden">
-                            <!-- Kanji glossary items will be inserted here -->
-                        </div>
-                    </div>
-                    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
+                <h1 class="text-2xl font-bold" style="color: var(--zen-accent);">
+                    <span class="golden-accent">茶の湯</span> The Way of Tea
+                </h1>
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
             </div>
             <!-- Navigation -->
             <nav id="nav-menu" class="hidden md:flex flex-wrap gap-2 pb-3">
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="overview">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="overview">
                     Overview
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="timeline">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="translator">
+                    茶道 Translator
+                </button>
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="timeline">
                     Timeline
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="roles">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="roles">
                     Roles
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="temples">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="temples">
                     Temples
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="monks">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="monks">
                     Monks & Bokuseki
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="utensils">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="utensils">
                     Utensils Explorer
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="provenance">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="provenance">
                     Provenance & Hakogaki
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="events">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="events">
                     Temple Events
                 </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="toriawase">
+                <button class="nav-pill nav-btn px-4 py-2 rounded-full text-sm font-medium" data-section="toriawase">
                     Toriawase Lab
-                </button>
-                <button class="nav-pill nav-btn px-4 py-2 rounded-full border border-gray-300 bg-white hover:bg-gray-50 text-sm" data-section="glossary">
-                    Glossary
                 </button>
             </nav>
         </div>
     </header>
 
-    <!-- Search Bar -->
-    <div class="sticky top-16 z-40 bg-white/70 backdrop-blur-sm border-b border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-            <div class="relative">
-                <input type="text" id="search-input" placeholder="Search across all sections (e.g., 'Ido foot', '前大徳', 'kencha', 'Rikyū')" 
-                    class="w-full pl-10 pr-10 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-800">
-                <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-                <button id="clear-search" class="hidden absolute right-3 top-3 p-1 rounded-full bg-gray-100 hover:bg-gray-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -229,24 +304,49 @@ layout: none
         <!-- Overview Section -->
         <section id="overview" class="content-section mb-12">
             <div class="section-card">
-                <h2 class="text-3xl font-bold mb-4">Chanoyu, Temples, and the Modern Collecting Ecosystem</h2>
+                <h2 class="text-3xl font-bold mb-4" style="color: var(--zen-accent);">Chanoyu, Temples, and the Modern Collecting Ecosystem</h2>
                 <div class="prose max-w-none text-gray-700">
                     <p class="mb-4">
-                        Chanoyu emerged from Zen monasteries as a practical aid to meditation and matured—through merchants, monks, and tea masters—into a codified aesthetic and social practice. This interactive guide presents an integrated, richly detailed map of that world: a timeline of key turns, the roles that sustain the Way, temple practices in the present, an explorer for utensils and their diagnostics, and a deep dive into provenance and <em>hakogaki</em>—the documentary spine of value.
+                        Chanoyu emerged from Zen monasteries as a practical aid to meditation and matured—through merchants, monks, and tea masters—into a codified aesthetic and social practice. This interactive guide presents an integrated, richly detailed map of that world.
                     </p>
                     <div class="grid md:grid-cols-3 gap-4 mt-6">
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <h3 class="font-semibold mb-2">Temple Centrality</h3>
+                        <div class="highlight-box">
+                            <h3 class="font-semibold mb-2 golden-accent">Temple Centrality</h3>
                             <p class="text-sm">Daitoku-ji and peers host public <em>tsukigama</em>, memorials, and <em>kencha</em>, while abbots provide bokuseki and endorsements.</p>
                         </div>
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <h3 class="font-semibold mb-2">Wabi-cha Aesthetics</h3>
+                        <div class="highlight-box">
+                            <h3 class="font-semibold mb-2 golden-accent">Wabi-cha Aesthetics</h3>
                             <p class="text-sm">From Murata Jukō to Rikyū—small huts, rustic materials, moral clarity—distinct from earlier <em>karamono</em> display culture.</p>
                         </div>
-                        <div class="bg-gray-50 rounded-lg p-4">
-                            <h3 class="font-semibold mb-2">Collector's Lens</h3>
+                        <div class="highlight-box">
+                            <h3 class="font-semibold mb-2 golden-accent">Collector's Lens</h3>
                             <p class="text-sm">Canon, diagnostics, and <em>denrai</em> (provenance) converge in the box inscription (<em>hakogaki</em>).</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Translator Section -->
+        <section id="translator" class="content-section mb-12">
+            <div class="section-card">
+                <h2 class="text-3xl font-bold mb-6" style="color: var(--zen-accent);">茶道 Tea Ceremony Translator</h2>
+                <div class="translator-box">
+                    <p class="text-sm mb-4" style="color: var(--zen-text-light);">
+                        Enter any Japanese term, romaji, or English word related to tea ceremony. Get instant translations, kanji, and cultural context.
+                    </p>
+                    <input type="text" id="translator-input" class="translator-input" 
+                        placeholder="Try: 'wabi', '茶碗', 'tea bowl', 'ichigo ichie', or any tea term...">
+                    <div id="translator-result" class="translator-result">
+                        <p class="text-sm text-gray-500">Your translation will appear here...</p>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <span class="text-xs text-gray-600">Popular searches:</span>
+                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('一期一会')">一期一会</button>
+                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('wabi-sabi')">wabi-sabi</button>
+                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('tea bowl')">tea bowl</button>
+                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('利休')">利休</button>
+                        <button class="tag cursor-pointer hover:bg-zen-accent hover:text-white transition-colors" onclick="translateTerm('hakogaki')">hakogaki</button>
                     </div>
                 </div>
             </div>
@@ -302,10 +402,10 @@ layout: none
                         <p class="text-gray-700 mb-4">
                             Zen calligraphy by esteemed monks is the most revered tokonoma display. The phrase (e.g., <em>日々是好日</em>, <em>一期一会</em>) sets the <em>shudai</em> and guides the ensemble. Brush energy is read as the living trace of discipline and clarity.
                         </p>
-                        <div class="accordion">
-                            <button class="w-full text-left flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                        <div class="accordion-wrapper">
+                            <button class="accordion-btn">
                                 <span>How bokuseki guides selection</span>
-                                <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
@@ -323,10 +423,10 @@ layout: none
                         <p class="text-gray-700 mb-4">
                             High-ranking abbots (esp. at Daitoku-ji) may host tea as direct Zen instruction, brush scrolls, name/carve utensils, and write authoritative box inscriptions (<em>hakogaki</em>) that canonize objects.
                         </p>
-                        <div class="accordion">
-                            <button class="w-full text-left flex items-center justify-between py-2 text-sm font-medium text-gray-700 hover:text-gray-900">
+                        <div class="accordion-wrapper">
+                            <button class="accordion-btn">
                                 <span>Listing phrase decoder: 前大徳 [Name] 書付</span>
-                                <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
@@ -478,15 +578,7 @@ layout: none
             </div>
         </section>
 
-        <!-- Glossary Section -->
-        <section id="glossary" class="content-section mb-12">
-            <div class="section-card">
-                <h2 class="text-3xl font-bold mb-6">Glossary (Kanji included where relevant)</h2>
-                <div id="glossary-container" class="grid md:grid-cols-2 gap-4">
-                    <!-- Glossary items will be inserted here -->
-                </div>
-            </div>
-        </section>
+
     </main>
 
     <!-- Modal -->
@@ -504,10 +596,10 @@ layout: none
     </div>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8 mt-16">
+    <footer class="mt-16 py-8 border-t-2" style="background: var(--zen-secondary); border-color: var(--zen-accent);">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2025 Chanoyu Interactive. Educational content for the study of the Way of Tea.</p>
-            <p class="text-sm text-gray-400 mt-2">This site is self-contained for offline use.</p>
+            <p style="color: var(--zen-text);">© 2025 Chanoyu Interactive. Educational content for the study of the Way of Tea.</p>
+            <p class="text-sm mt-2" style="color: var(--zen-text-light);">This site is self-contained for offline use.</p>
         </div>
     </footer>
 
@@ -774,81 +866,26 @@ layout: none
         }
     ];
 
-    const GLOSSARY = [
-        { term: "Chanoyu (茶の湯)", def: "The Japanese 'Way of Tea'; an aesthetic–ethical practice centered on preparing and sharing matcha." },
-        { term: "Chazen ichimi (茶禅一味)", def: "Tea and Zen are 'one taste': identical in ultimate aim (awakening)." },
-        { term: "Bokuseki (墨蹟)", def: "Zen calligraphy; preferred tokonoma scroll in tea for setting spiritual theme (shudai)." },
-        { term: "Hakogaki (箱書)", def: "Inscription on a utensil's storage box by an authority, certifying identity/provenance." },
-        { term: "Meibutsu (名物)", def: "Famous/celebrated objects within the tea canon; often with long denrai." },
-        { term: "Denrai (伝来)", def: "Provenance; chain of transmission/ownership and documentation." },
-        { term: "Toriawase (取り合わせ)", def: "Curated ensemble of utensils for a specific gathering aligned to a theme." },
-        { term: "Tsukigama (月釜)", def: "Monthly public tea events often at temples; training + community." },
-        { term: "Kencha (献茶)", def: "Tea offering ceremony at shrines/temples, public since Meiji." },
-        { term: "Kuchikiri (口切)", def: "Cutting the seal of the year's tea jar; ceremonial grinding of tencha." }
+    // Translation dictionary for the translator
+    const TRANSLATION_DICTIONARY = [
+        { japanese: "茶の湯", romaji: "chanoyu", english: "way of tea", explanation: "The Japanese tea ceremony; an aesthetic and spiritual practice centered on preparing and sharing matcha." },
+        { japanese: "茶道", romaji: "chadō", english: "way of tea", explanation: "Alternative reading for the Way of Tea, emphasizing the spiritual path aspect." },
+        { japanese: "侘び寂び", romaji: "wabi-sabi", english: "aesthetic of imperfect beauty", explanation: "Finding beauty in imperfection and impermanence." },
+        { japanese: "一期一会", romaji: "ichigo ichie", english: "one time one meeting", explanation: "Each tea gathering is unique and will never recur." },
+        { japanese: "茶禅一味", romaji: "chazen ichimi", english: "tea and zen are one taste", explanation: "Tea practice and Zen meditation share the same essence." },
+        { japanese: "利休", romaji: "rikyū", english: "Sen no Rikyū", explanation: "Greatest tea master who perfected wabi-cha." },
+        { japanese: "茶碗", romaji: "chawan", english: "tea bowl", explanation: "The ceramic bowl for drinking matcha." },
+        { japanese: "天目", romaji: "tenmoku", english: "tenmoku bowl", explanation: "Conical Chinese tea bowl with dark iron glaze." },
+        { japanese: "井戸", romaji: "ido", english: "ido bowl", explanation: "Korean rice bowl adopted for tea." },
+        { japanese: "楽", romaji: "raku", english: "raku bowl", explanation: "Hand-formed tea bowl created under Rikyū's guidance." },
+        { japanese: "茶杓", romaji: "chashaku", english: "tea scoop", explanation: "Bamboo scoop for transferring matcha." },
+        { japanese: "箱書", romaji: "hakogaki", english: "box inscription", explanation: "Authentication written on storage box." },
+        { japanese: "前大徳", romaji: "zen-daitoku", english: "former Daitoku-ji abbot", explanation: "Former abbot of Daitoku-ji temple." },
+        { japanese: "月釜", romaji: "tsukigama", english: "monthly tea gathering", explanation: "Regular monthly public tea gathering." },
+        { japanese: "献茶", romaji: "kencha", english: "tea offering", explanation: "Ritual offering of tea to deity or Buddha." }
     ];
 
-    // Comprehensive Kanji Reference
-    const KANJI_REFERENCE = [
-        { japanese: "茶の湯", romaji: "Chanoyu", meaning: "The Way of Tea" },
-        { japanese: "侘び寂び", romaji: "Wabi-sabi", meaning: "Aesthetic of imperfect beauty" },
-        { japanese: "一期一会", romaji: "Ichigo ichie", meaning: "One time, one meeting" },
-        { japanese: "和敬清寂", romaji: "Wa kei sei jaku", meaning: "Harmony, respect, purity, tranquility" },
-        { japanese: "茶禅一味", romaji: "Chazen ichimi", meaning: "Tea and Zen are one taste" },
-        { japanese: "利休", romaji: "Rikyū", meaning: "Sen no Rikyū (tea master)" },
-        { japanese: "珠光", romaji: "Jukō", meaning: "Murata Jukō (tea master)" },
-        { japanese: "紹鷗", romaji: "Jōō", meaning: "Takeno Jōō (tea master)" },
-        { japanese: "栄西", romaji: "Eisai", meaning: "Myōan Eisai (monk)" },
-        { japanese: "一休", romaji: "Ikkyū", meaning: "Ikkyū Sōjun (monk)" },
-        { japanese: "大徳寺", romaji: "Daitoku-ji", meaning: "Major Zen temple in Kyoto" },
-        { japanese: "前大徳", romaji: "Zen-daitoku", meaning: "Former abbot of Daitoku-ji" },
-        { japanese: "書付", romaji: "Kakitsuke", meaning: "Written inscription" },
-        { japanese: "茶碗", romaji: "Chawan", meaning: "Tea bowl" },
-        { japanese: "天目", romaji: "Tenmoku", meaning: "Conical tea bowl type" },
-        { japanese: "井戸", romaji: "Ido", meaning: "Korean tea bowl type" },
-        { japanese: "楽", romaji: "Raku", meaning: "Hand-formed tea bowl type" },
-        { japanese: "志野", romaji: "Shino", meaning: "White-glazed ware" },
-        { japanese: "織部", romaji: "Oribe", meaning: "Green-glazed ware" },
-        { japanese: "萩", romaji: "Hagi", meaning: "Soft-glazed ware from Hagi" },
-        { japanese: "唐津", romaji: "Karatsu", meaning: "Ware from Kyushu" },
-        { japanese: "棗", romaji: "Natsume", meaning: "Tea caddy for thin tea" },
-        { japanese: "茶入", romaji: "Chaire", meaning: "Tea caddy for thick tea" },
-        { japanese: "茶杓", romaji: "Chashaku", meaning: "Tea scoop" },
-        { japanese: "茶筅", romaji: "Chasen", meaning: "Tea whisk" },
-        { japanese: "水指", romaji: "Mizusashi", meaning: "Fresh water container" },
-        { japanese: "釜", romaji: "Kama", meaning: "Iron kettle" },
-        { japanese: "掛軸", romaji: "Kakejiku", meaning: "Hanging scroll" },
-        { japanese: "花入", romaji: "Hanaire", meaning: "Flower vase" },
-        { japanese: "床の間", romaji: "Tokonoma", meaning: "Alcove for display" },
-        { japanese: "箱書", romaji: "Hakogaki", meaning: "Box inscription" },
-        { japanese: "花押", romaji: "Kaō", meaning: "Stylized signature seal" },
-        { japanese: "銘", romaji: "Mei", meaning: "Poetic name" },
-        { japanese: "桐箱", romaji: "Kiribako", meaning: "Paulownia storage box" },
-        { japanese: "仕覆", romaji: "Shifuku", meaning: "Silk pouch for tea caddy" },
-        { japanese: "月釜", romaji: "Tsukigama", meaning: "Monthly tea gathering" },
-        { japanese: "献茶", romaji: "Kencha", meaning: "Tea offering ceremony" },
-        { japanese: "口切", romaji: "Kuchikiri", meaning: "Opening new tea jar" },
-        { japanese: "初釜", romaji: "Hatsugama", meaning: "First tea of the year" },
-        { japanese: "茶会", romaji: "Chakai", meaning: "Tea gathering" },
-        { japanese: "茶事", romaji: "Chaji", meaning: "Formal tea gathering" },
-        { japanese: "懐石", romaji: "Kaiseki", meaning: "Tea ceremony meal" },
-        { japanese: "濃茶", romaji: "Koicha", meaning: "Thick tea" },
-        { japanese: "薄茶", romaji: "Usucha", meaning: "Thin tea" },
-        { japanese: "点前", romaji: "Temae", meaning: "Tea preparation procedure" },
-        { japanese: "亭主", romaji: "Teishu", meaning: "Host of tea gathering" },
-        { japanese: "正客", romaji: "Shōkyaku", meaning: "Main guest" },
-        { japanese: "草庵", romaji: "Sōan", meaning: "Thatched hut tea room" },
-        { japanese: "躙口", romaji: "Nijiriguchi", meaning: "Small entrance to tea room" },
-        { japanese: "露地", romaji: "Roji", meaning: "Tea garden path" },
-        { japanese: "蹲踞", romaji: "Tsukubai", meaning: "Stone water basin" },
-        { japanese: "待合", romaji: "Machiai", meaning: "Waiting shelter" },
-        { japanese: "炉", romaji: "Ro", meaning: "Sunken hearth (winter)" },
-        { japanese: "風炉", romaji: "Furo", meaning: "Portable brazier (summer)" },
-        { japanese: "家元", romaji: "Iemoto", meaning: "Head of tea school" },
-        { japanese: "千家", romaji: "Senke", meaning: "Sen family schools" },
-        { japanese: "表千家", romaji: "Omotesenke", meaning: "One of three Sen schools" },
-        { japanese: "裏千家", romaji: "Urasenke", meaning: "Largest Sen school" },
-        { japanese: "武者小路千家", romaji: "Mushakōjisenke", meaning: "Third Sen school" }
-    ];
+
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
@@ -857,14 +894,12 @@ layout: none
         renderTemples();
         renderUtensils();
         renderEvents();
-        renderGlossary();
         setupNavigation();
-        setupSearch();
         setupFilters();
         setupAccordions();
         setupToriawaseLab();
         setupModal();
-        setupKanjiDropdown();
+        setupTranslator();
     });
 
     // Render functions
@@ -955,10 +990,10 @@ layout: none
                             <h4 class="font-bold mb-2">${item.name}</h4>
                             ${item.lineage ? `<p class="text-sm text-gray-600 mb-3">${item.lineage}</p>` : ''}
                             <div class="space-y-2">
-                                <div class="accordion">
-                                    <button class="w-full text-left flex items-center justify-between py-1 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                <div class="accordion-wrapper">
+                                    <button class="accordion-btn">
                                         <span>Diagnostics</span>
-                                        <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                         </svg>
                                     </button>
@@ -969,10 +1004,10 @@ layout: none
                                     </div>
                                 </div>
                                 ${item.valueDrivers ? `
-                                <div class="accordion">
-                                    <button class="w-full text-left flex items-center justify-between py-1 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                <div class="accordion-wrapper">
+                                    <button class="accordion-btn">
                                         <span>Value drivers</span>
-                                        <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                         </svg>
                                     </button>
@@ -984,10 +1019,10 @@ layout: none
                                 </div>
                                 ` : ''}
                                 ${item.pitfalls ? `
-                                <div class="accordion">
-                                    <button class="w-full text-left flex items-center justify-between py-1 text-sm font-medium text-gray-700 hover:text-gray-900">
+                                <div class="accordion-wrapper">
+                                    <button class="accordion-btn">
                                         <span>Common pitfalls</span>
-                                        <svg class="w-4 h-4 transform rotate-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 accordion-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                         </svg>
                                     </button>
@@ -1027,18 +1062,7 @@ layout: none
         });
     }
 
-    function renderGlossary() {
-        const container = document.getElementById('glossary-container');
-        GLOSSARY.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'bg-white rounded-lg border border-gray-200 p-4';
-            div.innerHTML = `
-                <h3 class="font-bold mb-1">${item.term}</h3>
-                <p class="text-sm text-gray-700">${item.def}</p>
-            `;
-            container.appendChild(div);
-        });
-    }
+
 
     // Setup functions
     function setupNavigation() {
@@ -1077,60 +1101,7 @@ layout: none
         });
     }
 
-    function setupSearch() {
-        const searchInput = document.getElementById('search-input');
-        const clearButton = document.getElementById('clear-search');
-        
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            
-            if (query) {
-                clearButton.classList.remove('hidden');
-                // Add search functionality here
-                highlightSearchResults(query);
-            } else {
-                clearButton.classList.add('hidden');
-                clearHighlights();
-            }
-        });
-        
-        clearButton.addEventListener('click', () => {
-            searchInput.value = '';
-            clearButton.classList.add('hidden');
-            clearHighlights();
-        });
-    }
 
-    function highlightSearchResults(query) {
-        // Simple highlight implementation
-        const sections = document.querySelectorAll('.content-section');
-        sections.forEach(section => {
-            const walker = document.createTreeWalker(
-                section,
-                NodeFilter.SHOW_TEXT,
-                null,
-                false
-            );
-            
-            let node;
-            while (node = walker.nextNode()) {
-                const parent = node.parentNode;
-                if (parent.tagName !== 'SCRIPT' && parent.tagName !== 'STYLE') {
-                    const text = node.textContent;
-                    if (text.toLowerCase().includes(query)) {
-                        // Highlight logic here
-                    }
-                }
-            }
-        });
-    }
-
-    function clearHighlights() {
-        document.querySelectorAll('.search-highlight').forEach(el => {
-            const text = el.textContent;
-            el.replaceWith(text);
-        });
-    }
 
     function setupFilters() {
         // Temple filters
@@ -1156,15 +1127,25 @@ layout: none
         });
     }
 
+    // Optimized accordion setup - use event delegation
+    let accordionInitialized = false;
+    
     function setupAccordions() {
-        document.querySelectorAll('.accordion button').forEach(button => {
-            button.addEventListener('click', () => {
-                const content = button.nextElementSibling;
-                const icon = button.querySelector('svg');
-                
+        if (accordionInitialized) return; // Prevent multiple event listeners
+        accordionInitialized = true;
+        
+        // Use event delegation on document body for better performance
+        document.body.addEventListener('click', (e) => {
+            const button = e.target.closest('.accordion-btn');
+            if (!button) return;
+            
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('.accordion-icon');
+            
+            if (content && content.classList.contains('accordion-content')) {
                 content.classList.toggle('open');
-                icon.classList.toggle('rotate-180');
-            });
+                if (icon) icon.classList.toggle('rotate');
+            }
         });
     }
 
@@ -1374,32 +1355,64 @@ layout: none
         modal.classList.add('show');
     }
     
-    function setupKanjiDropdown() {
-        const toggle = document.getElementById('kanji-toggle');
-        const dropdown = document.getElementById('kanji-dropdown');
+    // Setup translator
+    function setupTranslator() {
+        const input = document.getElementById('translator-input');
+        let debounceTimer;
         
-        // Populate dropdown
-        dropdown.innerHTML = KANJI_REFERENCE.map(item => `
-            <div class="kanji-item">
-                <div class="flex justify-between items-center">
-                    <span class="text-lg font-medium">${item.japanese}</span>
-                    <span class="text-sm text-gray-600">${item.romaji}</span>
-                </div>
-                <div class="text-xs text-gray-500 mt-1">${item.meaning}</div>
-            </div>
-        `).join('');
-        
-        toggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle('hidden');
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
-            }
+        input.addEventListener('input', (e) => {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                if (e.target.value.trim()) {
+                    translateTerm(e.target.value);
+                } else {
+                    document.getElementById('translator-result').innerHTML = '<p class="text-sm text-gray-500">Your translation will appear here...</p>';
+                }
+            }, 300);
         });
     }
+
+    // Translator function
+    function translateTerm(input) {
+        const searchTerm = input.toLowerCase().trim();
+        const resultDiv = document.getElementById('translator-result');
+        
+        // Search through comprehensive dictionary
+        const results = TRANSLATION_DICTIONARY.filter(entry => 
+            entry.japanese.includes(searchTerm) ||
+            entry.romaji.toLowerCase().includes(searchTerm) ||
+            entry.english.toLowerCase().includes(searchTerm)
+        );
+        
+        if (results.length > 0) {
+            let html = '<div class="space-y-3">';
+            results.forEach(result => {
+                html += `
+                    <div class="border-l-4 border-zen-accent pl-3">
+                        <div class="flex flex-wrap items-baseline gap-2 mb-1">
+                            <span class="text-xl font-bold">${result.japanese}</span>
+                            <span class="text-sm" style="color: var(--zen-text-light);">${result.romaji}</span>
+                            <span class="text-sm font-medium">${result.english}</span>
+                        </div>
+                        <p class="text-sm" style="color: var(--zen-text);">${result.explanation}</p>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            resultDiv.innerHTML = html;
+        } else {
+            resultDiv.innerHTML = `
+                <p class="text-sm text-gray-500">No results found for "${input}". Try searching for related terms or check your spelling.</p>
+                <p class="text-xs text-gray-400 mt-2">Tip: You can search in Japanese (茶碗), romaji (chawan), or English (tea bowl).</p>
+            `;
+        }
+    }
+
+    // Make translateTerm globally accessible for quick search buttons
+    window.translateTerm = function(term) {
+        document.getElementById('translator-input').value = term;
+        translateTerm(term);
+    };
     </script>
 </body>
 </html>
