@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Welcome 歓迎"
+title: "Welcome"
 author_profile: true
 redirect_from: 
   - /about/
@@ -52,7 +52,7 @@ redirect_from:
 
 <div class="dual-intro">
   <div class="intro-section">
-    <h2>Academic Work 学術</h2>
+    <h2>Academic Work</h2>
     <p>I am an undergraduate in <strong>Statistics & Data Science</strong> at <strong>LMU Munich</strong> and a research assistant with the <a href="https://www.stablab.stat.uni-muenchen.de/">Statistical Consulting Unit (StaBLab)</a> and the <a href="https://www.helmholtz-hzi.de/">Helmholtz Centre for Infection Research (HZI)</a>.</p>
     
     <p><strong>Research interests:</strong></p>
@@ -66,12 +66,12 @@ redirect_from:
   </div>
   
   <div class="intro-section">
-    <h2>Culture & Arts 文化</h2>
+    <h2>Culture & Arts</h2>
     <p>Beyond data and algorithms, I explore the rich traditions of cultural arts, particularly Japanese aesthetics and philosophy. This includes interactive experiences and essays on tea ceremony, Zen philosophy, and the beauty of imperfection.</p>
     
     <p><strong>Cultural interests:</strong></p>
     <ul style="margin-left: 1rem;">
-      <li>Japanese tea ceremony (茶の湯)</li>
+      <li>Japanese tea ceremony</li>
       <li>Zen aesthetics and philosophy</li>
       <li>Traditional arts and crafts</li>
     </ul>

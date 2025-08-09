@@ -14,8 +14,37 @@
 /* Global Font and Color Application */
 body, html {
     font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--zen-primary);
+    background-color: var(--zen-primary) !important;
     color: var(--zen-text);
+}
+
+/* Fix for dark mode */
+html[data-theme="dark"] body {
+    background-color: #1a1a1a !important;
+    color: #e0e0e0 !important;
+}
+
+html[data-theme="dark"] {
+    --zen-primary: #1a1a1a;
+    --zen-secondary: #2a2a2a;
+    --zen-accent: #8eb34a;
+    --zen-highlight: #f0c420;
+    --zen-text: #e0e0e0;
+    --zen-text-light: #b0b0b0;
+}
+
+html[data-theme="dark"] .page__content,
+html[data-theme="dark"] .archive,
+html[data-theme="dark"] .masthead {
+    background-color: #1a1a1a !important;
+}
+
+html[data-theme="dark"] .intro-section,
+html[data-theme="dark"] .academic-card,
+html[data-theme="dark"] .culture-card,
+html[data-theme="dark"] .archive__item {
+    background-color: #2a2a2a !important;
+    color: #e0e0e0 !important;
 }
 
 /* Override Academic Pages default colors */

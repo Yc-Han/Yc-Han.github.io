@@ -11,10 +11,10 @@ main:
   - title: "About"
     url: /
 
-  - title: "Academic 学術"
+  - title: "Academic"
     url: /academic/
   
-  - title: "Culture 文化"
+  - title: "Culture"
     url: /culture/    
     
 #  - title: "Portfolio"
