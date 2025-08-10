@@ -165,21 +165,7 @@
     </section>
 
     <!-- Wisdom of Tea: Quotes carousel -->
-    <section id="wisdom" class="section-card">
-      <div class="flex items-center justify-between mb-2">
-        <h3 class="text-lg font-bold">Wisdom of the Tea Masters</h3>
-        <div class="flex gap-2">
-          <button id="quote-prev" class="filter-badge" aria-label="Previous quote">Previous</button>
-          <button id="quote-next" class="filter-badge" aria-label="Next quote">Next</button>
-        </div>
-      </div>
-      <p class="text-sm text-gray-600 mb-3">Original Japanese with an elegant English rendering. One at a time.</p>
-      <div id="quote-box" class="p-4 rounded-lg border border-gray-200 bg-white">
-        <div class="text-xl leading-relaxed mb-3" id="quote-jp" style="font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;"></div>
-        <div class="text-sm text-gray-700 mb-2" id="quote-en"></div>
-        <div class="text-xs text-gray-500" id="quote-meta"></div>
-      </div>
-    </section>
+    
 
     <section class="section-card">
       <h3 class="text-lg font-bold mb-2">Further Reading (suggested starting points)</h3>
@@ -190,59 +176,12 @@
       </ul>
     </section>
   </main>
+  <footer class="mt-12 py-8 border-t-2" style="background: var(--zen-secondary); border-color: var(--zen-accent)">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p style="color: var(--zen-text)">© 2025 Chanoyu Interactive. Educational content for the study of the Way of Tea.</p>
+    </div>
+  </footer>
 </body>
-<script>
-  // Quotes: original Japanese and an English rendering. Sources noted.
-  // Carefully selected, widely attested lines to avoid misattribution.
-  const QUOTES = [
-    // Philosophical Teachings and Zen Insights
-    { author: '栄西（明菴栄西）', source: '『喫茶養生記』', jp: '茶は養生の仙薬なり。延齢の妙術なり。', en: 'Tea is a miraculous elixir for health, a wondrous method for longevity.' },
-    { author: '村田珠光', source: '『珠光心の文』', jp: '心の師とはなれ、心を師とせざれ。', en: 'Become the master of your mind; do not let your mind become your master.' },
-    { author: '村田珠光', source: '—', jp: '巧者をばそねみ、初心の者をば見下す事、一段勿体無き事共也。', en: 'To envy the adept and to look down upon the beginner are exceedingly deplorable things.' },
-    { author: '千利休', source: '—', jp: '頭を下げて守れるものもあれば、頭を下げる故に守れないものもある。', en: 'There are things that can be preserved by bowing one’s head, and things that, by bowing, one cannot preserve.' },
-    { author: '千利休', source: '—', jp: '家は漏らぬほど、食事は飢えぬほどにて足ることなり。', en: 'A house is sufficient if it does not leak; food is enough if it keeps one from hunger.' },
-    { author: '一休宗純', source: '—', jp: '大空の月、もろもろの水に宿りたまうといえども、濁れる水には宿りたまわず、澄める水のみ宿りたまうがごとし。', en: 'The full moon of the sky reflects in every pool of water; yet it will not dwell in cloudy water, only in water that is clear.' },
-    { author: '一休宗純', source: '—', jp: '今日ほめて明日わるく言う人の口。泣くも笑うも嘘の世の中。', en: 'Today they praise you, tomorrow they malign you. In this world of ours, both tears and laughter are lies.' },
-    { author: '一休宗純', source: '—', jp: '世の中は食うては糞して寝て起きて、さてその後は死ぬるばかりよ。', en: 'The world is nothing more than eating, shitting, sleeping, and waking — and after that, all that remains is to die.' },
-    { author: '一休宗純', source: '—', jp: '死にとうない。', en: 'I don’t want to die.' },
-
-    // Tea Practice and Etiquette Principles
-    { author: '千利休', source: '—', jp: '茶の湯とはただ湯をわかし茶を点てて飲むばかりなる事と知るべし。', en: 'Tea ceremony is nothing other than boiling water, making tea, and drinking it — that is all you need to understand.' },
-    { author: '千利休', source: '「七則」（伝）', jp: '茶は服のよきように、炭は湯の沸くように、夏は涼しく冬は暖かに、花は野にあるように、刻限は早めに、降らずとも雨の用意、相客に心せよ。', en: 'Serve tea to suit your guests; lay the charcoal so the water boils well; in summer provide coolness, in winter warmth; arrange flowers as though in the field; be ahead of time; prepare for rain even if it does not fall; and give every consideration to your fellow guests.' },
-    { author: '千利休', source: '—', jp: '常の茶湯なりとも、路地へ入るより出づるまで、一期に一度の会のように亭主を敬ひ畏るべし。', en: 'Even if it is an ordinary tea gathering, from entering the roji until departing, honor and revere the host as if it were a once-in-a-lifetime meeting.' },
-    { author: '千利休', source: '—', jp: '時ならず客の来らば、点前をば心は草に、技を慎め。', en: 'If an unexpected guest arrives, perform the procedure with a humble, grass-like heart, and take utmost care in your technique.' },
-    { author: '千利休', source: '—', jp: '何にても置き付けかへる手離れは、恋しき人に別るると知れ。', en: 'Whenever you set down an utensil and withdraw your hand, do so as if parting from a beloved person.' },
-    { author: '千利休', source: '—', jp: '習ひつつ見てこそ習へ、習はずによしあし言ふは愚かなりけり。', en: 'Learn by practice and observation before you speak; to judge good or bad without learning is folly.' },
-    { author: '千利休', source: '—', jp: '（弟子に向かって）もしこれができたら、私はあなたの弟子になりましょう。', en: 'To a pupil: “If you can truly do that, then I shall become your disciple.”' },
-
-    // Wabi-Sabi Aesthetics and Poetry
-    { author: '村田珠光', source: '—', jp: '月も雲間のなきは嫌にて候。', en: 'I dislike a moon with no veil of clouds.' },
-    { author: '村田珠光', source: '—', jp: '一年の内にも十月こそ侘びなれ。', en: 'Of all the months, the Tenth Month is the most wabi.' },
-    { author: '武野紹鴎', source: '—', jp: '心敬法師連歌の語に曰く、「連歌は枯れかじけて寒かれ」…茶の湯の果ても、其ごとく成したきと紹鴎常に云う。', en: 'As the renga master Shinkei said, “Linked verse should be withered and chilled.” Jōō would often add, “I wish the ultimate state of tea to be like that as well.”' },
-    { author: '千宗旦', source: '—', jp: '茶の湯とは梅寒菊に黄ばみ落ち、青竹枯木暁の霜。', en: 'Tea is [like] plum blossoms in the cold, chrysanthemums yellowing and falling, green bamboo, bare trees, and frost at dawn.' },
-    { author: '千利休', source: '—', jp: '花見より帰りの人に茶の湯せば、花鳥の絵をも花も置くまじ。', en: 'If you host tea for one returning from flower-viewing, do not display flower-and-bird paintings, nor set out blossoms.' }
-  ];
-
-  (function setupQuotes(){
-    const jp = document.getElementById('quote-jp');
-    const en = document.getElementById('quote-en');
-    const meta = document.getElementById('quote-meta');
-    const prev = document.getElementById('quote-prev');
-    const next = document.getElementById('quote-next');
-    if (!jp || !en || !meta || !prev || !next) return;
-    let idx = Math.floor(Math.random() * QUOTES.length);
-    const render = () => {
-      const q = QUOTES[idx];
-      jp.textContent = q.jp;
-      en.textContent = q.en;
-      const metaText = q.source && q.source.trim() && q.source !== '—' ? `${q.author}／${q.source}` : q.author;
-      meta.textContent = metaText;
-    };
-    prev.addEventListener('click', () => { idx = (idx - 1 + QUOTES.length) % QUOTES.length; render(); });
-    next.addEventListener('click', () => { idx = (idx + 1) % QUOTES.length; render(); });
-    render();
-  })();
-</script>
 </html>
 
   <footer class="mt-12 py-8 border-t-2" style="background: var(--zen-secondary); border-color: var(--zen-accent)">
