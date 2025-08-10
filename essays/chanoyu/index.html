@@ -119,6 +119,7 @@
             max-width: 900px;
             max-height: 90vh;
             overflow-y: auto;
+            position: relative;
             animation: slideIn 0.3s ease-out;
         }
         @keyframes slideIn {
@@ -627,11 +628,11 @@
     <!-- Modal -->
     <div id="modal" class="modal">
         <div class="modal-content p-8 max-w-3xl mx-4">
-            <button id="modal-close" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100">
+            <button id="modal-close" class="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100" style="z-index: 10;">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
-                </button>
+            </button>
             <div id="modal-body">
                 <!-- Modal content will be inserted here -->
             </div>
