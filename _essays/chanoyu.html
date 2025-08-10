@@ -520,64 +520,96 @@ layout: none
         <section id="toriawase" class="content-section mb-12">
             <div class="section-card">
                 <h2 class="text-3xl font-bold mb-6">Toriawase Lab (Ensemble Sandbox)</h2>
-                <div class="grid lg:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-lg border border-gray-200 p-6">
-                        <h3 class="text-xl font-bold mb-4">Set your theme</h3>
-                        <div class="space-y-3">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Theme</label>
-                                <input type="text" id="theme-input" value="Autumn moon" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Scroll (bokuseki)</label>
-                                <input type="text" id="scroll-input" value="一期一会" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
-                            </div>
-                            <div class="grid grid-cols-2 gap-3">
+                <div class="mb-4 flex flex-wrap items-center gap-2">
+                    <button id="toriawase-tab-presets" class="filter-badge active">Curated Ensembles</button>
+                    <button id="toriawase-tab-compose" class="filter-badge">Compose Your Own</button>
+                    <div id="presets-controls" class="ml-auto flex flex-wrap items-center gap-2">
+                        <select id="preset-filter-season" class="px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="All">All seasons</option>
+                            <option value="Spring">Spring</option>
+                            <option value="Summer">Summer</option>
+                            <option value="Autumn">Autumn</option>
+                            <option value="Winter">Winter</option>
+                            <option value="NewYear">New Year</option>
+                        </select>
+                        <select id="preset-filter-occasion" class="px-3 py-2 border border-gray-300 rounded-lg">
+                            <option value="All">All occasions</option>
+                            <option value="Chakai">Chakai</option>
+                            <option value="Chaji">Chaji</option>
+                            <option value="Memorial">Memorial</option>
+                            <option value="Kencha">Kencha</option>
+                            <option value="MoonViewing">Moon Viewing</option>
+                        </select>
+                        <button id="preset-surprise" class="zen-button">Surprise me</button>
+                    </div>
+                </div>
+
+                <!-- Presets panel -->
+                <div id="toriawase-presets-panel" class="block">
+                    <div id="toriawase-presets-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                </div>
+
+                <!-- Compose panel -->
+                <div id="toriawase-compose-panel" class="hidden">
+                    <div class="grid lg:grid-cols-2 gap-6">
+                        <div class="bg-white rounded-lg border border-gray-200 p-6">
+                            <h3 class="text-xl font-bold mb-4">Set your theme</h3>
+                            <div class="space-y-3">
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tea bowl</label>
-                                    <select id="bowl-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
-                                        <option>Ido</option>
-                                        <option>Raku</option>
-                                        <option>Tenmoku</option>
-                                        <option>Shino</option>
-                                        <option>Oribe</option>
-                                        <option>Hagi</option>
-                                        <option>Karatsu</option>
-                                    </select>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Theme</label>
+                                    <input type="text" id="theme-input" value="Autumn moon" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Tea caddy</label>
-                                    <select id="caddy-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
-                                        <option>Chaire</option>
-                                        <option>Natsume</option>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Scroll (bokuseki)</label>
+                                    <input type="text" id="scroll-input" value="一期一会" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tea bowl</label>
+                                        <select id="bowl-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                            <option>Ido</option>
+                                            <option>Raku</option>
+                                            <option>Tenmoku</option>
+                                            <option>Shino</option>
+                                            <option>Oribe</option>
+                                            <option>Hagi</option>
+                                            <option>Karatsu</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Tea caddy</label>
+                                        <select id="caddy-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                            <option>Chaire</option>
+                                            <option>Natsume</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-1">Flower vase</label>
+                                    <select id="vase-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                                        <option>Bamboo (node-cut)</option>
+                                        <option>Ceramic (Shigaraki)</option>
+                                        <option>Bronze hanging</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Flower vase</label>
-                                <select id="vase-select" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
-                                    <option>Bamboo (node-cut)</option>
-                                    <option>Ceramic (Shigaraki)</option>
-                                    <option>Bronze hanging</option>
-                                </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="bg-white rounded-lg border border-gray-200 p-6">
-                        <h3 class="text-xl font-bold mb-4">Curatorial guidance</h3>
-                        <p class="text-gray-700 mb-3 text-sm">General heuristics drawn from orthodox practice and connoisseurship.</p>
-                        <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
-                            <li>Choose a clear shudai (theme): seasonal, literary, or memorial.</li>
-                            <li>Balance decorated pieces with quiet anchors; avoid clashing patterns.</li>
-                            <li>Do not over-concentrate one maker/kiln; seek textural dialogue.</li>
-                            <li>Let bokuseki lead the room; utensils echo the scroll's teaching.</li>
-                            <li>Document the set: shifuku, boxes, and notes to build denrai.</li>
-                        </ul>
-                        <div id="toriawase-notes" class="mt-4 p-4 bg-blue-50 rounded-lg">
-                            <h4 class="font-semibold mb-2 text-blue-900">Contextual notes based on your picks</h4>
-                            <ul id="context-notes" class="list-disc pl-5 text-sm text-blue-800 space-y-1">
-                                <!-- Dynamic notes will appear here -->
+                        <div class="bg-white rounded-lg border border-gray-200 p-6">
+                            <h3 class="text-xl font-bold mb-4">Curatorial guidance</h3>
+                            <p class="text-gray-700 mb-3 text-sm">General heuristics drawn from orthodox practice and connoisseurship.</p>
+                            <ul class="list-disc pl-5 text-sm text-gray-700 space-y-1">
+                                <li>Choose a clear shudai (theme): seasonal, literary, or memorial.</li>
+                                <li>Balance decorated pieces with quiet anchors; avoid clashing patterns.</li>
+                                <li>Do not over-concentrate one maker/kiln; seek textural dialogue.</li>
+                                <li>Let bokuseki lead the room; utensils echo the scroll's teaching.</li>
+                                <li>Document the set: shifuku, boxes, and notes to build denrai.</li>
                             </ul>
+                            <div id="toriawase-notes" class="mt-4 p-4 bg-blue-50 rounded-lg">
+                                <h4 class="font-semibold mb-2 text-blue-900">Contextual notes based on your picks</h4>
+                                <ul id="context-notes" class="list-disc pl-5 text-sm text-blue-800 space-y-1">
+                                    <!-- Dynamic notes will appear here -->
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -872,6 +904,32 @@ layout: none
         }
     ];
 
+    // Curated Toriawase presets (gallery)
+    const TORIAWASE_PRESETS = [
+        { id: 'P01', title: 'Autumn Moon Formal', season: 'Autumn', occasion: 'MoonViewing', formality: 'High', theme: 'Autumn moon', scroll: '一期一会', bowl: 'Raku', caddy: 'Chaire', vase: 'Bronze hanging' },
+        { id: 'P02', title: 'Harvest Moon Wabi', season: 'Autumn', occasion: 'MoonViewing', formality: 'Medium', theme: 'Harvest moon', scroll: '無', bowl: 'Raku', caddy: 'Natsume', vase: 'Bamboo (node-cut)' },
+        { id: 'P03', title: 'Maple Grove', season: 'Autumn', occasion: 'Chakai', formality: 'Medium', theme: 'Autumn leaves', scroll: '日々是好日', bowl: 'Ido', caddy: 'Natsume', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P04', title: 'Kuchikiri Ceremony', season: 'Autumn', occasion: 'Chaji', formality: 'High', theme: 'Kuchikiri', scroll: '和敬清寂', bowl: 'Tenmoku', caddy: 'Chaire', vase: 'Bronze hanging' },
+        { id: 'P05', title: 'Winter Quiet', season: 'Winter', occasion: 'Chaji', formality: 'High', theme: 'Snow silence', scroll: '無', bowl: 'Tenmoku', caddy: 'Chaire', vase: 'Bamboo (node-cut)' },
+        { id: 'P06', title: 'New Year Formal', season: 'NewYear', occasion: 'Chaji', formality: 'High', theme: 'New Year auspice', scroll: '和敬清寂', bowl: 'Tenmoku', caddy: 'Chaire', vase: 'Bronze hanging' },
+        { id: 'P07', title: 'Early Spring Plum', season: 'Spring', occasion: 'Chakai', formality: 'Medium', theme: 'First plum', scroll: '日々是好日', bowl: 'Hagi', caddy: 'Natsume', vase: 'Bamboo (node-cut)' },
+        { id: 'P08', title: 'Sakura Drizzle', season: 'Spring', occasion: 'Chakai', formality: 'Medium', theme: 'Cherry rain', scroll: '雲水', bowl: 'Shino', caddy: 'Natsume', vase: 'Bamboo (node-cut)' },
+        { id: 'P09', title: 'Oribe Fresh Green', season: 'Spring', occasion: 'Chakai', formality: 'Low', theme: 'New shoots', scroll: '日々是好日', bowl: 'Oribe', caddy: 'Natsume', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P10', title: 'Rainy Season Cool', season: 'Summer', occasion: 'Chakai', formality: 'Low', theme: 'Cool water', scroll: '雲水', bowl: 'Karatsu', caddy: 'Natsume', vase: 'Bamboo (node-cut)' },
+        { id: 'P11', title: 'High Summer Clarity', season: 'Summer', occasion: 'Chakai', formality: 'Low', theme: 'Wind bell', scroll: '日々是好日', bowl: 'Karatsu', caddy: 'Natsume', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P12', title: 'Memorial Dignity', season: 'Autumn', occasion: 'Memorial', formality: 'High', theme: 'Memorial service', scroll: '無', bowl: 'Tenmoku', caddy: 'Chaire', vase: 'Bronze hanging' },
+        { id: 'P13', title: 'Tea and Zen One Taste', season: 'Winter', occasion: 'Chaji', formality: 'High', theme: 'Chazen ichimi', scroll: '茶禅一味', bowl: 'Raku', caddy: 'Chaire', vase: 'Bamboo (node-cut)' },
+        { id: 'P14', title: 'Wabi Anchor', season: 'Autumn', occasion: 'Chakai', formality: 'Medium', theme: 'Rust and grass', scroll: '日々是好日', bowl: 'Ido', caddy: 'Chaire', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P15', title: 'Momoyama Play', season: 'Spring', occasion: 'Chakai', formality: 'Low', theme: 'Asymmetry', scroll: '松風', bowl: 'Oribe', caddy: 'Chaire', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P16', title: 'Rikyū Orthodoxy', season: 'Winter', occasion: 'Chaji', formality: 'High', theme: 'Seiza and quiet', scroll: '和敬清寂', bowl: 'Raku', caddy: 'Chaire', vase: 'Bamboo (node-cut)' },
+        { id: 'P17', title: 'Everyday Good Day', season: 'Any', occasion: 'Chakai', formality: 'Medium', theme: 'Ordinary suchness', scroll: '日々是好日', bowl: 'Karatsu', caddy: 'Natsume', vase: 'Bamboo (node-cut)' },
+        { id: 'P18', title: 'Hagi Seven Transformations', season: 'Autumn', occasion: 'Chakai', formality: 'Medium', theme: 'Patina', scroll: '一期一会', bowl: 'Hagi', caddy: 'Chaire', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P19', title: 'Shino Snowfield', season: 'Winter', occasion: 'Chakai', formality: 'Medium', theme: 'Snow garden', scroll: '和敬清寂', bowl: 'Shino', caddy: 'Chaire', vase: 'Bamboo (node-cut)' },
+        { id: 'P20', title: 'Karatsu Autumn Grass', season: 'Autumn', occasion: 'Chakai', formality: 'Medium', theme: 'Autumn grass', scroll: '松風', bowl: 'Karatsu', caddy: 'Natsume', vase: 'Ceramic (Shigaraki)' },
+        { id: 'P21', title: 'Ido Harvest Warmth', season: 'Autumn', occasion: 'Chakai', formality: 'Medium', theme: 'Harvest hearth', scroll: '日々是好日', bowl: 'Ido', caddy: 'Chaire', vase: 'Bamboo (node-cut)' },
+        { id: 'P22', title: 'Bronze Gravitas', season: 'Winter', occasion: 'Memorial', formality: 'High', theme: 'Gratitude', scroll: '無', bowl: 'Raku', caddy: 'Chaire', vase: 'Bronze hanging' }
+    ];
+
     // Translation dictionary for the translator
     const TRANSLATION_DICTIONARY = [
     // Core concepts
@@ -1094,6 +1152,20 @@ layout: none
     // Render functions
     function renderTimeline() {
         const container = document.getElementById('timeline-container');
+        // Add comprehensive history card at the top
+        const intro = document.createElement('div');
+        intro.className = 'relative pl-8 pb-8';
+        intro.innerHTML = `
+            <div class="timeline-dot"></div>
+            <div class="bg-white rounded-lg p-4 shadow hover:shadow-lg transition-shadow cursor-pointer">
+                <div class="flex items-baseline justify-between mb-2">
+                    <h3 class="text-lg font-bold">Comprehensive History of Chanoyu</h3>
+                    <a href="/essays/chanoyu/history/" class="text-sm zen-button">Open</a>
+                </div>
+                <p class="text-gray-700 text-sm">A self-contained, long-form overview from monastic origins to modern practice: people, temples, utensils, spaces, and rituals.</p>
+            </div>
+        `;
+        container.appendChild(intro);
         TIMELINE.forEach(item => {
         const div = document.createElement('div');
             div.className = 'relative pl-8 pb-8';
@@ -1339,6 +1411,121 @@ layout: none
     }
 
     function setupToriawaseLab() {
+        // Tabs and presets wiring
+        const tabPresets = document.getElementById('toriawase-tab-presets');
+        const tabCompose = document.getElementById('toriawase-tab-compose');
+        const presetsPanel = document.getElementById('toriawase-presets-panel');
+        const composePanel = document.getElementById('toriawase-compose-panel');
+        const presetsControls = document.getElementById('presets-controls');
+
+        const filterSeason = document.getElementById('preset-filter-season');
+        const filterOccasion = document.getElementById('preset-filter-occasion');
+        const surpriseBtn = document.getElementById('preset-surprise');
+
+        const applyActiveTabStyles = (active) => {
+            [tabPresets, tabCompose].forEach(b => b.classList.remove('active'));
+            active.classList.add('active');
+        };
+
+        const showPresets = () => {
+            presetsPanel.classList.remove('hidden');
+            presetsPanel.classList.add('block');
+            composePanel.classList.add('hidden');
+            composePanel.classList.remove('block');
+            presetsControls.classList.remove('hidden');
+        };
+        const showCompose = () => {
+            composePanel.classList.remove('hidden');
+            composePanel.classList.add('block');
+            presetsPanel.classList.add('hidden');
+            presetsPanel.classList.remove('block');
+            presetsControls.classList.add('hidden');
+        };
+
+        tabPresets?.addEventListener('click', () => { applyActiveTabStyles(tabPresets); showPresets(); });
+        tabCompose?.addEventListener('click', () => { applyActiveTabStyles(tabCompose); showCompose(); });
+
+        const applyPresetToForm = (p) => {
+            const themeEl = document.getElementById('theme-input');
+            const scrollEl = document.getElementById('scroll-input');
+            const bowlEl = document.getElementById('bowl-select');
+            const caddyEl = document.getElementById('caddy-select');
+            const vaseEl = document.getElementById('vase-select');
+            if (themeEl) themeEl.value = p.theme;
+            if (scrollEl) scrollEl.value = p.scroll;
+            if (bowlEl) bowlEl.value = p.bowl;
+            if (caddyEl) caddyEl.value = p.caddy;
+            if (vaseEl) vaseEl.value = p.vase;
+        };
+
+        const renderToriawasePresets = () => {
+            const container = document.getElementById('toriawase-presets-container');
+            if (!container) return;
+            container.innerHTML = '';
+            const season = filterSeason?.value || 'All';
+            const occasion = filterOccasion?.value || 'All';
+
+            const filtered = TORIAWASE_PRESETS.filter(p =>
+                (season === 'All' || p.season === season || (season === 'Any' && p.season === 'Any')) &&
+                (occasion === 'All' || p.occasion === occasion)
+            );
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow';
+                card.innerHTML = `
+                    <div class="flex items-baseline justify-between mb-2">
+                        <h3 class="text-lg font-bold">${p.title}</h3>
+                        <span class="text-sm text-gray-500">${p.season} · ${p.occasion}</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Theme: ${p.theme}</p>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                        <span class="px-2 py-1 bg-gray-100 text-xs rounded-full">Scroll: ${p.scroll}</span>
+                        <span class="px-2 py-1 bg-gray-100 text-xs rounded-full">Bowl: ${p.bowl}</span>
+                        <span class="px-2 py-1 bg-gray-100 text-xs rounded-full">Caddy: ${p.caddy}</span>
+                        <span class="px-2 py-1 bg-gray-100 text-xs rounded-full">Vase: ${p.vase}</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="zen-button" data-action="use" data-id="${p.id}">Use as starting point</button>
+                        <button class="filter-badge" data-action="compose" data-id="${p.id}">Compose with this</button>
+                    </div>
+                `;
+                // Button handlers via delegation
+                card.addEventListener('click', (e) => {
+                    const btn = e.target.closest('button');
+                    if (!btn) return;
+                    const id = btn.getAttribute('data-id');
+                    const preset = TORIAWASE_PRESETS.find(x => x.id === id);
+                    if (!preset) return;
+                    applyPresetToForm(preset);
+                    applyActiveTabStyles(tabCompose);
+                    showCompose();
+                    // Trigger analysis after applying
+                    analyzeEnsemble();
+                });
+                container.appendChild(card);
+            });
+        };
+
+        filterSeason?.addEventListener('change', renderToriawasePresets);
+        filterOccasion?.addEventListener('change', renderToriawasePresets);
+        surpriseBtn?.addEventListener('click', () => {
+            const season = filterSeason?.value || 'All';
+            const occasion = filterOccasion?.value || 'All';
+            const pool = TORIAWASE_PRESETS.filter(p =>
+                (season === 'All' || p.season === season || (season === 'Any' && p.season === 'Any')) &&
+                (occasion === 'All' || p.occasion === occasion)
+            );
+            const pick = pool[Math.floor(Math.random() * pool.length)] || TORIAWASE_PRESETS[0];
+            applyPresetToForm(pick);
+            applyActiveTabStyles(tabCompose);
+            showCompose();
+            analyzeEnsemble();
+        });
+
+        // Render presets at start
+        renderToriawasePresets();
+
         // Sophisticated analysis engine for toriawase
         const analyzeEnsemble = () => {
             const theme = document.getElementById('theme-input').value.toLowerCase();
@@ -1509,7 +1696,12 @@ layout: none
         document.getElementById('caddy-select').addEventListener('change', analyzeEnsemble);
         document.getElementById('vase-select').addEventListener('change', analyzeEnsemble);
         
-        analyzeEnsemble(); // Initial analysis
+        analyzeEnsemble(); // Initial analysis (compose panel)
+        // Default view: presets tab active
+        if (tabPresets) {
+            applyActiveTabStyles(tabPresets);
+            showPresets();
+        }
     }
 
     function setupModal() {
