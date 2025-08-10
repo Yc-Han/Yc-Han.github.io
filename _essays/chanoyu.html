@@ -1374,7 +1374,8 @@ layout: none
         const metaEl = document.getElementById('quote-meta');
         const prev = document.getElementById('quote-prev');
         const next = document.getElementById('quote-next');
-        if (!jpEl || !enEl || !metaEl || !prev || !next) return;
+        if (!jpEl || !enEl || !metaEl) return;
+        // Allow rendering even if nav buttons are absent during load; attach when present
         let idx = Math.floor(Math.random() * QUOTES.length);
         const render = () => {
             const q = QUOTES[idx];
@@ -1382,8 +1383,8 @@ layout: none
             enEl.textContent = q.en;
             metaEl.textContent = q.source ? `${q.author}／${q.source}` : q.author;
         };
-        prev.addEventListener('click', () => { idx = (idx - 1 + QUOTES.length) % QUOTES.length; render(); });
-        next.addEventListener('click', () => { idx = (idx + 1) % QUOTES.length; render(); });
+        if (prev) prev.addEventListener('click', () => { idx = (idx - 1 + QUOTES.length) % QUOTES.length; render(); });
+        if (next) next.addEventListener('click', () => { idx = (idx + 1) % QUOTES.length; render(); });
         render();
     }
 
@@ -1743,7 +1744,20 @@ layout: none
     
     // Translator function - make it global so buttons can access it
     window.translateTerm = function(input) {
-        const searchTerm = input.toLowerCase().trim();
+        const normalize = (s) => (s || '')
+            .toString()
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') // strip combining marks
+            .replace(/[ōŌ]/g, 'o')
+            .replace(/[ūŪ]/g, 'u')
+            .replace(/[āĀ]/g, 'a')
+            .replace(/[īĪ]/g, 'i')
+            .replace(/[ēĒ]/g, 'e')
+            .replace(/[\s\-]/g, '');
+
+        const searchTermRaw = (input || '').trim();
+        const searchTerm = normalize(searchTermRaw);
         const resultDiv = document.getElementById('translator-result');
         
         // Update input field if called from button
@@ -1753,11 +1767,13 @@ layout: none
         }
         
         // Search through comprehensive dictionary
-        const results = TRANSLATION_DICTIONARY.filter(entry => 
-            entry.japanese.includes(searchTerm) ||
-            entry.romaji.toLowerCase().includes(searchTerm) ||
-            entry.english.toLowerCase().includes(searchTerm)
-        );
+        const results = TRANSLATION_DICTIONARY.filter(entry => {
+            const jp = (entry.japanese || '').toString();
+            const ro = normalize(entry.romaji);
+            const en = normalize(entry.english);
+            // For Japanese search, use raw (don't normalize away kanji)
+            return jp.includes(searchTermRaw) || ro.includes(searchTerm) || en.includes(searchTerm);
+        });
         
         if (results.length > 0) {
             let html = '<div class="space-y-3">';
@@ -1777,8 +1793,8 @@ layout: none
             resultDiv.innerHTML = html;
         } else {
             resultDiv.innerHTML = `
-                <p class="text-sm text-gray-500">No results found for "${input}". Try searching for related terms or check your spelling.</p>
-                <p class="text-xs text-gray-400 mt-2">Tip: You can search in Japanese (茶碗), romaji (chawan), or English (tea bowl).</p>
+                <p class="text-sm text-gray-500">No results for "${searchTermRaw}".</p>
+                <p class="text-xs text-gray-400 mt-2">Try Japanese (茶碗), romaji (chawan/chadō), or English (tea bowl). Macrons aren’t required.</p>
             `;
         }
     }
