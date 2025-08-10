@@ -338,9 +338,9 @@
                     </div>
                 </div>
                 <div id="quote-box" class="p-4 rounded-lg border border-gray-200 bg-white">
-                    <div class="text-xl leading-relaxed mb-3" id="quote-jp" style="font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;">茶は養生の仙薬なり。延齢の妙術なり。</div>
-                    <div class="text-sm text-gray-700 mb-2" id="quote-en">Tea is a miraculous elixir for health, a wondrous method for longevity.</div>
-                    <div class="text-xs text-gray-500" id="quote-meta">栄西（明菴栄西）／『喫茶養生記』</div>
+                    <div class="text-xl leading-relaxed mb-3" id="quote-jp" style="font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;"></div>
+                    <div class="text-sm text-gray-700 mb-2" id="quote-en"></div>
+                    <div class="text-xs text-gray-500" id="quote-meta"></div>
                 </div>
             </div>
         </section>
@@ -360,11 +360,11 @@
                     </div>
                     <div class="mt-4 flex flex-wrap gap-2">
                         <span class="text-xs text-gray-600">Popular searches:</span>
-                        <button class="tag cursor-pointer" onclick="translateTerm('一期一会')">一期一会</button>
-                        <button class="tag cursor-pointer" onclick="translateTerm('wabi-sabi')">wabi-sabi</button>
-                        <button class="tag cursor-pointer" onclick="translateTerm('tea bowl')">tea bowl</button>
-                        <button class="tag cursor-pointer" onclick="translateTerm('利休')">利休</button>
-                        <button class="tag cursor-pointer" onclick="translateTerm('hakogaki')">hakogaki</button>
+                        <button class="tag cursor-pointer" onclick="window.translateTerm('一期一会')">一期一会</button>
+                        <button class="tag cursor-pointer" onclick="window.translateTerm('wabi-sabi')">wabi-sabi</button>
+                        <button class="tag cursor-pointer" onclick="window.translateTerm('tea bowl')">tea bowl</button>
+                        <button class="tag cursor-pointer" onclick="window.translateTerm('利休')">利休</button>
+                        <button class="tag cursor-pointer" onclick="window.translateTerm('hakogaki')">hakogaki</button>
                     </div>
                 </div>
             </div>
@@ -1369,7 +1369,7 @@
         const prev = document.getElementById('quote-prev');
         const next = document.getElementById('quote-next');
         if (!jpEl || !enEl || !metaEl) return;
-        // Allow rendering even if nav buttons are absent during load; attach when present
+        
         let idx = Math.floor(Math.random() * QUOTES.length);
         const render = () => {
             const q = QUOTES[idx];
@@ -1377,8 +1377,20 @@
             enEl.textContent = q.en;
             metaEl.textContent = q.source ? `${q.author}／${q.source}` : q.author;
         };
-        if (prev) prev.addEventListener('click', () => { idx = (idx - 1 + QUOTES.length) % QUOTES.length; render(); });
-        if (next) next.addEventListener('click', () => { idx = (idx + 1) % QUOTES.length; render(); });
+        
+        if (prev) {
+            prev.addEventListener('click', () => { 
+                idx = (idx - 1 + QUOTES.length) % QUOTES.length; 
+                render(); 
+            });
+        }
+        if (next) {
+            next.addEventListener('click', () => { 
+                idx = (idx + 1) % QUOTES.length; 
+                render(); 
+            });
+        }
+        
         render();
     }
 
