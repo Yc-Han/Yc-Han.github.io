@@ -344,9 +344,9 @@ layout: none
                     </div>
                 </div>
                 <div id="quote-box" class="p-4 rounded-lg border border-gray-200 bg-white">
-                    <div class="text-xl leading-relaxed mb-3" id="quote-jp" style="font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;"></div>
-                    <div class="text-sm text-gray-700 mb-2" id="quote-en"></div>
-                    <div class="text-xs text-gray-500" id="quote-meta"></div>
+                    <div class="text-xl leading-relaxed mb-3" id="quote-jp" style="font-family: 'Noto Sans JP', 'Noto Sans', sans-serif;">茶は養生の仙薬なり。延齢の妙術なり。</div>
+                    <div class="text-sm text-gray-700 mb-2" id="quote-en">Tea is a miraculous elixir for health, a wondrous method for longevity.</div>
+                    <div class="text-xs text-gray-500" id="quote-meta">栄西（明菴栄西）／『喫茶養生記』</div>
                 </div>
             </div>
         </section>
@@ -1769,10 +1769,14 @@ layout: none
         // Search through comprehensive dictionary
         const results = TRANSLATION_DICTIONARY.filter(entry => {
             const jp = (entry.japanese || '').toString();
-            const ro = normalize(entry.romaji);
-            const en = normalize(entry.english);
+            const ro = normalize(entry.romaji || '');
+            const en = normalize(entry.english || '');
+            const exp = normalize(entry.explanation || '');
             // For Japanese search, use raw (don't normalize away kanji)
-            return jp.includes(searchTermRaw) || ro.includes(searchTerm) || en.includes(searchTerm);
+            return jp.includes(searchTermRaw) || 
+                   ro.includes(searchTerm) || 
+                   en.includes(searchTerm) ||
+                   exp.includes(searchTerm);
         });
         
         if (results.length > 0) {
@@ -1802,6 +1806,7 @@ layout: none
     // Setup translator
     function setupTranslator() {
         const input = document.getElementById('translator-input');
+        if (!input) return;
         let debounceTimer;
         
         input.addEventListener('input', (e) => {
@@ -1810,7 +1815,10 @@ layout: none
                 if (e.target.value.trim()) {
                     window.translateTerm(e.target.value);
                 } else {
-                    document.getElementById('translator-result').innerHTML = '<p class="text-sm text-gray-500">Your translation will appear here...</p>';
+                    const resultDiv = document.getElementById('translator-result');
+                    if (resultDiv) {
+                        resultDiv.innerHTML = '<p class="text-sm text-gray-500">Your translation will appear here...</p>';
+                    }
                 }
             }, 300);
         });
