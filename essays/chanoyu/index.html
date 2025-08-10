@@ -1171,23 +1171,62 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-        renderTimeline();
-        renderRoles();
-        renderTemples();
-        renderUtensils();
-        renderEvents();
-        setupNavigation();
-        setupFilters();
-        setupAccordions();
-        setupToriawaseLab();
-        setupModal();
-        setupTranslator();
-        setupQuotesOnMain();
+        try {
+            renderTimeline();
+        } catch(e) { console.error('Error in renderTimeline:', e); }
+        
+        try {
+            renderRoles();
+        } catch(e) { console.error('Error in renderRoles:', e); }
+        
+        try {
+            renderTemples();
+        } catch(e) { console.error('Error in renderTemples:', e); }
+        
+        try {
+            renderUtensils();
+        } catch(e) { console.error('Error in renderUtensils:', e); }
+        
+        try {
+            renderEvents();
+        } catch(e) { console.error('Error in renderEvents:', e); }
+        
+        try {
+            setupNavigation();
+        } catch(e) { console.error('Error in setupNavigation:', e); }
+        
+        try {
+            setupFilters();
+        } catch(e) { console.error('Error in setupFilters:', e); }
+        
+        try {
+            setupAccordions();
+        } catch(e) { console.error('Error in setupAccordions:', e); }
+        
+        try {
+            setupToriawaseLab();
+        } catch(e) { console.error('Error in setupToriawaseLab:', e); }
+        
+        try {
+            setupModal();
+        } catch(e) { console.error('Error in setupModal:', e); }
+        
+        try {
+            setupTranslator();
+        } catch(e) { console.error('Error in setupTranslator:', e); }
+        
+        try {
+            setupQuotesOnMain();
+        } catch(e) { console.error('Error in setupQuotesOnMain:', e); }
     });
 
     // Render functions
     function renderTimeline() {
         const container = document.getElementById('timeline-container');
+        if (!container) {
+            console.error('Timeline container not found');
+            return;
+        }
         // Add comprehensive history card at the top
         const intro = document.createElement('div');
         intro.className = 'relative pl-8 pb-8';
@@ -1224,6 +1263,10 @@
 
     function renderRoles() {
         const container = document.getElementById('roles-container');
+        if (!container) {
+            console.error('Roles container not found');
+            return;
+        }
         ROLES.forEach(role => {
             const div = document.createElement('div');
             div.className = 'bg-white rounded-lg border border-gray-200 p-6 hover:shadow-lg transition-shadow';
@@ -1240,6 +1283,10 @@
 
     function renderTemples(filter = 'All') {
         const container = document.getElementById('temples-container');
+        if (!container) {
+            console.error('Temples container not found');
+            return;
+        }
         container.innerHTML = '';
         const filtered = filter === 'All' ? TEMPLES : TEMPLES.filter(t => t.sect === filter);
         
@@ -1270,6 +1317,10 @@
 
     function renderUtensils(filter = 'All') {
         const container = document.getElementById('utensils-container');
+        if (!container) {
+            console.error('Utensils container not found');
+            return;
+        }
         container.innerHTML = '';
         
         const filtered = filter === 'All' ? UTENSIL_TYPES : 
@@ -1342,6 +1393,10 @@
 
     function renderEvents() {
         const container = document.getElementById('events-container');
+        if (!container) {
+            console.error('Events container not found');
+            return;
+        }
         EVENTS.forEach(event => {
             const div = document.createElement('div');
             div.className = 'bg-white rounded-lg border border-gray-200 p-4 hover:shadow-lg transition-shadow';
@@ -1408,6 +1463,11 @@
         const sections = document.querySelectorAll('.content-section');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const navMenu = document.getElementById('nav-menu');
+        
+        if (!navButtons.length || !sections.length) {
+            console.warn('Navigation elements not found');
+            return;
+        }
 
         navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -1493,6 +1553,11 @@
         const filterSeason = document.getElementById('preset-filter-season');
         const filterOccasion = document.getElementById('preset-filter-occasion');
         const surpriseBtn = document.getElementById('preset-surprise');
+        
+        if (!composePanel) {
+            console.warn('Toriawase compose panel not found');
+            return;
+        }
         const presetStrip = document.getElementById('preset-strip');
 
         const applyPresetToForm = (p) => {
@@ -1729,9 +1794,18 @@
         const modalClose = document.getElementById('modal-close');
         const modalBody = document.getElementById('modal-body');
         
-        modalClose.addEventListener('click', () => {
-            modal.classList.remove('show');
-        });
+        if (!modal) {
+            console.error('Modal element not found');
+            return;
+        }
+        
+        if (modalClose) {
+            modalClose.addEventListener('click', () => {
+                modal.classList.remove('show');
+            });
+        } else {
+            console.error('Modal close button not found');
+        }
         
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
